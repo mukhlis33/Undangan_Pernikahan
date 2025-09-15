@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan | Muhlis & Yuyun</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F3F0E9; /* Softer background */
+        }
+        .font-great-vibes {
+            font-family: 'Great Vibes', cursive;
+        }
+        .hero-bg {
+            background-image: url('https://images.unsplash.com/photo-1511285560921-26c10e1b32d6?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 1.5rem; /* more rounded */
+            padding: 2rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+        
+        /* Animation for fade-in effect */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        .fade-in-delay-1 { animation-delay: 0.2s; }
+        .fade-in-delay-2 { animation-delay: 0.4s; }
+        .fade-in-delay-3 { animation-delay: 0.6s; }
+        .fade-in-delay-4 { animation-delay: 0.8s; }
+    </style>
+</head>
+<body class="text-gray-700">
+
+    <!-- Audio Player -->
+    <audio id="background-music" loop>
+        <!-- Ganti src dengan link lagu Anda -->
+        <source src="https://placehold.co/audio/cheerful.mp3" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+    
+    <!-- Music Toggle Button -->
+    <button id="music-toggle" class="hidden fixed bottom-5 right-5 z-50 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg text-gray-700">
+        <svg id="music-on-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+        <svg id="music-off-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-x hidden"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/></svg>
+    </button>
+
+
+    <!-- Opening Cover -->
+    <div id="cover" class="fixed inset-0 hero-bg z-50 flex flex-col items-center justify-center text-center text-white p-4">
+        <div class="bg-black/40 p-8 rounded-2xl">
+            <p class="text-lg tracking-widest">The Wedding Of</p>
+            <h1 class="font-great-vibes text-6xl md:text-8xl my-4">Muhlis & Yuyun</h1>
+            <p class="mb-6">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
+            <h2 id="guest-name-cover" class="text-2xl font-bold mb-8 bg-white/20 px-4 py-2 rounded-lg"></h2>
+            <button id="open-invitation" class="bg-white/90 text-gray-800 font-bold py-3 px-8 rounded-full shadow-lg hover:scale-105 transform transition-transform duration-300">
+                Buka Undangan
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main id="main-content" class="hidden">
+        <!-- Hero Section -->
+        <section class="hero-bg h-screen flex flex-col items-center justify-center text-center text-white p-4">
+             <div class="bg-black/40 p-8 rounded-2xl">
+                <p class="text-lg tracking-widest fade-in">The Wedding Of</p>
+                <h1 class="font-great-vibes text-7xl md:text-9xl my-4 fade-in fade-in-delay-1">Muhlis & Yuyun</h1>
+                <p class="text-lg fade-in fade-in-delay-2">21 . 12 . 2025</p>
+            </div>
+        </section>
+
+        <!-- Greeting & Couple Info -->
+        <section class="py-20 px-4 bg-gray-50">
+            <div class="max-w-4xl mx-auto text-center space-y-12">
+                <div class="fade-in">
+                    <p class="text-gray-500 italic">"Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang..."</p>
+                    <p class="font-semibold mt-2">(QS. Ar-Rum: 21)</p>
+                </div>
+
+                <p class="text-lg fade-in">Assalamualaikum Warahmatullahi Wabarakatuh</p>
+                <p class="fade-in">Dengan memohon rahmat serta ridho Allah SWT, dan tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada acara pernikahan kami.</p>
+
+                <!-- Couple Details -->
+                <div class="grid md:grid-cols-2 gap-12 items-center pt-8">
+                    <div class="space-y-4 fade-in">
+                        <h2 class="font-great-vibes text-5xl text-rose-500">Yuyun Musyarofah</h2>
+                        <p class="font-semibold text-lg">(Yuyun)</p>
+                        <p>Putri dari:</p>
+                        <p class="font-bold">Bapak Topik Hidayat<br>& Ibu Siti Sunarti</p>
+                    </div>
+                    <div class="font-great-vibes text-6xl text-gray-400 fade-in">&</div>
+                    <div class="space-y-4 fade-in">
+                        <h2 class="font-great-vibes text-5xl text-blue-500">Muhlis</h2>
+                        <p class="font-semibold text-lg">(Muhlis)</p>
+                        <p>Putra dari:</p>
+                        <p class="font-bold">Bapak Imam Rohani<br>& Ibu Sumarni</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Save the Date & Countdown -->
+        <section class="py-20 px-4">
+             <div class="max-w-4xl mx-auto text-center">
+                <div class="card fade-in">
+                    <h2 class="text-2xl font-bold tracking-widest mb-4">SAVE THE DATE</h2>
+                    <p class="text-lg">Insya Allah, acara akan kami laksanakan pada:</p>
+                    
+                    <div class="my-8 border-t border-b border-gray-300 py-6">
+                        <h3 class="font-great-vibes text-5xl mb-2">Akad & Resepsi</h3>
+                        <p class="text-2xl font-bold">Minggu, 21 Desember 2025</p>
+                        <p class="mt-2 text-lg">Pukul 07.00 WIB s.d. Selesai</p>
+                        <p class="mt-4 font-semibold">Rumah Mempelai Wanita</p>
+                        <p>Kutawis RT 01 RW 07, Bukateja, Purbalingga</p>
+                    </div>
+
+                    <!-- Countdown Timer -->
+                    <div id="countdown" class="grid grid-cols-4 gap-4 text-center my-8">
+                        <div>
+                            <p id="days" class="text-4xl font-bold">00</p>
+                            <p>Hari</p>
+                        </div>
+                        <div>
+                            <p id="hours" class="text-4xl font-bold">00</p>
+                            <p>Jam</p>
+                        </div>
+                        <div>
+                            <p id="minutes" class="text-4xl font-bold">00</p>
+                            <p>Menit</p>
+                        </div>
+                        <div>
+                            <p id="seconds" class="text-4xl font-bold">00</p>
+                            <p>Detik</p>
+                        </div>
+                    </div>
+                </div>
+             </div>
+        </section>
+
+        <!-- Location -->
+        <section class="py-20 px-4 bg-gray-50">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="card fade-in">
+                    <h2 class="text-2xl font-bold tracking-widest mb-4">LOKASI ACARA</h2>
+                    <p class="mb-8">Untuk memudahkan Anda menuju lokasi, silakan gunakan peta digital berikut:</p>
+                    <div class="w-full h-80 rounded-2xl overflow-hidden shadow-lg">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d758.0207645679942!2d109.49566749647086!3d-7.413724567903002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sid!2sid!4v1757929678917!5m2!1sid!2sid" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <a href="https://maps.google.com/?q=-7.413724,109.495667" target="_blank" class="inline-block bg-gray-800 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-700 transform hover:scale-105 transition-transform duration-300 mt-8">
+                        Buka di Google Maps
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wedding Gift -->
+        <section class="py-20 px-4">
+             <div class="max-w-4xl mx-auto text-center">
+                 <div class="card fade-in">
+                    <h2 class="text-2xl font-bold tracking-widest mb-4">KIRIM HADIAH</h2>
+                    <p class="mb-8">Doa restu Anda adalah hadiah terindah bagi kami. Namun, jika Anda ingin memberikan tanda kasih, kami dengan senang hati menerimanya melalui:</p>
+                    <div class="space-y-6 max-w-sm mx-auto">
+                        <div class="border p-4 rounded-lg text-left">
+                            <p class="font-bold text-lg">Bank BRI</p>
+                            <p>No. Rekening: <span class="font-semibold">[Nomor Rekening Anda]</span></p>
+                            <p>a.n. Muhlis</p>
+                        </div>
+                        <div class="border p-4 rounded-lg text-left">
+                            <p class="font-bold text-lg">E-Wallet (Dana/Gopay)</p>
+                            <p>No: <span class="font-semibold">[Nomor Telepon Anda]</span></p>
+                            <p>a.n. <span class="font-semibold">[Nama Pemilik Akun]</span></p>
+                        </div>
+                    </div>
+                 </div>
+             </div>
+        </section>
+        
+        <!-- RSVP -->
+        <section class="py-20 px-4 bg-gray-50">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="card fade-in">
+                    <h2 class="text-2xl font-bold tracking-widest mb-4">KONFIRMASI KEHADIRAN</h2>
+                    <p class="mb-8">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Mohon konfirmasikan kehadiran Anda.</p>
+                    <a href="[Link Formulir RSVP/Google Form Anda di Sini]" target="_blank" class="inline-block bg-gray-800 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-700 transform hover:scale-105 transition-transform duration-300">
+                        Konfirmasi Kehadiran
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Closing -->
+        <footer class="py-20 text-center">
+            <p class="mb-8">Atas kehadiran dan doa restunya, kami ucapkan terima kasih.</p>
+            <p class="mb-8 font-semibold">Wassalamualaikum Warahmatullahi Wabarakatuh.</p>
+            <p class="mb-4">Kami yang berbahagia,</p>
+            <h2 class="font-great-vibes text-6xl">Muhlis & Yuyun</h2>
+            <p class="mt-8 text-sm text-gray-500">
+                Turut berbahagia,<br>
+                Keluarga Besar Bapak Imam Rohani<br>
+                & Keluarga Besar Bapak Topik Hidayat
+            </p>
+        </footer>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cover = document.getElementById('cover');
+            const mainContent = document.getElementById('main-content');
+            const openButton = document.getElementById('open-invitation');
+            const guestNameCover = document.getElementById('guest-name-cover');
+            const audio = document.getElementById('background-music');
+            const musicToggle = document.getElementById('music-toggle');
+            const musicOnIcon = document.getElementById('music-on-icon');
+            const musicOffIcon = document.getElementById('music-off-icon');
+
+            // --- Get Guest Name from URL ---
+            const urlParams = new URLSearchParams(window.location.search);
+            const guest = urlParams.get('nama') || 'Tamu Undangan';
+            guestNameCover.textContent = guest;
+
+            // --- Open Invitation Logic ---
+            openButton.addEventListener('click', () => {
+                cover.style.transition = 'opacity 1s ease-out';
+                cover.style.opacity = '0';
+                setTimeout(() => {
+                    cover.classList.add('hidden');
+                    mainContent.classList.remove('hidden');
+                    document.body.style.overflow = 'auto'; // Allow scrolling
+                    
+                    // Play music and show toggle
+                    audio.play().catch(error => console.log("Autoplay was prevented.", error));
+                    musicToggle.classList.remove('hidden');
+                }, 1000); // Match timeout with transition duration
+            });
+            
+            // --- Music Toggle Logic ---
+            let isPlaying = true;
+            musicToggle.addEventListener('click', () => {
+                if (isPlaying) {
+                    audio.pause();
+                    musicOnIcon.classList.add('hidden');
+                    musicOffIcon.classList.remove('hidden');
+                } else {
+                    audio.play();
+                    musicOnIcon.classList.remove('hidden');
+                    musicOffIcon.classList.add('hidden');
+                }
+                isPlaying = !isPlaying;
+            });
+
+
+            // --- Countdown Timer Logic ---
+            const countdownDate = new Date("December 21, 2025 07:00:00").getTime();
+
+            const timer = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countdownDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+                document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+
+                if (distance < 0) {
+                    clearInterval(timer);
+                    document.getElementById('countdown').innerHTML = "<p class='col-span-4 text-xl font-bold'>Acara Telah Berlangsung</p>";
+                }
+            }, 1000);
+
+            // --- Fade-in on Scroll Animation ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            document.querySelectorAll('.card').forEach(card => {
+                card.style.opacity = '0'; // hide initially
+                observer.observe(card);
+            });
+             document.querySelectorAll('.fade-in').forEach(el => {
+                el.style.opacity = '0'; // hide initially
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
+
