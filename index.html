@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Generator Link Undangan v2</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+        fieldset {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        legend {
+            font-weight: bold;
+            color: #3498db;
+            padding: 0 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        input[type="url"], input[type="file"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        button.secondary {
+            background-color: #e74c3c;
+        }
+        button.secondary:hover {
+            background-color: #c0392b;
+        }
+        button.warning {
+             background-color: #f39c12;
+        }
+        button.warning:hover {
+            background-color: #e67e22;
+        }
+         button.export {
+            background-color: #27ae60;
+        }
+        button.export:hover {
+            background-color: #229954;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #ecf0f1;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .link-cell {
+            word-break: break-all;
+        }
+        .copy-btn {
+            background-color: #95a5a6;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            margin: 0 0 0 10px;
+        }
+        .copy-btn:hover {
+            background-color: #7f8c8d;
+        }
+        .action-btn {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            margin: 2px;
+            width: 60px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>💌 Generator Link Undangan v2</h1>
+
+        <fieldset>
+            <legend>1. Atur Parameter URL</legend>
+            <label for="baseUrl">URL Undangan Anda:</label>
+            <input type="url" id="baseUrl" placeholder="Contoh: https://undangan-anda.com/acara" value="https://mukhlis33.github.io/Q.Itanzee/W_Ursy">
+
+            <label for="guestList">Daftar Nama Tamu (satu nama per baris):</label>
+            <textarea id="guestList" placeholder="Ahmad Soewarno&#10;Budi Santoso&#10;Citra Lestari"></textarea>
+
+            <label for="excelFile">Atau, Impor dari Excel (.xlsx):</label>
+            <input type="file" id="excelFile" accept=".xlsx, .xls">
+            <small>Format Excel: Kolom pertama untuk No, Kolom kedua untuk Nama dengan header "Nama daftar undangan".</small>
+
+            <br><br>
+            <button onclick="generateLinks()">🚀 Buat Link!</button>
+        </fieldset>
+
+        <fieldset>
+            <legend>2. Rekap Data & Hasil</legend>
+            <button class="export" onclick="exportToExcel()">📄 Export ke Excel</button>
+            <button class="warning" onclick="deleteSelected()">🗑️ Hapus Terpilih</button>
+            <button class="secondary" onclick="clearData()">🔥 Bersihkan Semua</button>
+            
+            <div style="overflow-x:auto;">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;"><input type="checkbox" onchange="toggleSelectAll(this)"></th>
+                            <th style="width: 10%;">No.</th>
+                            <th>Nama Tamu</th>
+                            <th>Link Undangan (Hasil)</th>
+                            <th style="width: 15%;">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </fieldset>
+    </div>
+
+    <script>
+        let generatedData = [];
+
+        window.onload = function() {
+            const savedData = localStorage.getItem('invitationLinksData');
+            if (savedData) {
+                generatedData = JSON.parse(savedData);
+                displayResults();
+            }
+        };
+
+        document.getElementById('excelFile').addEventListener('change', handleExcelFile, false);
+
+        function handleExcelFile(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const data = new Uint8Array(event.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const firstSheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[firstSheetName];
+                const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                const headerRow = jsonData[0];
+                let nameIndex = -1;
+                for(let i=0; i<headerRow.length; i++) {
+                    if(String(headerRow[i]).toLowerCase().trim() === 'nama daftar undangan') {
+                        nameIndex = i;
+                        break;
+                    }
+                }
+                if (nameIndex === -1) {
+                    alert('Error: Header "Nama daftar undangan" tidak ditemukan di file Excel Anda.');
+                    return;
+                }
+                const names = jsonData.slice(1).map(row => row[nameIndex]).filter(name => name && String(name).trim() !== '');
+                if (names.length > 0) {
+                    const guestListTextArea = document.getElementById('guestList');
+                    guestListTextArea.value = (guestListTextArea.value.trim() ? guestListTextArea.value + '\n' : '') + names.join('\n');
+                    alert(`${names.length} nama berhasil diimpor dari Excel!`);
+                } else {
+                    alert('Tidak ada nama yang ditemukan di kolom "Nama daftar undangan".');
+                }
+            };
+            reader.onerror = function() { alert('Gagal membaca file.'); };
+            reader.readAsArrayBuffer(file);
+            e.target.value = null;
+        }
+
+        function generateLinks() {
+            const baseUrl = document.getElementById('baseUrl').value.trim();
+            if (!baseUrl) {
+                alert('Silakan masukkan URL Undangan Anda terlebih dahulu.');
+                return;
+            }
+            const guestNamesInput = document.getElementById('guestList').value.trim();
+            if (!guestNamesInput) {
+                alert('Silakan masukkan daftar nama tamu atau impor dari Excel.');
+                return;
+            }
+            const guestNames = guestNamesInput.split('\n').filter(name => name.trim() !== '');
+            generatedData = [];
+            guestNames.forEach((name, index) => {
+                const trimmedName = name.trim();
+                generatedData.push({
+                    no: index + 1,
+                    name: trimmedName,
+                    link: createUrl(baseUrl, trimmedName)
+                });
+            });
+            displayResults();
+            saveData();
+            alert('Link berhasil dibuat untuk ' + guestNames.length + ' tamu!');
+        }
+        
+        function createUrl(base, name) {
+            const encodedName = encodeURIComponent(name).replace(/%20/g, '+');
+            const separator = base.includes('?') ? '&' : '?';
+            return `${base}${separator}nama=${encodedName}`;
+        }
+
+        function displayResults() {
+            const tableBody = document.getElementById('resultsTableBody');
+            tableBody.innerHTML = '';
+            generatedData.forEach((item, index) => {
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td style="text-align: center;"><input type="checkbox" class="row-checkbox" data-index="${index}"></td>
+                    <td>${item.no}</td>
+                    <td>${item.name}</td>
+                    <td class="link-cell">
+                        <a href="${item.link}" target="_blank">${item.link}</a>
+                        <button class="copy-btn" onclick="copyToClipboard('${item.link}')">Salin</button>
+                    </td>
+                    <td>
+                        <button class="action-btn" onclick="editRow(${index})">Edit</button>
+                        <button class="action-btn secondary" onclick="deleteRow(${index})">Hapus</button>
+                    </td>
+                `;
+            });
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Link berhasil disalin!');
+            }, (err) => {
+                alert('Gagal menyalin link: ', err);
+            });
+        }
+        
+        function renumberData() {
+            generatedData.forEach((item, index) => {
+                item.no = index + 1;
+            });
+        }
+
+        function saveData() {
+            localStorage.setItem('invitationLinksData', JSON.stringify(generatedData));
+        }
+
+        function clearData() {
+            if (confirm('Anda yakin ingin MENGHAPUS SEMUA data rekap? Tindakan ini tidak dapat dibatalkan.')) {
+                generatedData = [];
+                localStorage.removeItem('invitationLinksData');
+                displayResults();
+                document.getElementById('guestList').value = '';
+                alert('Semua data rekap telah dibersihkan.');
+            }
+        }
+        
+        function editRow(index) {
+            const currentName = generatedData[index].name;
+            const newName = prompt("Edit nama tamu:", currentName);
+
+            if (newName && newName.trim() !== '' && newName.trim() !== currentName) {
+                const baseUrl = document.getElementById('baseUrl').value.trim();
+                generatedData[index].name = newName.trim();
+                generatedData[index].link = createUrl(baseUrl, newName.trim());
+                saveData();
+                displayResults();
+            }
+        }
+        
+        function deleteRow(index) {
+            const nameToDelete = generatedData[index].name;
+            if (confirm(`Anda yakin ingin menghapus data untuk "${nameToDelete}"?`)) {
+                generatedData.splice(index, 1);
+                renumberData();
+                saveData();
+                displayResults();
+            }
+        }
+        
+        function deleteSelected() {
+            const checkboxes = document.querySelectorAll('.row-checkbox:checked');
+            if (checkboxes.length === 0) {
+                alert("Tidak ada baris yang dipilih untuk dihapus.");
+                return;
+            }
+
+            if (confirm(`Anda yakin ingin menghapus ${checkboxes.length} baris yang dipilih?`)) {
+                // Ambil semua index yang akan dihapus, ubah ke angka, dan urutkan dari besar ke kecil
+                const indicesToDelete = Array.from(checkboxes)
+                                           .map(cb => parseInt(cb.dataset.index))
+                                           .sort((a, b) => b - a);
+                
+                // Hapus dari array menggunakan index (mundur agar tidak merusak urutan)
+                indicesToDelete.forEach(index => {
+                    generatedData.splice(index, 1);
+                });
+
+                renumberData();
+                saveData();
+                displayResults();
+            }
+        }
+
+        function toggleSelectAll(masterCheckbox) {
+            const checkboxes = document.querySelectorAll('.row-checkbox');
+            checkboxes.forEach(cb => {
+                cb.checked = masterCheckbox.checked;
+            });
+        }
+
+        function exportToExcel() {
+            if (generatedData.length === 0) {
+                alert('Tidak ada data untuk diekspor. Silakan buat link terlebih dahulu.');
+                return;
+            }
+            const exportData = generatedData.map(item => ({
+                'Nomor urut': item.no,
+                'nama yang diundang': item.name,
+                'link hasil': item.link
+            }));
+            const worksheet = XLSX.utils.json_to_sheet(exportData);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Daftar Undangan');
+            worksheet['!cols'] = [{ wch: 10 }, { wch: 30 }, { wch: 70 }];
+            XLSX.writeFile(workbook, 'Daftar_Link_Undangan.xlsx');
+        }
+    </script>
+
+</body>
+</html>
