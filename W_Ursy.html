@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- GANTI DENGAN NAMA MEMPELAI -->
-    <title>Undangan Pernikahan Muhlis & Yuyun</title>
+    <title>Undangan Pernikahan Muhlis ❤️ Yuyun</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -256,7 +256,9 @@
         <i id="music-icon" data-lucide="music-2"></i>
     </button>
     
-    <audio id="background-music" loop src="wedding-nasheed.mp3"></audio>
+    <!-- PENTING: Tautan musik diubah ke URL publik agar berfungsi di lingkungan pratinjau. -->
+    <!-- Jika Anda meng-hosting sendiri, Anda bisa menggantinya kembali ke file lokal seperti 'wedding-nasheed.mp3' -->
+    <audio id="background-music" loop src="https://ia802500.us.archive.org/3/items/muhammad-al-muqit-wedding-nasheed/Muhammad%20Al%20Muqit%20-%20Wedding%20Nasheed.mp3"></audio>
 
     <!-- Pop up notifikasi -->
     <div id="notification" class="hidden fixed top-5 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-sm py-2 px-4 rounded-full shadow-lg z-50">
@@ -389,12 +391,18 @@
             bottomNav.classList.remove('hidden');
             musicToggle.classList.remove('hidden');
             
-            music.play().catch(error => {
-                console.error("Gagal memutar musik:", error.name, error.message);
-                if (error.name === 'NotSupportedError' && musicToggle) {
-                    musicToggle.style.display = 'none';
-                }
-            });
+            const musicPromise = music.play();
+            if (musicPromise !== undefined) {
+                musicPromise.catch(error => {
+                    // Penanganan error yang lebih baik ditambahkan di sini
+                    console.error("--- GAGAL MEMUAT MUSIK ---");
+                    console.error("Error:", error.message);
+                    console.info("Penyebab umum: File musik tidak ditemukan atau link salah. Pastikan sumber audio valid.");
+                    if (musicToggle) {
+                        musicToggle.style.display = 'none';
+                    }
+                });
+            }
 
             document.body.style.overflowY = 'auto';
             observeSections();
@@ -403,7 +411,6 @@
         let isPlaying = false;
         musicToggle.addEventListener('click', () => { isPlaying ? music.pause() : music.play(); });
         
-        // Logika ikon diperbaiki sesuai permintaan
         music.onplay = () => { isPlaying = true; musicIcon.setAttribute('data-lucide', 'pause'); lucide.createIcons(); };
         music.onpause = () => { isPlaying = false; musicIcon.setAttribute('data-lucide', 'music-2'); lucide.createIcons(); };
 
