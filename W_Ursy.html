@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- GANTI DENGAN NAMA MEMPELAI -->
-    <title>Undangan Pernikahan Muhlis ❤️ Yuyun</title>
+    <title>Undangan Pernikahan Muhlis & Yuyun</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -60,8 +60,8 @@
 
     <!-- === BAGIAN COVER UNDANGAN === -->
     <div id="cover" class="fixed top-0 left-0 right-0 bottom-0 z-50 max-w-lg mx-auto bg-gray-800">
-        <!-- GANTI FOTO COVER DI SINI: Ganti URL di dalam style="background-image: url('...') -->
-        <div class="w-full h-full bg-cover bg-center bg-no-repeat" style="background-image: url('https://images.pexels.com/photos/1024989/pexels-photo-1024989.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
+        <!-- FOTO COVER DIUBAH KE FILE LOKAL -->
+        <div class="w-full h-full bg-cover bg-center bg-no-repeat" style="background-image: url('gambar-cover.jpg');">
             <div class="w-full h-full bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white p-8">
                 <div class="flex-grow flex flex-col justify-end">
                     <p class="font-alice text-sm tracking-widest">Walimatul 'Ursy</p>
@@ -100,22 +100,18 @@
 
         <!-- === SECTION PEMBUKA & MEMPELAI === -->
         <section id="home" class="text-center p-8 md:p-12 text-teal-900">
-             <div class="w-24 h-24 mx-auto mb-6">
-                <!-- Ilustrasi Bunga/Cincin -->
-                <img src="https://static.vecteezy.com/system/resources/previews/022/100/158/original/watercolor-floral-frame-with-golden-circle-for-wedding-invitation-card-or-logo-composition-png.png" alt="Floral Wreath" />
-            </div>
-            <p class="mb-4">Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
+            <p class="mb-4 mt-8">Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
             <p class="text-sm leading-relaxed">
                 Maha suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Dengan memohon rahmat dan ridho-Nya, kami bermaksud menyelenggarakan pernikahan kami:
             </p>
             <div class="my-10">
                 <h2 class="font-tangerine text-6xl text-teal-800">Muhlis</h2>
-                <p class="font-semibold mt-2">Muhlis</p>
-                <p class="text-sm mt-1">Putra dari Bapak Imam Rokhani & Ibu Sumarni</p>
+                <p class="text-sm mt-1">Putra dari</p>
+                <p class="text-sm mt-1">Bapak Imam Rokhani & Ibu Sumarni</p>
                 <p class="font-tangerine text-5xl my-4">&</p>
                 <h2 class="font-tangerine text-6xl text-teal-800">Yuyun Musyarofah</h2>
-                <p class="font-semibold mt-2">Yuyun Musyarofah</p>
-                <p class="text-sm mt-1">Putri dari Bapak Topik Hidayat & Ibu Siti Sunarti</p>
+                <p class="text-sm mt-1">Putri dari</p>
+                <p class="text-sm mt-1">Bapak Cipto Topik Hidayat & Ibu Siti Sunarti</p>
             </div>
         </section>
 
@@ -256,9 +252,7 @@
         <i id="music-icon" data-lucide="music-2"></i>
     </button>
     
-    <!-- PENTING: Tautan musik diubah ke URL publik agar berfungsi di lingkungan pratinjau. -->
-    <!-- Jika Anda meng-hosting sendiri, Anda bisa menggantinya kembali ke file lokal seperti 'wedding-nasheed.mp3' -->
-    <audio id="background-music" loop src="https://ia802500.us.archive.org/3/items/muhammad-al-muqit-wedding-nasheed/Muhammad%20Al%20Muqit%20-%20Wedding%20Nasheed.mp3"></audio>
+    <audio id="background-music" loop src="wedding-nasheed.mp3"></audio>
 
     <!-- Pop up notifikasi -->
     <div id="notification" class="hidden fixed top-5 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-sm py-2 px-4 rounded-full shadow-lg z-50">
@@ -394,12 +388,13 @@
             const musicPromise = music.play();
             if (musicPromise !== undefined) {
                 musicPromise.catch(error => {
-                    // Penanganan error yang lebih baik ditambahkan di sini
-                    console.error("--- GAGAL MEMUAT MUSIK ---");
-                    console.error("Error:", error.message);
-                    console.info("Penyebab umum: File musik tidak ditemukan atau link salah. Pastikan sumber audio valid.");
-                    if (musicToggle) {
-                        musicToggle.style.display = 'none';
+                    if (error.name === "NotSupportedError") {
+                        console.error("--- GAGAL MEMUAT MUSIK ---");
+                        console.error("Error:", error.message);
+                        console.info("SOLUSI: Pastikan file 'wedding-nasheed.mp3' sudah ada di folder yang sama dengan file HTML ini.");
+                        if (musicToggle) {
+                            musicToggle.style.display = 'none';
+                        }
                     }
                 });
             }
