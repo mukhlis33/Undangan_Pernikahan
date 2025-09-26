@@ -253,8 +253,7 @@
     </div>
 
     <button id="music-toggle" class="hidden fixed bottom-20 right-4 bg-white shadow-xl w-12 h-12 rounded-full z-40 flex justify-center items-center text-gray-800">
-        <!-- Ikon awal diubah menjadi 'play' -->
-        <i id="music-icon" data-lucide="play"></i>
+        <i id="music-icon" data-lucide="music-2"></i>
     </button>
     
     <audio id="background-music" loop src="wedding-nasheed.mp3"></audio>
@@ -392,11 +391,9 @@
             
             music.play().catch(error => {
                 console.error("Gagal memutar musik:", error.name, error.message);
-                // Jika sumber tidak ditemukan, sembunyikan tombol musik
                 if (error.name === 'NotSupportedError' && musicToggle) {
                     musicToggle.style.display = 'none';
                 }
-                // Jika hanya masalah autoplay, tombol tetap ada agar bisa diklik manual
             });
 
             document.body.style.overflowY = 'auto';
@@ -405,9 +402,10 @@
         
         let isPlaying = false;
         musicToggle.addEventListener('click', () => { isPlaying ? music.pause() : music.play(); });
-        // Logika ikon diubah menjadi play/pause
+        
+        // Logika ikon diperbaiki sesuai permintaan
         music.onplay = () => { isPlaying = true; musicIcon.setAttribute('data-lucide', 'pause'); lucide.createIcons(); };
-        music.onpause = () => { isPlaying = false; musicIcon.setAttribute('data-lucide', 'play'); lucide.createIcons(); };
+        music.onpause = () => { isPlaying = false; musicIcon.setAttribute('data-lucide', 'music-2'); lucide.createIcons(); };
 
         const countdownInterval = setInterval(() => {
             const now = new Date().getTime();
