@@ -151,20 +151,157 @@
             background: linear-gradient(135deg, #FDFCFA 0%, #F9F5F0 50%, #F5F0E6 100%);
         }
 
-        /* Responsive improvements */
-        @media (max-width: 640px) {
+        /* Responsive improvements - DIPERBAIKI */
+        @media (max-width: 768px) {
             .mobile-padding {
                 padding-left: 1rem;
                 padding-right: 1rem;
             }
             .mobile-text-lg {
-                font-size: 1.5rem;
+                font-size: 1.125rem;
             }
             .mobile-text-xl {
+                font-size: 1.5rem;
+            }
+            .mobile-text-2xl {
+                font-size: 1.75rem;
+            }
+            .mobile-text-3xl {
                 font-size: 2rem;
+            }
+            .mobile-text-4xl {
+                font-size: 2.25rem;
+            }
+            .mobile-text-5xl {
+                font-size: 2.5rem;
+            }
+            .mobile-text-6xl {
+                font-size: 3rem;
             }
             .mobile-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            /* Perbaikan khusus untuk elemen-elemen */
+            #cover h1 {
+                font-size: 3.5rem !important;
+            }
+            
+            #inner-cover h1 {
+                font-size: 3.5rem !important;
+            }
+            
+            #home h2 {
+                font-size: 3rem !important;
+            }
+            
+            .section-divider {
+                margin: 1.5rem 0;
+            }
+            
+            /* Perbaikan untuk iframe peta */
+            iframe {
+                height: 200px !important;
+            }
+            
+            /* Perbaikan untuk countdown */
+            #countdown {
+                gap: 0.5rem;
+                max-width: 100%;
+            }
+            
+            #countdown > div {
+                padding: 0.5rem;
+            }
+            
+            #countdown > div > div:first-child {
+                font-size: 1.5rem !important;
+            }
+            
+            /* Perbaikan untuk bottom navigation */
+            #bottom-nav {
+                width: calc(100% - 1rem);
+                bottom: 1rem;
+            }
+            
+            /* Perbaikan untuk tombol musik */
+            #music-toggle {
+                bottom: 5rem;
+                right: 0.5rem;
+                width: 3rem;
+                height: 3rem;
+            }
+            
+            /* Perbaikan untuk padding section */
+            section {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            #cover h1 {
+                font-size: 2.75rem !important;
+            }
+            
+            #inner-cover h1 {
+                font-size: 2.75rem !important;
+            }
+            
+            #home h2 {
+                font-size: 2.5rem !important;
+            }
+            
+            #guest-name {
+                font-size: 1.25rem !important;
+            }
+            
+            .ornament::before {
+                left: -1.5rem;
+            }
+            
+            .ornament::after {
+                right: -1.5rem;
+            }
+            
+            #countdown > div > div:first-child {
+                font-size: 1.25rem !important;
+            }
+            
+            footer p.font-tangerine {
+                font-size: 2.5rem !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            #cover h1 {
+                font-size: 2.25rem !important;
+            }
+            
+            #inner-cover h1 {
+                font-size: 2.25rem !important;
+            }
+            
+            #home h2 {
+                font-size: 2rem !important;
+            }
+            
+            #countdown {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+            
+            #countdown > div > div:first-child {
+                font-size: 1.75rem !important;
+            }
+            
+            .mobile-text-center {
+                text-align: center !important;
+            }
+            
+            .mobile-full-width {
+                width: 100% !important;
+                max-width: 100% !important;
             }
         }
 
@@ -226,9 +363,34 @@
             pointer-events: none;
             z-index: 9998;
         }
+        
+        /* Perbaikan untuk max-width container */
+        .container-resp {
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        @media (min-width: 640px) {
+            .container-resp {
+                max-width: 640px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .container-resp {
+                max-width: 768px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .container-resp {
+                max-width: 1024px;
+            }
+        }
     </style>
 </head>
-<body class="max-w-lg mx-auto pattern-bg">
+<body class="container-resp mx-auto pattern-bg">
 
     <!-- Container untuk efek ripple (hanya di cover) -->
     <div id="ripple-container" class="ripple-container"></div>
@@ -237,20 +399,20 @@
     <div id="petals-container"></div>
 
     <!-- === BAGIAN COVER UNDANGAN === -->
-    <div id="cover" class="fixed top-0 left-0 right-0 bottom-0 z-50 max-w-lg mx-auto bg-gray-800">
+    <div id="cover" class="fixed top-0 left-0 right-0 bottom-0 z-50 w-full mx-auto bg-gray-800">
         <!-- FOTO COVER DIUBAH KE FILE LOKAL -->
         <div class="w-full h-full bg-cover bg-center bg-no-repeat" style="background-image: url('gambar-cover.jpg');">
-            <div class="w-full h-full bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white p-8">
+            <div class="w-full h-full bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white p-4 md:p-8">
                 <div class="flex-grow flex flex-col justify-end">
-                    <p class="font-alice text-sm tracking-widest gold-text">Walimatul Ursy</p>
-                    <h1 class="font-tangerine text-6xl md:text-8xl my-4">Mukhlis & Yuyun</h1>
-                    <p id="wedding-date-cover" class="font-semibold text-lg"></p>
+                    <p class="font-alice text-sm md:text-base tracking-widest gold-text">Walimatul Ursy</p>
+                    <h1 class="font-tangerine text-4xl md:text-6xl lg:text-8xl my-4">Mukhlis & Yuyun</h1>
+                    <p id="wedding-date-cover" class="font-semibold text-base md:text-lg"></p>
                 </div>
-                <div class="flex-grow flex flex-col justify-end w-full pb-12">
-                    <p class="text-sm">Kepada Yth. Bapak/Ibu/Saudara/i</p>
-                    <p id="guest-name" class="text-xl md:text-2xl font-bold mt-2 mb-6">Tamu Undangan</p>
-                    <button id="open-invitation" class="gold-gradient hover:opacity-90 text-brown font-semibold py-3 px-6 rounded-full shadow-lg flex items-center mx-auto transition-transform transform hover:scale-105">
-                        <i data-lucide="mail-open" class="mr-2"></i>
+                <div class="flex-grow flex flex-col justify-end w-full pb-8 md:pb-12">
+                    <p class="text-xs md:text-sm">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+                    <p id="guest-name" class="text-lg md:text-xl lg:text-2xl font-bold mt-2 mb-4 md:mb-6">Tamu Undangan</p>
+                    <button id="open-invitation" class="gold-gradient hover:opacity-90 text-brown font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-lg flex items-center mx-auto transition-transform transform hover:scale-105 text-sm md:text-base">
+                        <i data-lucide="mail-open" class="mr-2 w-4 h-4 md:w-5 md:h-5"></i>
                         Buka Undangan
                     </button>
                 </div>
@@ -267,17 +429,17 @@
     </div>
 
     <!-- === BAGIAN UTAMA UNDANGAN (Awalnya tersembunyi) === -->
-    <main id="main-content" class="opacity-0">
+    <main id="main-content" class="opacity-0 w-full">
 
         <!-- === SAMPUL DALAM & AYAT === -->
-        <section id="inner-cover" class="text-center p-6 md:p-12 text-brown min-h-screen flex flex-col justify-center elegant-bg relative">
+        <section id="inner-cover" class="text-center p-4 md:p-6 lg:p-12 text-brown min-h-screen flex flex-col justify-center elegant-bg relative w-full">
             <div class="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-white to-transparent"></div>
-            <h2 class="font-alice text-xl md:text-2xl text-light-brown">Walimatul Ursy</h2>
-            <h1 class="font-tangerine text-5xl md:text-7xl my-4 gold-text">Mukhlis & Yuyun</h1>
-            <p class="font-semibold text-lg">21 Desember 2025</p>
+            <h2 class="font-alice text-lg md:text-xl lg:text-2xl text-light-brown">Walimatul Ursy</h2>
+            <h1 class="font-tangerine text-3xl md:text-5xl lg:text-7xl my-4 gold-text">Mukhlis & Yuyun</h1>
+            <p class="font-semibold text-base md:text-lg">21 Desember 2025</p>
             <div class="section-divider w-3/4 mx-auto"></div>
-            <div class="max-w-md mx-auto">
-                 <p dir="rtl" class="text-lg md:text-xl leading-loose my-4">وَمِنْ ءَايَٰتِهِۦٓ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَٰجًا لِّتَسْكُنُوٓا۟ إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِى ذَٰلِكَ لَءَايَٰتٍ لِّقَوْمٍ يَتَفَكَّرُونَ</p>
+            <div class="max-w-md mx-auto w-full px-4">
+                 <p dir="rtl" class="text-base md:text-lg lg:text-xl leading-loose my-4">وَمِنْ ءَايَٰتِهِۦٓ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَٰجًا لِّتَسْكُنُوٓا۟ إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِى ذَٰلِكَ لَءَايَٰتٍ لِّقَوْمٍ يَتَفَكَّرُونَ</p>
                 <p class="text-sm md:text-base italic leading-relaxed text-light-brown">
                     "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir."
                 </p>
@@ -294,44 +456,44 @@
         </section>
 
         <!-- === SECTION PEMBUKA & MEMPELAI === -->
-        <section id="home" class="text-center p-6 md:p-12 text-brown cream-bg">
-            <p class="mb-4 mt-8 text-lg">Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
-            <p class="text-sm md:text-base leading-relaxed text-light-brown max-w-md mx-auto">
+        <section id="home" class="text-center p-4 md:p-6 lg:p-12 text-brown cream-bg w-full">
+            <p class="mb-4 mt-8 text-base md:text-lg">Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
+            <p class="text-sm md:text-base leading-relaxed text-light-brown max-w-md mx-auto w-full px-4">
                 Maha suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Dengan memohon rahmat dan ridho-Nya, kami bermaksud menyelenggarakan pernikahan kami:
             </p>
-            <div class="my-8 md:my-10">
-                <h2 class="font-tangerine text-4xl md:text-6xl gold-text">Mukhlis</h2>
+            <div class="my-6 md:my-8 lg:my-10">
+                <h2 class="font-tangerine text-3xl md:text-4xl lg:text-6xl gold-text">Mukhlis</h2>
                 <p class="text-sm mt-1 text-light-brown">Putra dari</p>
                 <p class="text-sm mt-1">Bapak Imam Rokhani & Ibu Sumarni</p>
                 <div class="ornament my-4">
-                    <p class="font-tangerine text-3xl md:text-5xl gold-text">&</p>
+                    <p class="font-tangerine text-2xl md:text-3xl lg:text-5xl gold-text">&</p>
                 </div>
-                <h2 class="font-tangerine text-4xl md:text-6xl gold-text">Yuyun Musyarofah</h2>
+                <h2 class="font-tangerine text-3xl md:text-4xl lg:text-6xl gold-text">Yuyun Musyarofah</h2>
                 <p class="text-sm mt-1 text-light-brown">Putri dari</p>
                 <p class="text-sm mt-1">Bapak Cipto Topik Hidayat & Ibu Siti Sunarti</p>
             </div>
         </section>
 
         <!-- === SECTION ACARA & HITUNG MUNDUR === -->
-        <section id="event" class="light-brown-bg text-brown text-center p-6 md:p-12">
-            <h2 class="font-alice text-2xl md:text-3xl font-bold mb-8 ">Save The Date</h2>
+        <section id="event" class="light-brown-bg text-brown text-center p-4 md:p-6 lg:p-12 w-full">
+            <h2 class="font-alice text-xl md:text-2xl lg:text-3xl font-bold mb-6 md:mb-8">Save The Date</h2>
             
-            <div id="countdown" data-date="2025-12-21T09:00:00" class="grid grid-cols-4 gap-2 md:gap-4 max-w-sm mx-auto mb-8 font-alice">
-                <div class="bg-white p-2 rounded-lg custom-shadow border border-brown"><div id="days" class="text-2xl md:text-4xl font-bold gold-text">0</div><div class="text-xs text-light-brown">Hari</div></div>
-                <div class="bg-white p-2 rounded-lg custom-shadow border border-brown"><div id="hours" class="text-2xl md:text-4xl font-bold gold-text">0</div><div class="text-xs text-light-brown">Jam</div></div>
-                <div class="bg-white p-2 rounded-lg custom-shadow border border-brown"><div id="minutes" class="text-2xl md:text-4xl font-bold gold-text">0</div><div class="text-xs text-light-brown">Menit</div></div>
-                <div class="bg-white p-2 rounded-lg custom-shadow border border-brown"><div id="seconds" class="text-2xl md:text-4xl font-bold gold-text">0</div><div class="text-xs text-light-brown">Detik</div></div>
+            <div id="countdown" data-date="2025-12-21T09:00:00" class="grid grid-cols-4 gap-2 md:gap-4 max-w-sm mx-auto mb-6 md:mb-8 font-alice w-full px-4">
+                <div class="bg-white p-2 rounded-lg custom-shadow border border-brown"><div id="days" class="text-xl md:text-2xl lg:text-4xl font-bold gold-text">0</div><div class="text-xs text-light-brown">Hari</div></div>
+                <div class="bg-white p-2 rounded-lg custom-shadow border border-brown"><div id="hours" class="text-xl md:text-2xl lg:text-4xl font-bold gold-text">0</div><div class="text-xs text-light-brown">Jam</div></div>
+                <div class="bg-white p-2 rounded-lg custom-shadow border border-brown"><div id="minutes" class="text-xl md:text-2xl lg:text-4xl font-bold gold-text">0</div><div class="text-xs text-light-brown">Menit</div></div>
+                <div class="bg-white p-2 rounded-lg custom-shadow border border-brown"><div id="seconds" class="text-xl md:text-2xl lg:text-4xl font-bold gold-text">0</div><div class="text-xs text-light-brown">Detik</div></div>
             </div>
 
-            <a id="save-date-button" href="#" target="_blank" class="inline-block gold-gradient hover:opacity-90 text-brown font-semibold py-3 px-6 rounded-full shadow-md flex items-center mx-auto transition-transform transform hover:scale-105">
-                <i data-lucide="calendar-plus" class="mr-2 w-5 h-5"></i>
+            <a id="save-date-button" href="#" target="_blank" class="inline-block gold-gradient hover:opacity-90 text-brown font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-md flex items-center mx-auto transition-transform transform hover:scale-105 text-sm md:text-base">
+                <i data-lucide="calendar-plus" class="mr-2 w-4 h-4 md:w-5 md:h-5"></i>
                 Simpan Tanggal
             </a>
 
-            <div class="grid md:grid-cols-1 gap-6 md:gap-8 text-left mt-8 md:mt-12">
-                <div class="bg-white p-4 md:p-6 rounded-lg custom-shadow border border-brown">
+            <div class="grid md:grid-cols-1 gap-4 md:gap-6 lg:gap-8 text-left mt-6 md:mt-8 lg:mt-12 w-full">
+                <div class="bg-white p-4 md:p-6 rounded-lg custom-shadow border border-brown w-full">
                     <i data-lucide="gem" class="w-8 md:w-10 h-8 md:h-10 mb-4 gold-text"></i>
-                    <h3 class="font-alice text-xl md:text-2xl font-bold">Akad Nikah & Resepsi</h3>
+                    <h3 class="font-alice text-lg md:text-xl lg:text-2xl font-bold">Akad Nikah & Resepsi</h3>
                     <p class="mt-4">Ahad, 21 Desember 2025</p>
                     <p>08:00 - Selesai</p>
                     <p class="mt-2 font-semibold">Lokasi Akad</p>
@@ -344,32 +506,32 @@
         </section>
 
         <!-- === SECTION TASYAKURAN === -->
-        <section id="tasyakuran" class="cream-bg text-brown text-center p-6 md:p-12">
-            <h2 class="font-alice text-2xl md:text-3xl font-bold mb-8 ">Tasyakuran</h2>
-            <div class="grid md:grid-cols-2 gap-6 md:gap-8 text-left">
-                <div class="bg-white p-4 md:p-6 rounded-lg custom-shadow border border-brown">
+        <section id="tasyakuran" class="cream-bg text-brown text-center p-4 md:p-6 lg:p-12 w-full">
+            <h2 class="font-alice text-xl md:text-2xl lg:text-3xl font-bold mb-6 md:mb-8">Tasyakuran</h2>
+            <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 text-left w-full">
+                <div class="bg-white p-4 md:p-6 rounded-lg custom-shadow border border-brown w-full">
                     <i data-lucide="home" class="w-8 md:w-10 h-8 md:h-10 mb-4 gold-text"></i>
-                    <h3 class="font-alice text-xl md:text-2xl font-bold">Keluarga Mempelai Pria</h3>
+                    <h3 class="font-alice text-lg md:text-xl lg:text-2xl font-bold">Keluarga Mempelai Pria</h3>
                     <p class="mt-4">Jum'at-Sabtu,</p>
                     <p>19-20 Desember 2025</p>
                     <p class="mt-2 font-semibold">Di Kediaman Mempelai Pria</p>
                     <p class="text-sm">Pandansari RT 9 RW 4, Kejobong, Purbalingga.</p>
-                    <div class="mt-4 rounded-lg overflow-hidden border border-brown">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d304.27154008596784!2d109.48131289038002!3d-7.410229513077883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sid!2sid!4v1765609594901!5m2!1sid!2sid" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <div class="mt-4 rounded-lg overflow-hidden border border-brown w-full">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d304.27154008596784!2d109.48131289038002!3d-7.410229513077883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sid!2sid!4v1765609594901!5m2!1sid!2sid" class="w-full" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                     <a href="https://maps.app.goo.gl/mr9En4j1Q9VYAPn26" class="inline-block gold-gradient text-brown font-semibold py-2 px-4 rounded-full mt-4 text-sm hover:opacity-90" target="_blank">
                         <i data-lucide="map-pin" class="inline w-4 h-4 mr-1"></i>Buka di Google Maps
                     </a>
                 </div>
-                <div class="bg-white p-4 md:p-6 rounded-lg custom-shadow border border-brown">
+                <div class="bg-white p-4 md:p-6 rounded-lg custom-shadow border border-brown w-full">
                     <i data-lucide="home" class="w-8 md:w-10 h-8 md:h-10 mb-4 gold-text"></i>
-                    <h3 class="font-alice text-xl md:text-2xl font-bold">Keluarga Mempelai Wanita</h3>
+                    <h3 class="font-alice text-lg md:text-xl lg:text-2xl font-bold">Keluarga Mempelai Wanita</h3>
                     <p class="mt-4">Ahad,</p>
                     <p>21 Desember 2025</p>
                     <p class="mt-2 font-semibold">Di Kediaman Mempelai Wanita</p>
                     <p class="text-sm">Ds. 5 Mendiri RT 1 RW 7 Kutawis, Bukateja, Purbalingga</p>
-                    <div class="mt-4 rounded-lg overflow-hidden border border-brown">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d737.897426584839!2d109.49564640041504!3d-7.413655283576904!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sid!2sid!4v1758869008563!5m2!1sid!2sid" class="w-full" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <div class="mt-4 rounded-lg overflow-hidden border border-brown w-full">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d737.897426584839!2d109.49564640041504!3d-7.413655283576904!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sid!2sid!4v1758869008563!5m2!1sid!2sid" class="w-full" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                      <a href="https://maps.app.goo.gl/wUaMDuupH6HbxDtJA" class="inline-block gold-gradient text-brown font-semibold py-2 px-4 rounded-full mt-4 text-sm hover:opacity-90" target="_blank">
                         <i data-lucide="map-pin" class="inline w-4 h-4 mr-1"></i>Buka di Google Maps
@@ -379,71 +541,71 @@
         </section>
 
         <!-- === SECTION HADIAH === -->
-        <section id="gift" class="p-6 md:p-12 text-center text-brown light-brown-bg">
-             <h2 class="font-alice text-2xl md:text-3xl font-bold mb-4 ">Kirim Hadiah</h2>
-             <p class="text-sm md:text-base max-w-md mx-auto text-light-brown">Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika memberi adalah ungkapan tanda kasih, Anda dapat memberi kado secara cashless.</p>
-             <div class="max-w-sm mx-auto bg-white p-4 md:p-6 rounded-lg mt-6 md:mt-8 text-left custom-shadow border border-brown">
+        <section id="gift" class="p-4 md:p-6 lg:p-12 text-center text-brown light-brown-bg w-full">
+             <h2 class="font-alice text-xl md:text-2xl lg:text-3xl font-bold mb-4">Kirim Hadiah</h2>
+             <p class="text-sm md:text-base max-w-md mx-auto text-light-brown w-full px-4">Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika memberi adalah ungkapan tanda kasih, Anda dapat memberi kado secara cashless.</p>
+             <div class="max-w-sm mx-auto bg-white p-4 md:p-6 rounded-lg mt-4 md:mt-6 lg:mt-8 text-left custom-shadow border border-brown w-full">
                 <i data-lucide="credit-card" class="mx-auto w-10 md:w-12 h-10 md:h-12 gold-text block text-center mb-4"></i>
                 <p class="font-bold text-center">Bank Jateng</p>
                 <p class="text-center text-sm text-light-brown">a.n. Mukhlis</p>
                 <div class="bg-gray-100 p-3 rounded-lg flex justify-between items-center mt-2 border border-brown">
-                    <span id="norek" class="font-mono text-sm md:text-base">3027043270</span>
-                    <button onclick="copyToClipboard('norek', 'Nomor rekening berhasil disalin!')" class="gold-gradient text-brown px-3 py-1 text-xs rounded-full hover:opacity-90">Salin</button>
+                    <span id="norek" class="font-mono text-sm md:text-base break-all">3027043270</span>
+                    <button onclick="copyToClipboard('norek', 'Nomor rekening berhasil disalin!')" class="gold-gradient text-brown px-3 py-1 text-xs rounded-full hover:opacity-90 whitespace-nowrap">Salin</button>
                 </div>
                 <i data-lucide="credit-card" class="mx-auto w-10 md:w-12 h-10 md:h-12 gold-text block text-center mt-4 mb-4"></i>
                 <p class="font-bold text-center">Bank BRI</p>
                 <p class="text-center text-sm text-light-brown">a.n. Yuyun Musyarofah</p>
                 <div class="bg-gray-100 p-3 rounded-lg flex justify-between items-center mt-2 border border-brown">
-                    <span id="norek1" class="font-mono text-sm md:text-base">372001019701503</span>
-                    <button onclick="copyToClipboard('norek1', 'Nomor rekening berhasil disalin!')" class="gold-gradient text-brown px-3 py-1 text-xs rounded-full hover:opacity-90">Salin</button>
+                    <span id="norek1" class="font-mono text-sm md:text-base break-all">372001019701503</span>
+                    <button onclick="copyToClipboard('norek1', 'Nomor rekening berhasil disalin!')" class="gold-gradient text-brown px-3 py-1 text-xs rounded-full hover:opacity-90 whitespace-nowrap">Salin</button>
                 </div>
              </div>
         </section>
         <!-- === SECTION RSVP & UCAPAN === -->
-        <section id="rsvp" class="p-6 md:p-12 text-brown cream-bg">
-            <h2 class="font-alice text-2xl md:text-3xl font-bold mb-4 text-center">Ucapan & Doa</h2>
-            <div id="rsvp-container" class="max-w-md mx-auto bg-white p-4 md:p-6 rounded-lg custom-shadow border border-brown">
+        <section id="rsvp" class="p-4 md:p-6 lg:p-12 text-brown cream-bg w-full">
+            <h2 class="font-alice text-xl md:text-2xl lg:text-3xl font-bold mb-4 text-center">Ucapan & Doa</h2>
+            <div id="rsvp-container" class="max-w-md mx-auto bg-white p-4 md:p-6 rounded-lg custom-shadow border border-brown w-full">
                 <form id="rsvp-form">
                     <div class="mb-4">
                         <label for="nama" class="block text-sm font-medium mb-1 text-light-brown">Nama</label>
-                        <input type="text" id="nama" name="nama" class="w-full border-brown rounded-md shadow-sm focus:ring-gold focus:border-gold p-2" required>
+                        <input type="text" id="nama" name="nama" class="w-full border-brown rounded-md shadow-sm focus:ring-gold focus:border-gold p-2 text-sm md:text-base" required>
                     </div>
                     <div class="mb-4">
                         <label for="ucapan" class="block text-sm font-medium mb-1 text-light-brown">Ucapan & Doa</label>
-                        <textarea id="ucapan" name="ucapan" rows="4" class="w-full border-brown rounded-md shadow-sm focus:ring-gold focus:border-gold p-2" required></textarea>
+                        <textarea id="ucapan" name="ucapan" rows="4" class="w-full border-brown rounded-md shadow-sm focus:ring-gold focus:border-gold p-2 text-sm md:text-base" required></textarea>
                     </div>
-                    <button type="submit" class="w-full gold-gradient text-brown font-semibold py-2 px-4 rounded-full hover:opacity-90">Kirim Ucapan</button>
+                    <button type="submit" class="w-full gold-gradient text-brown font-semibold py-2 px-4 rounded-full hover:opacity-90 text-sm md:text-base">Kirim Ucapan</button>
                 </form>
             </div>
 
-            <div id="wishes-container" class="max-w-md mx-auto mt-6 md:mt-8 bg-white p-4 rounded-lg custom-shadow max-h-80 overflow-y-auto border border-brown">
+            <div id="wishes-container" class="max-w-md mx-auto mt-4 md:mt-6 lg:mt-8 bg-white p-4 rounded-lg custom-shadow max-h-80 overflow-y-auto border border-brown w-full">
                 <div id="wishes-list"></div>
                 <p id="no-wishes" class="text-center text-light-brown text-sm">Jadilah yang pertama mengirim ucapan!</p>
             </div>
         </section>
 
         <!-- === FOOTER === -->
-        <footer class="text-center p-6 md:p-8 text-brown light-brown-bg mb-24">
-            <p class="text-sm text-light-brown max-w-md mx-auto">Merupakan suatu kehormatan dan kebahagiaan bagi kami sekeluarga apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.</p>
-            <p class="mt-6">Atas kehadiran dan doa restunya kami ucapkan terima kasih.</p>
-            <p class="mt-2 mb-8">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
-            <p class="font-tangerine text-4xl md:text-5xl gold-text">Mukhlis & Yuyun</p>
+        <footer class="text-center p-4 md:p-6 lg:p-8 text-brown light-brown-bg mb-16 md:mb-20 lg:mb-24 w-full">
+            <p class="text-sm text-light-brown max-w-md mx-auto w-full px-4">Merupakan suatu kehormatan dan kebahagiaan bagi kami sekeluarga apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.</p>
+            <p class="mt-4 md:mt-6">Atas kehadiran dan doa restunya kami ucapkan terima kasih.</p>
+            <p class="mt-2 mb-6 md:mb-8">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+            <p class="font-tangerine text-3xl md:text-4xl lg:text-5xl gold-text">Mukhlis & Yuyun</p>
         </footer>
     </main>
 
     <!-- === NAVIGASI BAWAH & KONTROL MUSIK === -->
     <div id="bottom-nav" class="hidden fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-sm z-40">
         <div class="bg-white shadow-xl rounded-full p-1 flex justify-around items-center text-brown border border-brown">
-            <a href="#home" class="p-1.5 rounded-full hover:bg-amber-50"><i data-lucide="home"></i></a>
-            <a href="#event" class="p-1.5 rounded-full hover:bg-amber-50"><i data-lucide="calendar-days"></i></a>
-            <a href="#tasyakuran" class="p-1.5 rounded-full hover:bg-amber-50"><i data-lucide="map"></i></a>
-            <a href="#gift" class="p-1.5 rounded-full hover:bg-amber-50"><i data-lucide="gift"></i></a>
-            <a href="#rsvp" class="p-1.5 rounded-full hover:bg-amber-50"><i data-lucide="book-heart"></i></a>
+            <a href="#home" class="p-1.5 rounded-full hover:bg-amber-50"><i data-lucide="home" class="w-4 h-4 md:w-5 md:h-5"></i></a>
+            <a href="#event" class="p-1.5 rounded-full hover:bg-amber-50"><i data-lucide="calendar-days" class="w-4 h-4 md:w-5 md:h-5"></i></a>
+            <a href="#tasyakuran" class="p-1.5 rounded-full hover:bg-amber-50"><i data-lucide="map" class="w-4 h-4 md:w-5 md:h-5"></i></a>
+            <a href="#gift" class="p-1.5 rounded-full hover:bg-amber-50"><i data-lucide="gift" class="w-4 h-4 md:w-5 md:h-5"></i></a>
+            <a href="#rsvp" class="p-1.5 rounded-full hover:bg-amber-50"><i data-lucide="book-heart" class="w-4 h-4 md:w-5 md:h-5"></i></a>
         </div>
     </div>
 
-    <button id="music-toggle" class="hidden fixed bottom-20 right-4 bg-white shadow-xl w-12 h-12 rounded-full z-40 flex justify-center items-center text-brown border border-brown">
-        <svg id="music-icon" class="music-icon w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <button id="music-toggle" class="hidden fixed bottom-20 right-4 bg-white shadow-xl w-10 h-10 md:w-12 md:h-12 rounded-full z-40 flex justify-center items-center text-brown border border-brown">
+        <svg id="music-icon" class="music-icon w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M9 18V5l12-2v13"></path>
             <circle cx="6" cy="18" r="3"></circle>
             <circle cx="18" cy="16" r="3"></circle>
@@ -453,8 +615,8 @@
     <audio id="background-music" loop src="wedding-nasheed.mp3"></audio>
 
     <!-- Pop up notifikasi -->
-    <div id="notification" class="hidden fixed top-5 left-1/2 -translate-x-1/2 bg-brown text-white text-sm py-2 px-4 rounded-full shadow-lg z-50">
-        <p>Teks notifikasi</p>
+    <div id="notification" class="hidden fixed top-5 left-1/2 -translate-x-1/2 bg-brown text-white text-sm py-2 px-4 rounded-full shadow-lg z-50 max-w-[90%]">
+        <p class="text-xs md:text-sm">Teks notifikasi</p>
     </div>
 
     <!-- Firebase SDK -->
@@ -519,7 +681,7 @@
                     const wish = doc.data();
                     const wishEl = document.createElement('div');
                     wishEl.className = 'border-b border-brown py-3';
-                    wishEl.innerHTML = `<p class="font-semibold text-brown">${wish.nama}</p><p class="text-light-brown text-sm mt-1">${wish.ucapan}</p>`;
+                    wishEl.innerHTML = `<p class="font-semibold text-brown text-sm md:text-base">${wish.nama}</p><p class="text-light-brown text-xs md:text-sm mt-1">${wish.ucapan}</p>`;
                     wishesList.appendChild(wishEl);
                 });
             }
