@@ -220,16 +220,18 @@
             
             /* Perbaikan untuk bottom navigation */
             #bottom-nav {
-                width: calc(100% - 1rem);
+                width: calc(100% - 2rem);
                 bottom: 1rem;
+                max-width: 28rem; /* Maksimal sesuai dengan konten */
             }
             
-            /* Perbaikan untuk tombol musik */
+            /* Perbaikan untuk tombol musik - POSISI DIPERBAIKI */
             #music-toggle {
                 bottom: 5rem;
-                right: 0.5rem;
+                right: calc(50% - 14rem + 0.5rem); /* Posisi di dalam konten */
                 width: 3rem;
                 height: 3rem;
+                transform: translateX(50%); /* Pusatkan relatif terhadap right */
             }
             
             /* Perbaikan untuk padding section */
@@ -271,6 +273,14 @@
             footer p.font-tangerine {
                 font-size: 2.5rem !important;
             }
+            
+            /* Perbaikan untuk tombol musik di ponsel */
+            #music-toggle {
+                right: calc(50% - 11rem + 0.5rem); /* Sesuaikan dengan lebar konten di ponsel */
+                width: 2.75rem;
+                height: 2.75rem;
+                bottom: 4.5rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -302,6 +312,18 @@
             .mobile-full-width {
                 width: 100% !important;
                 max-width: 100% !important;
+            }
+            
+            /* Perbaikan untuk tombol musik di ponsel kecil */
+            #music-toggle {
+                right: calc(50% - 8.5rem + 0.5rem); /* Sesuaikan dengan lebar konten */
+                width: 2.5rem;
+                height: 2.5rem;
+                bottom: 4rem;
+            }
+            
+            #bottom-nav {
+                width: calc(100% - 1rem);
             }
         }
 
@@ -364,33 +386,69 @@
             z-index: 9998;
         }
         
-        /* Perbaikan untuk max-width container */
-        .container-resp {
-            max-width: 100%;
+        /* Container utama untuk konten undangan */
+        .content-container {
+            max-width: 36rem; /* Lebar maksimal konten */
             margin-left: auto;
             margin-right: auto;
+            width: 100%;
+            position: relative;
         }
         
-        @media (min-width: 640px) {
-            .container-resp {
-                max-width: 640px;
+        /* Container untuk tombol musik agar selalu di dalam konten */
+        .music-container {
+            position: fixed;
+            bottom: 5rem;
+            right: 50%;
+            transform: translateX(50%); /* Pusatkan relatif */
+            width: 36rem; /* Sama dengan lebar konten */
+            max-width: 100%;
+            pointer-events: none;
+            z-index: 40;
+        }
+        
+        /* Tombol musik di dalam container */
+        .music-button-wrapper {
+            position: absolute;
+            right: 0.5rem; /* Posisi di dalam kanan konten */
+            pointer-events: auto;
+        }
+        
+        /* Responsif untuk container musik */
+        @media (max-width: 36rem) {
+            .music-container {
+                width: 100%;
+                padding-right: 0.5rem;
+                box-sizing: border-box;
+            }
+            
+            .music-button-wrapper {
+                right: 0.5rem;
             }
         }
         
-        @media (min-width: 768px) {
-            .container-resp {
-                max-width: 768px;
+        @media (max-width: 640px) {
+            .music-container {
+                bottom: 4.5rem;
+            }
+            
+            .music-button-wrapper {
+                right: 0.75rem;
             }
         }
         
-        @media (min-width: 1024px) {
-            .container-resp {
-                max-width: 1024px;
+        @media (max-width: 480px) {
+            .music-container {
+                bottom: 4rem;
+            }
+            
+            .music-button-wrapper {
+                right: 0.5rem;
             }
         }
     </style>
 </head>
-<body class="container-resp mx-auto pattern-bg">
+<body class="content-container pattern-bg">
 
     <!-- Container untuk efek ripple (hanya di cover) -->
     <div id="ripple-container" class="ripple-container"></div>
@@ -399,7 +457,7 @@
     <div id="petals-container"></div>
 
     <!-- === BAGIAN COVER UNDANGAN === -->
-    <div id="cover" class="fixed top-0 left-0 right-0 bottom-0 z-50 w-full mx-auto bg-gray-800">
+    <div id="cover" class="fixed top-0 left-0 right-0 bottom-0 z-50 content-container bg-gray-800">
         <!-- FOTO COVER DIUBAH KE FILE LOKAL -->
         <div class="w-full h-full bg-cover bg-center bg-no-repeat" style="background-image: url('gambar-cover.jpg');">
             <div class="w-full h-full bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white p-4 md:p-8">
@@ -604,13 +662,18 @@
         </div>
     </div>
 
-    <button id="music-toggle" class="hidden fixed bottom-20 right-4 bg-white shadow-xl w-10 h-10 md:w-12 md:h-12 rounded-full z-40 flex justify-center items-center text-brown border border-brown">
-        <svg id="music-icon" class="music-icon w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 18V5l12-2v13"></path>
-            <circle cx="6" cy="18" r="3"></circle>
-            <circle cx="18" cy="16" r="3"></circle>
-        </svg>
-    </button>
+    <!-- Container untuk tombol musik yang selalu berada di dalam area konten -->
+    <div id="music-container" class="music-container">
+        <div class="music-button-wrapper">
+            <button id="music-toggle" class="hidden bg-white shadow-xl w-10 h-10 md:w-12 md:h-12 rounded-full z-40 flex justify-center items-center text-brown border border-brown">
+                <svg id="music-icon" class="music-icon w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18V5l12-2v13"></path>
+                    <circle cx="6" cy="18" r="3"></circle>
+                    <circle cx="18" cy="16" r="3"></circle>
+                </svg>
+            </button>
+        </div>
+    </div>
 
     <audio id="background-music" loop src="wedding-nasheed.mp3"></audio>
 
