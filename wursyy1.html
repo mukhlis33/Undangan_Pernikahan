@@ -158,6 +158,11 @@
                 padding-right: 1rem;
             }
             
+            /* PERBAIKAN: Judul di cover TIDAK mengecil di mobile */
+            #cover h1.font-tangerine {
+                font-size: 5rem !important; /* TETAP BESAR di mobile */
+            }
+            
             /* Perbaikan untuk judul di mobile - TETAP BESAR */
             #inner-cover h1 {
                 font-size: 4.5rem !important; /* DIPERBESAR untuk mobile */
@@ -238,8 +243,9 @@
         }
         
         @media (max-width: 640px) {
-            #cover h1 {
-                font-size: 3rem !important;
+            /* PERBAIKAN: Judul di cover TIDAK mengecil di mobile kecil */
+            #cover h1.font-tangerine {
+                font-size: 4.5rem !important; /* TETAP BESAR di mobile kecil */
             }
             
             #inner-cover h1 {
@@ -298,8 +304,9 @@
         }
         
         @media (max-width: 480px) {
-            #cover h1 {
-                font-size: 2.5rem !important;
+            /* PERBAIKAN: Judul di cover TIDAK mengecil di mobile sangat kecil */
+            #cover h1.font-tangerine {
+                font-size: 4rem !important; /* TETAP BESAR di mobile sangat kecil */
             }
             
             #inner-cover h1 {
@@ -362,35 +369,21 @@
                 font-size: 1.25rem !important;
             }
         }
-
-        /* Efek kelopak bunga yang lebih smooth dan transparan */
-        .petal {
-            position: fixed;
-            top: -50px;
-            z-index: 9999;
-            pointer-events: none;
-            opacity: 0;
-            user-select: none;
-            will-change: transform, opacity;
+        
+        /* PERBAIKAN TAMBAHAN: Ukuran font untuk cover yang lebih konsisten */
+        #cover h1.font-tangerine {
+            font-size: 6rem; /* Default size untuk desktop */
         }
-
-        .petal-fall {
-            animation-name: petal-fall-animation;
-            animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
-            animation-fill-mode: forwards;
+        
+        @media (min-width: 768px) {
+            #cover h1.font-tangerine {
+                font-size: 7rem !important; /* Sedikit lebih besar di tablet */
+            }
         }
-
-        @keyframes petal-fall-animation {
-            0% {
-                transform: translateY(0) translateX(0) rotate(0deg);
-                opacity: 0.4; /* DIPERBAIKI: lebih transparan dari 0.7 */
-            }
-            10% {
-                opacity: 0.5; /* DIPERBAIKI: lebih transparan dari 0.8 */
-            }
-            100% {
-                transform: translateY(100vh) translateX(var(--sway-x)) rotate(360deg);
-                opacity: 0;
+        
+        @media (min-width: 1024px) {
+            #cover h1.font-tangerine {
+                font-size: 8rem !important; /* Paling besar di desktop */
             }
         }
         
@@ -438,9 +431,6 @@
 </head>
 <body class="content-container pattern-bg">
 
-    <!-- Container untuk kelopak bunga -->
-    <div id="petals-container"></div>
-
     <!-- === BAGIAN COVER UNDANGAN === -->
     <div id="cover" class="fixed top-0 left-0 right-0 bottom-0 z-50 content-container bg-gray-800">
         <!-- FOTO COVER DIUBAH KE FILE LOKAL -->
@@ -448,7 +438,8 @@
             <div class="w-full h-full bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white p-4 md:p-8">
                 <div class="flex-grow flex flex-col justify-center pt-12"> <!-- DITAMBAHKAN: pt-12 untuk naikkan konten -->
                     <p class="font-alice text-sm md:text-base tracking-widest gold-text">Walimatul Ursy</p>
-                    <h1 class="font-tangerine text-5xl md:text-7xl lg:text-8xl my-4">Mukhlis & Yuyun</h1>
+                    <!-- PERBAIKAN: Font size TIDAK mengecil di mobile -->
+                    <h1 class="font-tangerine text-6xl md:text-7xl lg:text-8xl my-4">Mukhlis & Yuyun</h1>
                     <p id="wedding-date-cover" class="font-semibold text-base md:text-lg"></p>
                 </div>
                 <div class="flex-grow flex flex-col justify-end w-full pb-8 md:pb-12">
@@ -805,8 +796,8 @@
             bottomNav.classList.remove('hidden');
             musicToggle.classList.remove('hidden');
 
-            // Mulai efek kelopak bunga setelah undangan dibuka
-            startPetalEffect();
+            // HAPUS: Efek bunga telah dihapus
+            // startPetalEffect();
             
             const musicPromise = music.play();
             if (musicPromise !== undefined) {
@@ -891,62 +882,7 @@
             });
         });
 
-        // Fungsi untuk efek kelopak bunga yang lebih smooth dan transparan
-        function startPetalEffect() {
-            const petalsContainer = document.getElementById('petals-container');
-            const petalSymbols = [];
-            const petalColors = [];
-            
-            function createPetal() {
-                const petal = document.createElement('div');
-                petal.className = 'petal';
-                
-                // Gunakan simbol bunga yang lebih kecil
-                const symbol = petalSymbols[Math.floor(Math.random() * petalSymbols.length)];
-                petal.innerHTML = symbol;
-                petal.style.color = petalColors[Math.floor(Math.random() * petalColors.length)];
-                
-                // Posisi awal acak di atas layar
-                petal.style.left = Math.random() * 100 + 'vw';
-                
-                // Ukuran lebih kecil dan konsisten
-                const size = Math.random() * 10 + 10; // 10px - 22px
-                petal.style.fontSize = size + 'px';
-                
-                // Transparansi lebih tinggi (efek lebih halus)
-                petal.style.opacity = '0.6';
-                
-                // Variasi animasi yang lebih smooth
-                const duration = Math.random() * 15 + 15; // 15-30 detik
-                const swayX = (Math.random() - 0.5) * 100; // -50px sampai +50px
-                
-                // Set custom properties untuk animasi
-                petal.style.setProperty('--sway-x', swayX + 'px');
-                
-                // Terapkan animasi
-                petal.classList.add('petal-fall');
-                petal.style.animationDuration = duration + 's';
-                
-                petalsContainer.appendChild(petal);
-                
-                // Hapus kelopak setelah selesai animasi
-                setTimeout(() => {
-                    if (petal.parentNode) {
-                        petal.parentNode.removeChild(petal);
-                    }
-                }, duration * 1000);
-            }
-            
-            // Buat kelopak baru dengan interval yang lebih jarang
-            setInterval(createPetal, 800);
-            
-            // Buat beberapa kelopak awal
-            for (let i = 0; i < 8; i++) {
-                setTimeout(createPetal, i * 300);
-            }
-        }
-
-        // Hapus event listener untuk ripple effect (sudah dihapus dari HTML)
+        // HAPUS: Fungsi efek bunga telah dihapus
       });
     </script>
 </body>
