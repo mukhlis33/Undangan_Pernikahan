@@ -158,17 +158,18 @@
                 padding-right: 1rem;
             }
             
-            /* Perbaikan khusus untuk elemen-elemen */
-            #cover h1 {
-                font-size: 3.5rem !important;
-            }
-            
+            /* Perbaikan untuk judul di mobile - TETAP BESAR */
             #inner-cover h1 {
-                font-size: 4rem !important; /* DIPERBESAR untuk mobile */
+                font-size: 4.5rem !important; /* DIPERBESAR untuk mobile */
+                margin-top: 1.5rem !important;
             }
             
             #home h2 {
-                font-size: 3.5rem !important; /* DIPERBESAR untuk mobile */
+                font-size: 4rem !important; /* DIPERBESAR untuk mobile */
+            }
+            
+            .ornament .font-tangerine {
+                font-size: 3rem !important; /* DIPERBESAR untuk mobile */
             }
             
             .section-divider {
@@ -198,16 +199,15 @@
             #bottom-nav {
                 width: calc(100% - 2rem);
                 bottom: 1rem;
-                max-width: 28rem; /* Maksimal sesuai dengan konten */
+                max-width: 28rem;
             }
             
             /* Perbaikan untuk tombol musik - POSISI DIPERBAIKI */
             #music-toggle {
-                bottom: 5rem;
-                right: calc(50% - 14rem + 0.5rem); /* Posisi di dalam konten */
-                width: 3rem;
-                height: 3rem;
-                transform: translateX(50%); /* Pusatkan relatif terhadap right */
+                bottom: 6.5rem; /* DIATASKAN dari 5rem */
+                right: 1rem; /* JARAK DARI SAMPING DIPERBESAR */
+                width: 3.5rem; /* DIPERBESAR */
+                height: 3.5rem; /* DIPERBESAR */
             }
             
             /* Perbaikan untuk padding section */
@@ -215,19 +215,44 @@
                 padding-left: 1rem !important;
                 padding-right: 1rem !important;
             }
+            
+            /* Perbaikan untuk judul section di mobile - TETAP BESAR */
+            #event h2,
+            #tasyakuran h2,
+            #gift h2,
+            #rsvp h2 {
+                font-size: 2rem !important; /* TETAP BESAR di mobile */
+                margin-bottom: 2rem !important;
+            }
+            
+            /* Perbaikan untuk tombol Simpan Tanggal di mobile */
+            #save-date-button {
+                font-size: 1rem !important;
+                padding: 0.75rem 1.5rem !important;
+            }
+            
+            /* Perbaikan untuk judul "Akad Nikah & Resepsi" di mobile */
+            #event .font-alice.text-xl {
+                font-size: 1.5rem !important;
+            }
         }
         
         @media (max-width: 640px) {
             #cover h1 {
-                font-size: 3rem !important; /* Disesuaikan */
+                font-size: 3rem !important;
             }
             
             #inner-cover h1 {
-                font-size: 3.5rem !important; /* DIPERBESAR untuk mobile kecil */
+                font-size: 4rem !important; /* DIPERBESAR untuk mobile kecil */
+                margin-top: 1rem !important;
             }
             
             #home h2 {
-                font-size: 3rem !important; /* DIPERBESAR untuk mobile kecil */
+                font-size: 3.5rem !important; /* DIPERBESAR untuk mobile kecil */
+            }
+            
+            .ornament .font-tangerine {
+                font-size: 2.5rem !important; /* DIPERBESAR untuk mobile kecil */
             }
             
             #guest-name {
@@ -252,10 +277,23 @@
             
             /* Perbaikan untuk tombol musik di ponsel */
             #music-toggle {
-                right: calc(50% - 11rem + 0.5rem); /* Sesuaikan dengan lebar konten di ponsel */
-                width: 2.75rem;
-                height: 2.75rem;
-                bottom: 4.5rem;
+                bottom: 6rem;
+                right: 1rem;
+                width: 3.25rem;
+                height: 3.25rem;
+            }
+            
+            /* Perbaikan untuk judul section di mobile kecil */
+            #event h2,
+            #tasyakuran h2,
+            #gift h2,
+            #rsvp h2 {
+                font-size: 1.75rem !important;
+            }
+            
+            #save-date-button {
+                font-size: 0.9rem !important;
+                padding: 0.6rem 1.2rem !important;
             }
         }
         
@@ -265,11 +303,16 @@
             }
             
             #inner-cover h1 {
-                font-size: 3rem !important; /* DIPERBESAR untuk mobile sangat kecil */
+                font-size: 3.5rem !important; /* DIPERBESAR untuk mobile sangat kecil */
+                margin-top: 0.5rem !important;
             }
             
             #home h2 {
-                font-size: 2.5rem !important; /* DIPERBESAR untuk mobile sangat kecil */
+                font-size: 3rem !important; /* DIPERBESAR untuk mobile sangat kecil */
+            }
+            
+            .ornament .font-tangerine {
+                font-size: 2rem !important; /* DIPERBESAR untuk mobile sangat kecil */
             }
             
             #countdown {
@@ -292,18 +335,35 @@
             
             /* Perbaikan untuk tombol musik di ponsel kecil */
             #music-toggle {
-                right: calc(50% - 8.5rem + 0.5rem); /* Sesuaikan dengan lebar konten */
-                width: 2.5rem;
-                height: 2.5rem;
-                bottom: 4rem;
+                bottom: 5.5rem;
+                right: 0.75rem;
+                width: 3rem;
+                height: 3rem;
             }
             
             #bottom-nav {
                 width: calc(100% - 1rem);
             }
+            
+            /* Perbaikan untuk judul section di mobile sangat kecil */
+            #event h2,
+            #tasyakuran h2,
+            #gift h2,
+            #rsvp h2 {
+                font-size: 1.5rem !important;
+            }
+            
+            #save-date-button {
+                font-size: 0.85rem !important;
+                padding: 0.5rem 1rem !important;
+            }
+            
+            #event .font-alice.text-xl {
+                font-size: 1.25rem !important;
+            }
         }
 
-        /* Efek kelopak bunga yang lebih smooth */
+        /* Efek kelopak bunga yang lebih smooth dan transparan */
         .petal {
             position: fixed;
             top: -50px;
@@ -323,43 +383,15 @@
         @keyframes petal-fall-animation {
             0% {
                 transform: translateY(0) translateX(0) rotate(0deg);
-                opacity: 0.7;
+                opacity: 0.4; /* DIPERBAIKI: lebih transparan dari 0.7 */
             }
             10% {
-                opacity: 0.8;
+                opacity: 0.5; /* DIPERBAIKI: lebih transparan dari 0.8 */
             }
             100% {
                 transform: translateY(100vh) translateX(var(--sway-x)) rotate(360deg);
                 opacity: 0;
             }
-        }
-
-        /* Efek ripple hanya di cover */
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.6);
-            transform: scale(0);
-            animation: ripple-animation 1s ease-out;
-            pointer-events: none;
-        }
-
-        @keyframes ripple-animation {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-
-        /* Container untuk efek ripple */
-        .ripple-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-            z-index: 9998;
         }
         
         /* Container utama untuk konten undangan */
@@ -371,63 +403,40 @@
             position: relative;
         }
         
-        /* Container untuk tombol musik agar selalu di dalam konten */
-        .music-container {
-            position: fixed;
-            bottom: 5rem;
-            right: 50%;
-            transform: translateX(50%); /* Pusatkan relatif */
-            width: 36rem; /* Sama dengan lebar konten */
-            max-width: 100%;
-            pointer-events: none;
-            z-index: 40;
+        /* Style untuk tombol musik yang lebih profesional */
+        #music-toggle {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
         }
         
-        /* Tombol musik di dalam container */
-        .music-button-wrapper {
-            position: absolute;
-            right: 0.5rem; /* Posisi di dalam kanan konten */
-            pointer-events: auto;
+        #music-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
         }
         
-        /* Responsif untuk container musik */
-        @media (max-width: 36rem) {
-            .music-container {
-                width: 100%;
-                padding-right: 0.5rem;
-                box-sizing: border-box;
-            }
-            
-            .music-button-wrapper {
-                right: 0.5rem;
-            }
+        /* Style untuk popup notifikasi yang lebih terlihat */
+        #notification {
+            background: linear-gradient(135deg, #8B4513 0%, #A67C52 100%);
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        @media (max-width: 640px) {
-            .music-container {
-                bottom: 4.5rem;
-            }
-            
-            .music-button-wrapper {
-                right: 0.75rem;
-            }
+        #notification.bg-red-500 {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
         }
         
-        @media (max-width: 480px) {
-            .music-container {
-                bottom: 4rem;
-            }
-            
-            .music-button-wrapper {
-                right: 0.5rem;
-            }
+        /* Style untuk inner cover yang lebih baik */
+        #inner-cover {
+            padding-top: 2rem !important; /* DITAMBAHKAN: padding atas untuk inner cover */
         }
     </style>
 </head>
 <body class="content-container pattern-bg">
-
-    <!-- Container untuk efek ripple (hanya di cover) -->
-    <div id="ripple-container" class="ripple-container"></div>
 
     <!-- Container untuk kelopak bunga -->
     <div id="petals-container"></div>
@@ -437,7 +446,7 @@
         <!-- FOTO COVER DIUBAH KE FILE LOKAL -->
         <div class="w-full h-full bg-cover bg-center bg-no-repeat" style="background-image: url('gambar-cover.jpg');">
             <div class="w-full h-full bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white p-4 md:p-8">
-                <div class="flex-grow flex flex-col justify-end">
+                <div class="flex-grow flex flex-col justify-center pt-12"> <!-- DITAMBAHKAN: pt-12 untuk naikkan konten -->
                     <p class="font-alice text-sm md:text-base tracking-widest gold-text">Walimatul Ursy</p>
                     <h1 class="font-tangerine text-5xl md:text-7xl lg:text-8xl my-4">Mukhlis & Yuyun</h1>
                     <p id="wedding-date-cover" class="font-semibold text-base md:text-lg"></p>
@@ -466,9 +475,8 @@
     <main id="main-content" class="opacity-0 w-full">
 
         <!-- === SAMPUL DALAM & AYAT === -->
-        <section id="inner-cover" class="text-center p-4 md:p-6 lg:p-12 text-brown min-h-screen flex flex-col justify-center elegant-bg relative w-full">
-            <div class="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-white to-transparent"></div>
-            <h2 class="font-alice text-lg md:text-xl lg:text-2xl text-light-brown">Walimatul Ursy</h2>
+        <section id="inner-cover" class="text-center p-4 md:p-6 lg:p-12 text-brown min-h-screen flex flex-col justify-center elegant-bg relative w-full" style="padding-top: 3rem;"> <!-- DITAMBAHKAN: style padding-top -->
+            <h2 class="font-alice text-lg md:text-xl lg:text-2xl text-light-brown mt-4">Walimatul Ursy</h2> <!-- DITAMBAHKAN: mt-4 -->
             <!-- DIPERBESAR: dari text-3xl md:text-5xl lg:text-7xl menjadi text-4xl md:text-6xl lg:text-8xl -->
             <h1 class="font-tangerine text-4xl md:text-6xl lg:text-8xl my-4 gold-text">Mukhlis & Yuyun</h1>
             <p class="font-semibold text-base md:text-lg">21 Desember 2025</p>
@@ -560,7 +568,7 @@
                     <p class="mt-2 font-semibold">Di Kediaman Mempelai Pria</p>
                     <p class="text-sm">Pandansari RT 9 RW 4, Kejobong, Purbalingga.</p>
                     <div class="mt-4 rounded-lg overflow-hidden border border-brown w-full">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d304.27166354853756!2d109.48113613306911!3d-7.410050756588583!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sid!2sid!4v1765616878360!5m2!1sid!2sid" class="w-full" width="250" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d304.27154008596784!2d109.48131289038002!3d-7.410229513077883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sid!2sid!4v1765609594901!5m2!1sid!2sid" class="w-full" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                     <a href="https://maps.app.goo.gl/mr9En4j1Q9VYAPn26" class="inline-block gold-gradient text-brown font-semibold py-2 px-4 rounded-full mt-4 text-sm hover:opacity-90" target="_blank">
                         <i data-lucide="map-pin" class="inline w-4 h-4 mr-1"></i>Buka di Google Maps
@@ -650,24 +658,20 @@
         </div>
     </div>
 
-    <!-- Container untuk tombol musik yang selalu berada di dalam area konten -->
-    <div id="music-container" class="music-container">
-        <div class="music-button-wrapper">
-            <button id="music-toggle" class="hidden bg-white shadow-xl w-10 h-10 md:w-12 md:h-12 rounded-full z-40 flex justify-center items-center text-brown border border-brown">
-                <svg id="music-icon" class="music-icon w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M9 18V5l12-2v13"></path>
-                    <circle cx="6" cy="18" r="3"></circle>
-                    <circle cx="18" cy="16" r="3"></circle>
-                </svg>
-            </button>
-        </div>
-    </div>
+    <!-- Tombol musik yang lebih profesional -->
+    <button id="music-toggle" class="hidden fixed bottom-20 right-6 bg-white shadow-xl w-12 h-12 md:w-14 md:h-14 rounded-full z-40 flex justify-center items-center text-brown border border-brown hover:scale-110 transition-all duration-300">
+        <svg id="music-icon" class="music-icon w-6 h-6 md:w-7 md:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+        </svg>
+    </button>
 
     <audio id="background-music" loop src="wedding-nasheed.mp3"></audio>
 
-    <!-- Pop up notifikasi -->
-    <div id="notification" class="hidden fixed top-5 left-1/2 -translate-x-1/2 bg-brown text-white text-sm py-2 px-4 rounded-full shadow-lg z-50 max-w-[90%]">
-        <p class="text-xs md:text-sm">Teks notifikasi</p>
+    <!-- Pop up notifikasi yang lebih terlihat -->
+    <div id="notification" class="hidden fixed top-20 left-1/2 -translate-x-1/2 text-white text-sm py-3 px-6 rounded-full shadow-lg z-50 max-w-[90%]">
+        <p class="text-sm md:text-base font-medium">Teks notifikasi</p>
     </div>
 
     <!-- Firebase SDK -->
@@ -752,7 +756,11 @@
       function showNotification(message, isError = false) {
           notification.querySelector('p').textContent = message;
           notification.classList.remove('hidden');
-          if(isError) notification.classList.add('bg-red-500'); else notification.classList.remove('bg-red-500');
+          if(isError) {
+              notification.style.background = 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)';
+          } else {
+              notification.style.background = 'linear-gradient(135deg, #8B4513 0%, #A67C52 100%)';
+          }
           setTimeout(() => { notification.classList.add('hidden'); }, 3000);
       }
 
@@ -768,7 +776,6 @@
         const bottomNav = document.getElementById('bottom-nav');
         const countdownEl = document.getElementById('countdown');
         const targetDate = new Date(countdownEl.dataset.date);
-        const rippleContainer = document.getElementById('ripple-container');
 
         const urlParams = new URLSearchParams(window.location.search);
         const guest = urlParams.get('nama');
@@ -777,21 +784,19 @@
             document.getElementById('nama').value = guest.replace(/\+/g, ' ');
         }
 
+        // PERBAIKAN: Simpan tanggal dengan jam 08:00 saja (akad dan resepsi jadi 1)
         function formatToUTC(date, hours, minutes) {
             let d = new Date(date);
             d.setUTCHours(hours, minutes, 0, 0);
             return d.toISOString().replace(/-|:|\.\d+/g, "");
         }
-        const eventStartDate = formatToUTC(targetDate, 2, 0); // 09:00 WIB is 02:00 UTC
-        const eventEndDate = formatToUTC(targetDate, 14, 0); // 21:00 WIB is 14:00 UTC
-        const calendarLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Muhlis+%26+Yuyun&dates=${eventStartDate}/${eventEndDate}&details=Jangan+lupa+datang+ke+acara+pernikahan+kami!+Untuk+detail+lokasi+lihat+kembali+undangan.&location=Lokasi+Acara,+Indonesia`;
+        const eventStartDate = formatToUTC(targetDate, 1, 0); // 08:00 WIB is 01:00 UTC
+        const eventEndDate = formatToUTC(targetDate, 10, 0); // 17:00 WIB is 10:00 UTC (asumsi selesai 9 jam kemudian)
+        const calendarLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Mukhlis+%26+Yuyun&dates=${eventStartDate}/${eventEndDate}&details=Akad+Nikah+%26+Resepsi%0ADsn.+5+Mendiri+RT+1+RW+7+%2C+Kutawis%2C+Kec.+Bukateja%2C+Kabupaten+Purbalingga%2C+Jawa+Tengah&location=Dsn.+5+Mendiri+RT+1+RW+7+%2C+Kutawis%2C+Kec.+Bukateja%2C+Kabupaten+Purbalingga%2C+Jawa+Tengah`;
         document.getElementById('save-date-button').href = calendarLink;
 
         const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
         document.getElementById('wedding-date-cover').textContent = targetDate.toLocaleString('id-ID', dateOptions);
-
-        // Variabel untuk mengontrol efek ripple
-        let rippleEnabled = true;
 
         openButton.addEventListener('click', () => {
             cover.classList.add('cover-hidden');
@@ -800,9 +805,6 @@
             bottomNav.classList.remove('hidden');
             musicToggle.classList.remove('hidden');
 
-            // Nonaktifkan efek ripple setelah undangan dibuka
-            rippleEnabled = false;
-            
             // Mulai efek kelopak bunga setelah undangan dibuka
             startPetalEffect();
             
@@ -889,7 +891,7 @@
             });
         });
 
-        // Fungsi untuk efek kelopak bunga yang lebih smooth
+        // Fungsi untuk efek kelopak bunga yang lebih smooth dan transparan
         function startPetalEffect() {
             const petalsContainer = document.getElementById('petals-container');
             const petalSymbols = ['❀', '✿'];
@@ -910,6 +912,9 @@
                 // Ukuran lebih kecil dan konsisten
                 const size = Math.random() * 10 + 10; // 10px - 22px
                 petal.style.fontSize = size + 'px';
+                
+                // Transparansi lebih tinggi (efek lebih halus)
+                petal.style.opacity = '0.6';
                 
                 // Variasi animasi yang lebih smooth
                 const duration = Math.random() * 15 + 15; // 15-30 detik
@@ -941,40 +946,7 @@
             }
         }
 
-        // Fungsi untuk efek ripple (hanya di cover)
-        function createRipple(event) {
-            // Hanya buat ripple jika masih di cover (rippleEnabled = true)
-            if (!rippleEnabled) return;
-            
-            const ripple = document.createElement('div');
-            ripple.className = 'ripple';
-            
-            // Dapatkan posisi sentuhan/klik relatif terhadap container
-            const rect = rippleContainer.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
-            
-            ripple.style.left = x + 'px';
-            ripple.style.top = y + 'px';
-            
-            rippleContainer.appendChild(ripple);
-            
-            // Hapus ripple setelah animasi selesai
-            setTimeout(() => {
-                if (ripple.parentNode) {
-                    ripple.parentNode.removeChild(ripple);
-                }
-            }, 1000);
-        }
-
-        // Tambahkan event listener untuk efek ripple (hanya di cover)
-        cover.addEventListener('click', createRipple);
-        cover.addEventListener('touchstart', function(e) {
-            // Untuk sentuhan, buat ripple di setiap titik sentuh
-            for (let i = 0; i < e.touches.length; i++) {
-                createRipple(e.touches[i]);
-            }
-        });
+        // Hapus event listener untuk ripple effect (sudah dihapus dari HTML)
       });
     </script>
 </body>
