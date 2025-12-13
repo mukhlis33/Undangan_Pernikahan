@@ -157,30 +157,6 @@
                 padding-left: 1rem;
                 padding-right: 1rem;
             }
-            .mobile-text-lg {
-                font-size: 1.125rem;
-            }
-            .mobile-text-xl {
-                font-size: 1.5rem;
-            }
-            .mobile-text-2xl {
-                font-size: 1.75rem;
-            }
-            .mobile-text-3xl {
-                font-size: 2rem;
-            }
-            .mobile-text-4xl {
-                font-size: 2.25rem;
-            }
-            .mobile-text-5xl {
-                font-size: 2.5rem;
-            }
-            .mobile-text-6xl {
-                font-size: 3rem;
-            }
-            .mobile-grid {
-                grid-template-columns: 1fr;
-            }
             
             /* Perbaikan khusus untuk elemen-elemen */
             #cover h1 {
@@ -188,11 +164,11 @@
             }
             
             #inner-cover h1 {
-                font-size: 3.5rem !important;
+                font-size: 4rem !important; /* DIPERBESAR untuk mobile */
             }
             
             #home h2 {
-                font-size: 3rem !important;
+                font-size: 3.5rem !important; /* DIPERBESAR untuk mobile */
             }
             
             .section-divider {
@@ -243,15 +219,15 @@
         
         @media (max-width: 640px) {
             #cover h1 {
-                font-size: 2.75rem !important;
+                font-size: 3rem !important; /* Disesuaikan */
             }
             
             #inner-cover h1 {
-                font-size: 2.75rem !important;
+                font-size: 3.5rem !important; /* DIPERBESAR untuk mobile kecil */
             }
             
             #home h2 {
-                font-size: 2.5rem !important;
+                font-size: 3rem !important; /* DIPERBESAR untuk mobile kecil */
             }
             
             #guest-name {
@@ -285,15 +261,15 @@
         
         @media (max-width: 480px) {
             #cover h1 {
-                font-size: 2.25rem !important;
+                font-size: 2.5rem !important;
             }
             
             #inner-cover h1 {
-                font-size: 2.25rem !important;
+                font-size: 3rem !important; /* DIPERBESAR untuk mobile sangat kecil */
             }
             
             #home h2 {
-                font-size: 2rem !important;
+                font-size: 2.5rem !important; /* DIPERBESAR untuk mobile sangat kecil */
             }
             
             #countdown {
@@ -463,7 +439,7 @@
             <div class="w-full h-full bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white p-4 md:p-8">
                 <div class="flex-grow flex flex-col justify-end">
                     <p class="font-alice text-sm md:text-base tracking-widest gold-text">Walimatul Ursy</p>
-                    <h1 class="font-tangerine text-4xl md:text-6xl lg:text-8xl my-4">Mukhlis & Yuyun</h1>
+                    <h1 class="font-tangerine text-5xl md:text-7xl lg:text-8xl my-4">Mukhlis & Yuyun</h1>
                     <p id="wedding-date-cover" class="font-semibold text-base md:text-lg"></p>
                 </div>
                 <div class="flex-grow flex flex-col justify-end w-full pb-8 md:pb-12">
@@ -493,7 +469,8 @@
         <section id="inner-cover" class="text-center p-4 md:p-6 lg:p-12 text-brown min-h-screen flex flex-col justify-center elegant-bg relative w-full">
             <div class="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-white to-transparent"></div>
             <h2 class="font-alice text-lg md:text-xl lg:text-2xl text-light-brown">Walimatul Ursy</h2>
-            <h1 class="font-tangerine text-3xl md:text-5xl lg:text-7xl my-4 gold-text">Mukhlis & Yuyun</h1>
+            <!-- DIPERBESAR: dari text-3xl md:text-5xl lg:text-7xl menjadi text-4xl md:text-6xl lg:text-8xl -->
+            <h1 class="font-tangerine text-4xl md:text-6xl lg:text-8xl my-4 gold-text">Mukhlis & Yuyun</h1>
             <p class="font-semibold text-base md:text-lg">21 Desember 2025</p>
             <div class="section-divider w-3/4 mx-auto"></div>
             <div class="max-w-md mx-auto w-full px-4">
@@ -520,13 +497,16 @@
                 Maha suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Dengan memohon rahmat dan ridho-Nya, kami bermaksud menyelenggarakan pernikahan kami:
             </p>
             <div class="my-6 md:my-8 lg:my-10">
-                <h2 class="font-tangerine text-3xl md:text-4xl lg:text-6xl gold-text">Mukhlis</h2>
+                <!-- DIPERBESAR: dari text-3xl md:text-4xl lg:text-6xl menjadi text-4xl md:text-5xl lg:text-7xl -->
+                <h2 class="font-tangerine text-4xl md:text-5xl lg:text-7xl gold-text">Mukhlis</h2>
                 <p class="text-sm mt-1 text-light-brown">Putra dari</p>
                 <p class="text-sm mt-1">Bapak Imam Rokhani & Ibu Sumarni</p>
                 <div class="ornament my-4">
-                    <p class="font-tangerine text-2xl md:text-3xl lg:text-5xl gold-text">&</p>
+                    <!-- DIPERBESAR: dari text-2xl md:text-3xl lg:text-5xl menjadi text-3xl md:text-4xl lg:text-6xl -->
+                    <p class="font-tangerine text-3xl md:text-4xl lg:text-6xl gold-text">&</p>
                 </div>
-                <h2 class="font-tangerine text-3xl md:text-4xl lg:text-6xl gold-text">Yuyun Musyarofah</h2>
+                <!-- DIPERBESAR: dari text-3xl md:text-4xl lg:text-6xl menjadi text-4xl md:text-5xl lg:text-7xl -->
+                <h2 class="font-tangerine text-4xl md:text-5xl lg:text-7xl gold-text">Yuyun Musyarofah</h2>
                 <p class="text-sm mt-1 text-light-brown">Putri dari</p>
                 <p class="text-sm mt-1">Bapak Cipto Topik Hidayat & Ibu Siti Sunarti</p>
             </div>
@@ -534,7 +514,8 @@
 
         <!-- === SECTION ACARA & HITUNG MUNDUR === -->
         <section id="event" class="light-brown-bg text-brown text-center p-4 md:p-6 lg:p-12 w-full">
-            <h2 class="font-alice text-xl md:text-2xl lg:text-3xl font-bold mb-6 md:mb-8">Save The Date</h2>
+            <!-- DIPERBESAR: dari text-xl md:text-2xl lg:text-3xl menjadi text-2xl md:text-3xl lg:text-4xl -->
+            <h2 class="font-alice text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8">Save The Date</h2>
             
             <div id="countdown" data-date="2025-12-21T09:00:00" class="grid grid-cols-4 gap-2 md:gap-4 max-w-sm mx-auto mb-6 md:mb-8 font-alice w-full px-4">
                 <div class="bg-white p-2 rounded-lg custom-shadow border border-brown"><div id="days" class="text-xl md:text-2xl lg:text-4xl font-bold gold-text">0</div><div class="text-xs text-light-brown">Hari</div></div>
@@ -543,7 +524,8 @@
                 <div class="bg-white p-2 rounded-lg custom-shadow border border-brown"><div id="seconds" class="text-xl md:text-2xl lg:text-4xl font-bold gold-text">0</div><div class="text-xs text-light-brown">Detik</div></div>
             </div>
 
-            <a id="save-date-button" href="#" target="_blank" class="inline-block gold-gradient hover:opacity-90 text-brown font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-md flex items-center mx-auto transition-transform transform hover:scale-105 text-sm md:text-base">
+            <!-- DIPERBESAR: tombol Simpan Tanggal dari text-sm md:text-base menjadi text-base md:text-lg -->
+            <a id="save-date-button" href="#" target="_blank" class="inline-block gold-gradient hover:opacity-90 text-brown font-semibold py-2 md:py-3 px-4 md:px-6 rounded-full shadow-md flex items-center mx-auto transition-transform transform hover:scale-105 text-base md:text-lg">
                 <i data-lucide="calendar-plus" class="mr-2 w-4 h-4 md:w-5 md:h-5"></i>
                 Simpan Tanggal
             </a>
@@ -551,7 +533,8 @@
             <div class="grid md:grid-cols-1 gap-4 md:gap-6 lg:gap-8 text-left mt-6 md:mt-8 lg:mt-12 w-full">
                 <div class="bg-white p-4 md:p-6 rounded-lg custom-shadow border border-brown w-full">
                     <i data-lucide="gem" class="w-8 md:w-10 h-8 md:h-10 mb-4 gold-text"></i>
-                    <h3 class="font-alice text-lg md:text-xl lg:text-2xl font-bold">Akad Nikah & Resepsi</h3>
+                    <!-- DIPERBESAR: dari text-lg md:text-xl lg:text-2xl menjadi text-xl md:text-2xl lg:text-3xl -->
+                    <h3 class="font-alice text-xl md:text-2xl lg:text-3xl font-bold">Akad Nikah & Resepsi</h3>
                     <p class="mt-4">Ahad, 21 Desember 2025</p>
                     <p>08:00 - Selesai</p>
                     <p class="mt-2 font-semibold">Lokasi Akad</p>
@@ -565,17 +548,19 @@
 
         <!-- === SECTION TASYAKURAN === -->
         <section id="tasyakuran" class="cream-bg text-brown text-center p-4 md:p-6 lg:p-12 w-full">
-            <h2 class="font-alice text-xl md:text-2xl lg:text-3xl font-bold mb-6 md:mb-8">Tasyakuran</h2>
+            <!-- DIPERBESAR: dari text-xl md:text-2xl lg:text-3xl menjadi text-2xl md:text-3xl lg:text-4xl -->
+            <h2 class="font-alice text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8">Tasyakuran</h2>
             <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 text-left w-full">
                 <div class="bg-white p-4 md:p-6 rounded-lg custom-shadow border border-brown w-full">
                     <i data-lucide="home" class="w-8 md:w-10 h-8 md:h-10 mb-4 gold-text"></i>
-                    <h3 class="font-alice text-lg md:text-xl lg:text-2xl font-bold">Keluarga Mempelai Pria</h3>
+                    <!-- DIPERBESAR: dari text-lg md:text-xl lg:text-2xl menjadi text-xl md:text-2xl lg:text-3xl -->
+                    <h3 class="font-alice text-xl md:text-2xl lg:text-3xl font-bold">Keluarga Mempelai Pria</h3>
                     <p class="mt-4">Jum'at-Sabtu,</p>
                     <p>19-20 Desember 2025</p>
                     <p class="mt-2 font-semibold">Di Kediaman Mempelai Pria</p>
                     <p class="text-sm">Pandansari RT 9 RW 4, Kejobong, Purbalingga.</p>
                     <div class="mt-4 rounded-lg overflow-hidden border border-brown w-full">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d304.27154008596784!2d109.48131289038002!3d-7.410229513077883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sid!2sid!4v1765609594901!5m2!1sid!2sid" class="w-full" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d304.27166354853756!2d109.48113613306911!3d-7.410050756588583!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sid!2sid!4v1765616878360!5m2!1sid!2sid" class="w-full" width="250" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                     <a href="https://maps.app.goo.gl/mr9En4j1Q9VYAPn26" class="inline-block gold-gradient text-brown font-semibold py-2 px-4 rounded-full mt-4 text-sm hover:opacity-90" target="_blank">
                         <i data-lucide="map-pin" class="inline w-4 h-4 mr-1"></i>Buka di Google Maps
@@ -583,7 +568,8 @@
                 </div>
                 <div class="bg-white p-4 md:p-6 rounded-lg custom-shadow border border-brown w-full">
                     <i data-lucide="home" class="w-8 md:w-10 h-8 md:h-10 mb-4 gold-text"></i>
-                    <h3 class="font-alice text-lg md:text-xl lg:text-2xl font-bold">Keluarga Mempelai Wanita</h3>
+                    <!-- DIPERBESAR: dari text-lg md:text-xl lg:text-2xl menjadi text-xl md:text-2xl lg:text-3xl -->
+                    <h3 class="font-alice text-xl md:text-2xl lg:text-3xl font-bold">Keluarga Mempelai Wanita</h3>
                     <p class="mt-4">Ahad,</p>
                     <p>21 Desember 2025</p>
                     <p class="mt-2 font-semibold">Di Kediaman Mempelai Wanita</p>
@@ -600,7 +586,8 @@
 
         <!-- === SECTION HADIAH === -->
         <section id="gift" class="p-4 md:p-6 lg:p-12 text-center text-brown light-brown-bg w-full">
-             <h2 class="font-alice text-xl md:text-2xl lg:text-3xl font-bold mb-4">Kirim Hadiah</h2>
+             <!-- DIPERBESAR: dari text-xl md:text-2xl lg:text-3xl menjadi text-2xl md:text-3xl lg:text-4xl -->
+             <h2 class="font-alice text-2xl md:text-3xl lg:text-4xl font-bold mb-4">Kirim Hadiah</h2>
              <p class="text-sm md:text-base max-w-md mx-auto text-light-brown w-full px-4">Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika memberi adalah ungkapan tanda kasih, Anda dapat memberi kado secara cashless.</p>
              <div class="max-w-sm mx-auto bg-white p-4 md:p-6 rounded-lg mt-4 md:mt-6 lg:mt-8 text-left custom-shadow border border-brown w-full">
                 <i data-lucide="credit-card" class="mx-auto w-10 md:w-12 h-10 md:h-12 gold-text block text-center mb-4"></i>
@@ -621,7 +608,8 @@
         </section>
         <!-- === SECTION RSVP & UCAPAN === -->
         <section id="rsvp" class="p-4 md:p-6 lg:p-12 text-brown cream-bg w-full">
-            <h2 class="font-alice text-xl md:text-2xl lg:text-3xl font-bold mb-4 text-center">Ucapan & Doa</h2>
+            <!-- DIPERBESAR: dari text-xl md:text-2xl lg:text-3xl menjadi text-2xl md:text-3xl lg:text-4xl -->
+            <h2 class="font-alice text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-center">Ucapan & Doa</h2>
             <div id="rsvp-container" class="max-w-md mx-auto bg-white p-4 md:p-6 rounded-lg custom-shadow border border-brown w-full">
                 <form id="rsvp-form">
                     <div class="mb-4">
