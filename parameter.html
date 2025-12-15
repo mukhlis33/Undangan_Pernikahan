@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Undangan Digital Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --primary:#2563eb;
+      --primary-soft:#e0e7ff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --danger:#dc2626;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:'Inter',sans-serif; background:var(--bg); color:var(--text);
+    }
+    .app{
+      max-width:920px; margin:auto; padding:16px;
+    }
+    header{
+      margin-bottom:16px;
+    }
+    header h1{
+      font-size:22px; margin:0;
+    }
+    header p{
+      margin:6px 0 0; color:var(--muted); font-size:14px;
+    }
+    .card{
+      background:var(--card); border-radius:14px; padding:16px; box-shadow:0 8px 24px rgba(0,0,0,.06); margin-bottom:16px;
+    }
+    .card-title{
+      font-weight:600; margin-bottom:12px;
+    }
+    label{font-size:13px; color:var(--muted)}
+    input,textarea{
+      width:100%; border:1px solid var(--border); border-radius:10px; padding:12px; margin-top:6px; font-size:14px; font-family:inherit;
+    }
+    textarea{min-height:220px; white-space:pre-wrap}
+    .btn{
+      border:none; border-radius:10px; padding:10px 14px; font-size:14px; font-weight:500; cursor:pointer;
+      display:inline-flex; align-items:center; gap:6px;
+    }
+    .btn-primary{background:var(--primary); color:#fff}
+    .btn-soft{background:var(--primary-soft); color:var(--primary)}
+    .btn-danger{background:#fee2e2; color:var(--danger)}
+    .btn:active{transform:scale(.98)}
+    .row{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+    .row.space{justify-content:space-between}
+    .table-wrap{overflow-x:auto}
+    table{width:100%; border-collapse:collapse; margin-top:8px}
+    th,td{padding:12px 10px; border-bottom:1px solid var(--border); font-size:14px}
+    th{text-align:left; font-size:13px; color:var(--muted)}
+    .actions{display:flex; gap:6px}
+    .icon-btn{
+      border:1px solid var(--border); background:#fff; border-radius:8px; padding:6px 8px; cursor:pointer;
+    }
+    .icon-btn:hover{background:var(--bg)}
+    .footer-note{font-size:12px; color:var(--muted); margin-top:8px}
+    @media(max-width:600px){
+      header h1{font-size:20px}
+      textarea{min-height:200px}
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>Undangan Digital Generator</h1>
+    <p>Generate undangan personal dan kirim cepat via WhatsApp</p>
+  </header>
+
+  <div class="card">
+    <div class="card-title">Generate Single</div>
+    <label>Nama Undangan</label>
+    <input id="singleNama" placeholder="Contoh: M. Subhan Muzni Renleuw" />
+    <div class="row">
+      <button class="btn btn-primary" onclick="generateSingle()">Generate</button>
+      <button class="btn btn-soft" onclick="copyText()">Salin</button>
+      <button class="btn btn-soft" onclick="openWAFromText()">Buka WhatsApp</button>
+    </div>
+    <textarea id="hasil" placeholder="Hasil undangan akan muncul di sini"></textarea>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Mode Banyak (Excel)</div>
+    <label>Import file Excel (.xlsx) dengan header <b>Nama Undangan</b></label>
+    <input type="file" accept=".xlsx" onchange="importXLSX(event)" />
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Nama Undangan</th>
+            <th style="width:140px">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="row space">
+      <div class="row">
+        <button class="btn btn-soft" onclick="generateBulk()">Generate Semua</button>
+        <button class="btn btn-soft" onclick="exportXLSX()">Export Excel</button>
+      </div>
+    </div>
+    <div class="footer-note">Klik ikon WhatsApp untuk membuka chat dengan teks undangan otomatis.</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script>
+const BASE_URL = "https://mukhlis33.github.io/Undangan_Pernikahan/";
+let bulkData = [];
+
+function buildText(nama){
+  const enc = encodeURIComponent(nama).replace(/%20/g,'+');
+  const url = BASE_URL + '?nama=' + enc;
+  return `Assalamu’alaikum Warahmatullahi Wabarakatuh\n\nBismillahirahmanirrahim.\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami.\n\n*_Mukhlis & Yuyun_*\n\nBerikut link undangan kami, untuk info lengkap dari acara bisa kunjungi :\n\n${url}\n\n\nMerupakan suatu kehormatan serta kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan mendoakan kami.\n\nMohon maaf perihal undangan hanya di bagikan melalui pesan ini.\n\nWassalamu'alaikum Warahmatullahi Wabarakatuh\n\nKami yang berbahagia,\n_Mukhlis & Yuyun_`;
+}
+
+function generateSingle(){
+  const nama = singleNama.value.trim();
+  if(!nama){alert('Nama undangan belum diisi');return;}
+  hasil.value = buildText(nama);
+}
+
+function copyText(){ if(hasil.value) navigator.clipboard.writeText(hasil.value); }
+function openWAFromText(){ if(hasil.value) window.open('https://wa.me/?text='+encodeURIComponent(hasil.value),'_blank'); }
+
+function importXLSX(e){
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.onload = evt =>{
+    const wb = XLSX.read(new Uint8Array(evt.target.result),{type:'array'});
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const json = XLSX.utils.sheet_to_json(ws);
+    if(!json[0] || !('Nama Undangan' in json[0])){alert('Header harus "Nama Undangan"');return;}
+    bulkData = json.map(r=>({nama:r['Nama Undangan']}));
+    renderTable();
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function renderTable(){
+  tbody.innerHTML='';
+  bulkData.forEach((d,i)=>{
+    tbody.innerHTML += `<tr>
+      <td>${d.nama}</td>
+      <td>
+        <div class="actions">
+          <button class="icon-btn" title="Edit" onclick="editRow(${i})">✏️</button>
+          <button class="icon-btn" title="Hapus" onclick="deleteRow(${i})">🗑️</button>
+          <button class="icon-btn" title="WhatsApp" onclick="openWARow(${i})">📲</button>
+        </div>
+      </td>
+    </tr>`;
+  });
+}
+
+function editRow(i){ const n = prompt('Ubah Nama Undangan', bulkData[i].nama); if(n) {bulkData[i].nama=n; renderTable();} }
+function deleteRow(i){ bulkData.splice(i,1); renderTable(); }
+function openWARow(i){ window.open('https://wa.me/?text='+encodeURIComponent(buildText(bulkData[i].nama)),'_blank'); }
+
+function generateBulk(){ hasil.value = bulkData.map(d=>buildText(d.nama)).join('\n\n--------------------\n\n'); }
+function exportXLSX(){ const ws = XLSX.utils.json_to_sheet(bulkData.map(d=>({'Nama Undangan':d.nama}))); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Undangan'); XLSX.writeFile(wb,'undangan.xlsx'); }
+</script>
+</body>
+</html>
