@@ -209,9 +209,36 @@
         .avatar-6 { background-color: #a05858 !important; }
         .avatar-7 { background-color: #e8a5a5 !important; }
         .avatar-8 { background-color: #b56576 !important; }
+        
+        /* Firebase connection status */
+        .firebase-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 100;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .firebase-connected {
+            background-color: #10b981;
+            color: white;
+        }
+        
+        .firebase-disconnected {
+            background-color: #ef4444;
+            color: white;
+        }
     </style>
 </head>
 <body class="max-w-lg mx-auto relative">
+
+    <!-- Firebase Connection Status -->
+    <div id="firebase-status" class="firebase-status firebase-disconnected hidden">
+        <i class="fas fa-circle mr-1"></i> Firebase
+    </div>
 
     <!-- COVER SECTION -->
     <div id="cover" class="fixed top-0 left-0 right-0 bottom-0 z-50 max-w-lg mx-auto cover-gradient text-white">
@@ -520,12 +547,26 @@
             </div>
         </section>
 
-        <!-- RSVP SECTION - FIREBASE -->
+        <!-- RSVP SECTION - DENGAN FALLBACK LOCALSTORAGE -->
         <section id="rsvp" class="p-8 md:p-12 bg-light text-wine">
             <h2 class="font-serif text-3xl font-bold mb-6 text-center">Buku Tamu & Ucapan</h2>
             <p class="text-center mb-10 max-w-md mx-auto">Berikan ucapan dan doa restu untuk kami melalui form berikut:</p>
             
             <div class="max-w-md mx-auto">
+                <!-- Firebase Connection Warning -->
+                <div id="firebase-warning" class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-yellow-700" id="firebase-warning-text">
+                                Menghubungkan ke database...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Form Input -->
                 <div class="bg-white p-8 rounded-2xl shadow-lg mb-8 border border-soft-red border-opacity-20">
                     <form id="rsvp-form">
@@ -653,6 +694,11 @@
             appId: "1:719498963668:web:b09e08d469f001e5fa6941"
         };
 
+        // Global variables
+        let db = null;
+        let useLocalStorage = false;
+        let localStorageWishes = JSON.parse(localStorage.getItem('weddingWishes')) || [];
+
         // Notification function
         const notification = document.getElementById('notification');
         function showNotification(message, isError = false) {
@@ -720,6 +766,25 @@
             });
         }
         
+        // Update Firebase status indicator
+        function updateFirebaseStatus(connected) {
+            const statusEl = document.getElementById('firebase-status');
+            const warningEl = document.getElementById('firebase-warning');
+            const warningText = document.getElementById('firebase-warning-text');
+            
+            if (connected) {
+                statusEl.className = 'firebase-status firebase-connected';
+                statusEl.innerHTML = '<i class="fas fa-circle mr-1"></i> Firebase Online';
+                warningEl.className = 'hidden';
+            } else {
+                statusEl.className = 'firebase-status firebase-disconnected';
+                statusEl.innerHTML = '<i class="fas fa-circle mr-1"></i> Firebase Offline';
+                warningEl.className = 'bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded';
+                warningText.textContent = 'Mode offline aktif. Ucapan disimpan sementara di browser.';
+            }
+            statusEl.classList.remove('hidden');
+        }
+        
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             const cover = document.getElementById('cover');
@@ -732,15 +797,24 @@
             const countdownEl = document.getElementById('countdown');
             const targetDate = new Date(countdownEl.dataset.date);
 
-            // Initialize Firebase
-            let db;
+            // Try to initialize Firebase
             try {
                 firebase.initializeApp(firebaseConfig);
                 db = firebase.database();
                 console.log("Firebase initialized successfully");
+                updateFirebaseStatus(true);
+                
+                // Test Firebase connection
+                db.ref('.info/connected').on('value', (snapshot) => {
+                    const connected = snapshot.val() === true;
+                    updateFirebaseStatus(connected);
+                    useLocalStorage = !connected;
+                });
+                
             } catch (error) {
                 console.error("Firebase initialization error:", error);
-                showNotification("Gagal menghubungkan ke database", true);
+                useLocalStorage = true;
+                updateFirebaseStatus(false);
             }
 
             // Get guest name from URL
@@ -837,7 +911,7 @@
                 document.getElementById('seconds').textContent = Math.floor((distance % (1000 * 60)) / 1000);
             }, 1000);
 
-            // RSVP Form with Firebase - SESUAI RULES
+            // RSVP Form with Firebase (with fallback to localStorage)
             const rsvpForm = document.getElementById('rsvp-form');
             const submitBtn = document.getElementById('submit-btn');
             const submitText = document.getElementById('submit-text');
@@ -852,102 +926,135 @@
             const wishesCount = document.getElementById('wishes-count');
             const wishesContainer = document.getElementById('wishes-container');
             
-            // Function to load wishes from Firebase - SESUAI RULES
-            function loadWishes() {
-                if (!db) {
-                    console.error("Firebase not initialized");
-                    loadingWishes.classList.add('hidden');
-                    wishesError.classList.remove('hidden');
+            // Function to display wishes (common for both Firebase and localStorage)
+            function displayWishes(wishesArray) {
+                loadingWishes.classList.add('hidden');
+                
+                if (!wishesArray || wishesArray.length === 0) {
+                    noWishes.classList.remove('hidden');
+                    wishesCount.textContent = "0 ucapan";
                     return;
                 }
                 
-                try {
-                    loadingWishes.classList.remove('hidden');
-                    noWishes.classList.add('hidden');
-                    wishesError.classList.add('hidden');
+                // Update count
+                wishesCount.textContent = `${wishesArray.length} ucapan`;
+                
+                // Clear the list
+                wishesList.innerHTML = '';
+                
+                // Display wishes (show newest first)
+                wishesArray.forEach((wish, index) => {
+                    const wishElement = document.createElement('div');
+                    wishElement.className = 'wish-item p-4 rounded-lg';
                     
-                    // Path sesuai rules: 'bukutamu'
+                    // Get avatar class
+                    const avatarClass = getAvatarClass(wish.nama);
+                    const firstLetter = wish.nama ? wish.nama.charAt(0).toUpperCase() : '?';
+                    
+                    // Format waktu
+                    const waktuText = formatTimestamp(wish.waktu);
+                    
+                    wishElement.innerHTML = `
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mr-3">
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold ${avatarClass}">
+                                    ${firstLetter}
+                                </div>
+                            </div>
+                            <div class="flex-grow">
+                                <div class="flex justify-between items-start mb-1">
+                                    <p class="font-bold text-wine">${wish.nama || 'Tamu'}</p>
+                                    <p class="text-xs text-gray-500">${waktuText}</p>
+                                </div>
+                                <p class="text-gray-700">${wish.ucapan || ''}</p>
+                            </div>
+                        </div>
+                    `;
+                    wishesList.appendChild(wishElement);
+                });
+            }
+            
+            // Function to load wishes from Firebase (with fallback)
+            function loadWishes() {
+                loadingWishes.classList.remove('hidden');
+                noWishes.classList.add('hidden');
+                wishesError.classList.add('hidden');
+                
+                if (useLocalStorage || !db) {
+                    // Use localStorage
+                    console.log("Using localStorage for wishes");
+                    displayWishes(localStorageWishes);
+                    return;
+                }
+                
+                // Try Firebase first
+                try {
                     const bukutamuRef = db.ref('bukutamu');
                     
-                    // Listen for real-time updates, order by waktu (timestamp) descending
-                    bukutamuRef.orderByChild('waktu').limitToLast(30).on('value', (snapshot) => {
-                        loadingWishes.classList.add('hidden');
-                        
-                        if (!snapshot.exists()) {
-                            noWishes.classList.remove('hidden');
-                            wishesCount.textContent = "0 ucapan";
-                            return;
-                        }
-                        
-                        const wishes = [];
-                        snapshot.forEach((childSnapshot) => {
-                            const wish = childSnapshot.val();
-                            wish.id = childSnapshot.key;
-                            wishes.push(wish);
+                    // Try with simpler query
+                    bukutamuRef.once('value')
+                        .then((snapshot) => {
+                            if (!snapshot.exists()) {
+                                // No data in Firebase, check localStorage
+                                if (localStorageWishes.length > 0) {
+                                    displayWishes(localStorageWishes);
+                                } else {
+                                    displayWishes([]);
+                                }
+                                return;
+                            }
+                            
+                            const wishes = [];
+                            snapshot.forEach((childSnapshot) => {
+                                const wish = childSnapshot.val();
+                                wish.id = childSnapshot.key;
+                                wishes.push(wish);
+                            });
+                            
+                            // Sort by waktu descending (newest first)
+                            wishes.sort((a, b) => b.waktu - a.waktu);
+                            
+                            // Limit to 30 most recent
+                            const recentWishes = wishes.slice(0, 30);
+                            displayWishes(recentWishes);
+                            
+                        })
+                        .catch((error) => {
+                            console.error("Error loading from Firebase:", error);
+                            // Fallback to localStorage
+                            displayWishes(localStorageWishes);
                         });
-                        
-                        // Reverse to show newest first (Firebase orders ascending)
-                        wishes.reverse();
-                        
-                        // Update count
-                        wishesCount.textContent = `${wishes.length} ucapan`;
-                        
-                        // Clear the list
-                        wishesList.innerHTML = '';
-                        
-                        // Display wishes
-                        wishes.forEach((wish, index) => {
-                            const wishElement = document.createElement('div');
-                            wishElement.className = 'wish-item p-4 rounded-lg';
-                            
-                            // Get avatar class
-                            const avatarClass = getAvatarClass(wish.nama);
-                            const firstLetter = wish.nama ? wish.nama.charAt(0).toUpperCase() : '?';
-                            
-                            // Format waktu
-                            const waktuText = formatTimestamp(wish.waktu);
-                            
-                            wishElement.innerHTML = `
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0 mr-3">
-                                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold ${avatarClass}">
-                                            ${firstLetter}
-                                        </div>
-                                    </div>
-                                    <div class="flex-grow">
-                                        <div class="flex justify-between items-start mb-1">
-                                            <p class="font-bold text-wine">${wish.nama || 'Tamu'}</p>
-                                            <p class="text-xs text-gray-500">${waktuText}</p>
-                                        </div>
-                                        <p class="text-gray-700">${wish.ucapan || ''}</p>
-                                    </div>
-                                </div>
-                            `;
-                            wishesList.appendChild(wishElement);
-                        });
-                        
-                    }, (error) => {
-                        console.error("Error loading wishes:", error);
-                        loadingWishes.classList.add('hidden');
-                        wishesError.classList.remove('hidden');
-                        wishesError.textContent = 'Error: ' + error.message;
-                    });
                     
                 } catch (error) {
                     console.error('Error in loadWishes:', error);
-                    loadingWishes.classList.add('hidden');
-                    wishesError.classList.remove('hidden');
+                    // Fallback to localStorage
+                    displayWishes(localStorageWishes);
                 }
             }
             
-            // Handle form submission - SESUAI RULES
+            // Function to save to localStorage
+            function saveToLocalStorage(wishData) {
+                const wish = {
+                    ...wishData,
+                    id: 'local_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
+                };
+                
+                localStorageWishes.unshift(wish); // Add to beginning
+                
+                // Keep only last 50 wishes
+                if (localStorageWishes.length > 50) {
+                    localStorageWishes = localStorageWishes.slice(0, 50);
+                }
+                
+                // Save to localStorage
+                localStorage.setItem('weddingWishes', JSON.stringify(localStorageWishes));
+                
+                return wish;
+            }
+            
+            // Handle form submission
             rsvpForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                
-                if (!db) {
-                    showNotification("Database tidak tersedia. Silakan refresh halaman.", true);
-                    return;
-                }
                 
                 // Disable submit button and show spinner
                 submitBtn.disabled = true;
@@ -959,7 +1066,7 @@
                 const nama = document.getElementById('nama').value.trim();
                 const ucapan = document.getElementById('ucapan').value.trim();
                 
-                // Validate sesuai rules
+                // Validate
                 if (!nama || !ucapan) {
                     showNotification('Harap lengkapi nama dan ucapan', true);
                     submitBtn.disabled = false;
@@ -985,16 +1092,33 @@
                 }
                 
                 try {
-                    // Prepare wish data sesuai rules
+                    // Prepare wish data
                     const wishData = {
                         nama: nama,
                         ucapan: ucapan,
-                        waktu: Date.now() // Number timestamp, sesuai rules
+                        waktu: Date.now()
                     };
                     
-                    // Path sesuai rules: 'bukutamu'
-                    const newWishRef = db.ref('bukutamu').push();
-                    await newWishRef.set(wishData);
+                    let savedWish;
+                    
+                    if (useLocalStorage || !db) {
+                        // Save to localStorage
+                        savedWish = saveToLocalStorage(wishData);
+                        console.log("Saved to localStorage:", savedWish);
+                    } else {
+                        // Try to save to Firebase
+                        try {
+                            const newWishRef = db.ref('bukutamu').push();
+                            await newWishRef.set(wishData);
+                            savedWish = { ...wishData, id: newWishRef.key };
+                            console.log("Saved to Firebase:", savedWish);
+                        } catch (firebaseError) {
+                            console.error("Firebase save error:", firebaseError);
+                            // Fallback to localStorage
+                            savedWish = saveToLocalStorage(wishData);
+                            showNotification('Menggunakan penyimpanan lokal', false);
+                        }
+                    }
                     
                     // Reset form
                     rsvpForm.reset();
@@ -1011,6 +1135,9 @@
                     
                     // Show notification
                     showNotification('Ucapan berhasil dikirim!');
+                    
+                    // Reload wishes
+                    loadWishes();
                     
                     // Scroll to top of wishes
                     setTimeout(() => {
