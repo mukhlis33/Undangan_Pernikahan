@@ -176,39 +176,6 @@
             display: inline-block;
         }
         
-        /* Chat bubble style for wishes */
-        .chat-bubble {
-            position: relative;
-            background: #f8f9fa;
-            border-radius: 15px;
-            border-top-left-radius: 5px;
-            padding: 15px;
-            margin: 10px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .chat-bubble::before {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 0;
-            left: -10px;
-            top: 0;
-            border: 10px solid transparent;
-            border-right-color: #f8f9fa;
-            border-left: 0;
-        }
-        
-        /* Custom form styling */
-        .form-input {
-            transition: all 0.3s ease;
-        }
-        
-        .form-input:focus {
-            border-color: #b76e79;
-            box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.1);
-        }
-        
         /* Wish item styling */
         .wish-item {
             background: linear-gradient(to right, #fef2f2, #fce7f3);
@@ -220,6 +187,28 @@
             transform: translateX(5px);
             box-shadow: 0 5px 15px rgba(183, 110, 121, 0.2);
         }
+        
+        /* Form styling */
+        .form-input {
+            transition: all 0.3s ease;
+            border: 1px solid #d1d5db;
+        }
+        
+        .form-input:focus {
+            border-color: #b76e79;
+            box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.1);
+            outline: none;
+        }
+        
+        /* Avatar colors */
+        .avatar-1 { background-color: #b76e79 !important; }
+        .avatar-2 { background-color: #722F37 !important; }
+        .avatar-3 { background-color: #9c6a7e !important; }
+        .avatar-4 { background-color: #d4a5a5 !important; }
+        .avatar-5 { background-color: #c86b6b !important; }
+        .avatar-6 { background-color: #a05858 !important; }
+        .avatar-7 { background-color: #e8a5a5 !important; }
+        .avatar-8 { background-color: #b56576 !important; }
     </style>
 </head>
 <body class="max-w-lg mx-auto relative">
@@ -531,7 +520,7 @@
             </div>
         </section>
 
-        <!-- RSVP SECTION - UPDATED DESIGN -->
+        <!-- RSVP SECTION - FIREBASE -->
         <section id="rsvp" class="p-8 md:p-12 bg-light text-wine">
             <h2 class="font-serif text-3xl font-bold mb-6 text-center">Buku Tamu & Ucapan</h2>
             <p class="text-center mb-10 max-w-md mx-auto">Berikan ucapan dan doa restu untuk kami melalui form berikut:</p>
@@ -542,12 +531,14 @@
                     <form id="rsvp-form">
                         <div class="mb-6">
                             <label for="nama" class="block text-sm font-medium mb-2">Nama Anda <span class="text-red-500">*</span></label>
-                            <input type="text" id="nama" name="nama" class="w-full border border-gray-300 rounded-lg px-4 py-3 form-input focus:outline-none" placeholder="Masukkan nama lengkap" required>
+                            <input type="text" id="nama" name="nama" class="w-full border border-gray-300 rounded-lg px-4 py-3 form-input focus:outline-none" placeholder="Masukkan nama lengkap" required maxlength="50">
+                            <p class="text-xs text-gray-500 mt-1">Maksimal 50 karakter</p>
                         </div>
                         
                         <div class="mb-6">
                             <label for="ucapan" class="block text-sm font-medium mb-2">Ucapan & Doa <span class="text-red-500">*</span></label>
-                            <textarea id="ucapan" name="ucapan" rows="4" class="w-full border border-gray-300 rounded-lg px-4 py-3 form-input focus:outline-none" placeholder="Tuliskan ucapan dan doa untuk kami..." required></textarea>
+                            <textarea id="ucapan" name="ucapan" rows="4" class="w-full border border-gray-300 rounded-lg px-4 py-3 form-input focus:outline-none" placeholder="Tuliskan ucapan dan doa untuk kami..." required maxlength="600"></textarea>
+                            <p class="text-xs text-gray-500 mt-1">Maksimal 600 karakter</p>
                         </div>
                         
                         <div class="flex items-center justify-between mb-4">
@@ -567,7 +558,7 @@
                     </form>
                 </div>
                 
-                <!-- Wishes Display - UPDATED DESIGN -->
+                <!-- Wishes Display -->
                 <div class="bg-white p-6 rounded-2xl shadow-lg border border-soft-red border-opacity-20">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-xl font-bold flex items-center">
@@ -620,7 +611,7 @@
                 </div>
                 
                 <div class="pt-6 border-t border-white border-opacity-20">
-                    <p class="text-sm opacity-80">Dengan mengunduh Bapak/Ibu/Saudara/i, kami sekeluarga memohon doa restu</p>
+                    <p class="text-sm opacity-80">Dengan mengundang Bapak/Ibu/Saudara/i, kami sekeluarga memohon doa restu</p>
                     <p class="text-xs mt-2 opacity-60">© 2026 - Undangan Pernikahan Dwi Wardoyo & Elis Kurniasih</p>
                 </div>
             </div>
@@ -683,6 +674,52 @@
                 .catch(() => showNotification('Gagal menyalin teks', true));
         }
         
+        // Function to generate avatar class based on name
+        function getAvatarClass(name) {
+            if (!name) return 'avatar-1';
+            
+            let hash = 0;
+            for (let i = 0; i < name.length; i++) {
+                hash = name.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            
+            const avatarClasses = [
+                'avatar-1', 'avatar-2', 'avatar-3', 'avatar-4',
+                'avatar-5', 'avatar-6', 'avatar-7', 'avatar-8'
+            ];
+            
+            const index = Math.abs(hash) % avatarClasses.length;
+            return avatarClasses[index];
+        }
+        
+        // Format timestamp to readable date
+        function formatTimestamp(timestamp) {
+            if (!timestamp) return 'Baru saja';
+            
+            const date = new Date(timestamp);
+            if (isNaN(date.getTime())) return 'Baru saja';
+            
+            const now = new Date();
+            const diffMs = now - date;
+            const diffSec = Math.floor(diffMs / 1000);
+            const diffMin = Math.floor(diffSec / 60);
+            const diffHour = Math.floor(diffMin / 60);
+            const diffDay = Math.floor(diffHour / 24);
+            
+            if (diffSec < 60) return 'Baru saja';
+            if (diffMin < 60) return `${diffMin} menit yang lalu`;
+            if (diffHour < 24) return `${diffHour} jam yang lalu`;
+            if (diffDay === 1) return 'Kemarin';
+            if (diffDay < 7) return `${diffDay} hari yang lalu`;
+            
+            return date.toLocaleDateString('id-ID', {
+                day: 'numeric',
+                month: 'short',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             const cover = document.getElementById('cover');
@@ -724,8 +761,8 @@
                 return d.toISOString().replace(/-|:|\.\d+/g, "");
             }
             
-            const eventStartDate = formatToUTC(targetDate, 1, 0); // 08:00 WIB is 01:00 UTC
-            const eventEndDate = formatToUTC(targetDate, 12, 0); // Selesai sekitar 19:00 WIB is 12:00 UTC
+            const eventStartDate = formatToUTC(targetDate, 1, 0);
+            const eventEndDate = formatToUTC(targetDate, 12, 0);
             const calendarLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Dwi+Wardoyo+%26+Elis+Kurniasih&dates=${eventStartDate}/${eventEndDate}&details=Acara+pernikahan+Dwi+Wardoyo+dan+Elis+Kurniasih.+Lokasi:+Gumelem+Kulon+RT+6+RW+4,+Susukan,+Banjarnegara&location=Gumelem+Kulon+RT+6+RW+4,+Susukan,+Banjarnegara`;
             document.getElementById('save-date-button').href = calendarLink;
 
@@ -739,11 +776,11 @@
                 
                 // Try to play music
                 try {
-                    music.volume = 0.5; // Set volume to 50%
+                    music.volume = 0.5;
                     const musicPromise = music.play();
                     if (musicPromise !== undefined) {
                         musicPromise.catch(error => {
-                            console.log("Autoplay prevented. User needs to interact first.");
+                            console.log("Autoplay prevented.");
                             musicToggle.addEventListener('click', () => {
                                 if (music.paused) {
                                     music.play();
@@ -800,7 +837,7 @@
                 document.getElementById('seconds').textContent = Math.floor((distance % (1000 * 60)) / 1000);
             }, 1000);
 
-            // RSVP Form with Firebase
+            // RSVP Form with Firebase - SESUAI RULES
             const rsvpForm = document.getElementById('rsvp-form');
             const submitBtn = document.getElementById('submit-btn');
             const submitText = document.getElementById('submit-text');
@@ -815,7 +852,7 @@
             const wishesCount = document.getElementById('wishes-count');
             const wishesContainer = document.getElementById('wishes-container');
             
-            // Function to load wishes from Firebase
+            // Function to load wishes from Firebase - SESUAI RULES
             function loadWishes() {
                 if (!db) {
                     console.error("Firebase not initialized");
@@ -829,9 +866,11 @@
                     noWishes.classList.add('hidden');
                     wishesError.classList.add('hidden');
                     
-                    // Listen for real-time updates
-                    const wishesRef = db.ref('wishes');
-                    wishesRef.orderByChild('timestamp').limitToLast(20).on('value', (snapshot) => {
+                    // Path sesuai rules: 'bukutamu'
+                    const bukutamuRef = db.ref('bukutamu');
+                    
+                    // Listen for real-time updates, order by waktu (timestamp) descending
+                    bukutamuRef.orderByChild('waktu').limitToLast(30).on('value', (snapshot) => {
                         loadingWishes.classList.add('hidden');
                         
                         if (!snapshot.exists()) {
@@ -842,13 +881,12 @@
                         
                         const wishes = [];
                         snapshot.forEach((childSnapshot) => {
-                            wishes.push({
-                                id: childSnapshot.key,
-                                ...childSnapshot.val()
-                            });
+                            const wish = childSnapshot.val();
+                            wish.id = childSnapshot.key;
+                            wishes.push(wish);
                         });
                         
-                        // Reverse to show newest first
+                        // Reverse to show newest first (Firebase orders ascending)
                         wishes.reverse();
                         
                         // Update count
@@ -858,40 +896,28 @@
                         wishesList.innerHTML = '';
                         
                         // Display wishes
-                        wishes.forEach(wish => {
+                        wishes.forEach((wish, index) => {
                             const wishElement = document.createElement('div');
                             wishElement.className = 'wish-item p-4 rounded-lg';
                             
-                            // Format waktu
-                            let waktuText = '';
-                            if (wish.timestamp) {
-                                const waktuDate = new Date(wish.timestamp);
-                                if (!isNaN(waktuDate.getTime())) {
-                                    waktuText = waktuDate.toLocaleDateString('id-ID', {
-                                        day: 'numeric',
-                                        month: 'short',
-                                        year: 'numeric',
-                                        hour: '2-digit',
-                                        minute: '2-digit'
-                                    });
-                                }
-                            }
-                            
-                            // Create avatar based on first letter of name
+                            // Get avatar class
+                            const avatarClass = getAvatarClass(wish.nama);
                             const firstLetter = wish.nama ? wish.nama.charAt(0).toUpperCase() : '?';
-                            const avatarColor = getAvatarColor(wish.nama);
+                            
+                            // Format waktu
+                            const waktuText = formatTimestamp(wish.waktu);
                             
                             wishElement.innerHTML = `
                                 <div class="flex items-start">
                                     <div class="flex-shrink-0 mr-3">
-                                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style="background-color: ${avatarColor}">
+                                        <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold ${avatarClass}">
                                             ${firstLetter}
                                         </div>
                                     </div>
                                     <div class="flex-grow">
                                         <div class="flex justify-between items-start mb-1">
                                             <p class="font-bold text-wine">${wish.nama || 'Tamu'}</p>
-                                            <p class="text-xs text-gray-500">${waktuText || 'Baru saja'}</p>
+                                            <p class="text-xs text-gray-500">${waktuText}</p>
                                         </div>
                                         <p class="text-gray-700">${wish.ucapan || ''}</p>
                                     </div>
@@ -904,6 +930,7 @@
                         console.error("Error loading wishes:", error);
                         loadingWishes.classList.add('hidden');
                         wishesError.classList.remove('hidden');
+                        wishesError.textContent = 'Error: ' + error.message;
                     });
                     
                 } catch (error) {
@@ -913,31 +940,7 @@
                 }
             }
             
-            // Function to generate consistent avatar color based on name
-            function getAvatarColor(name) {
-                if (!name) return '#b76e79';
-                
-                const colors = [
-                    '#b76e79', // soft red
-                    '#722F37', // wine
-                    '#9c6a7e', // purple
-                    '#d4a5a5', // pink
-                    '#c86b6b', // coral
-                    '#a05858', // brown
-                    '#e8a5a5', // light pink
-                    '#b56576', // rose
-                ];
-                
-                let hash = 0;
-                for (let i = 0; i < name.length; i++) {
-                    hash = name.charCodeAt(i) + ((hash << 5) - hash);
-                }
-                
-                const index = Math.abs(hash) % colors.length;
-                return colors[index];
-            }
-            
-            // Handle form submission
+            // Handle form submission - SESUAI RULES
             rsvpForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
@@ -956,7 +959,7 @@
                 const nama = document.getElementById('nama').value.trim();
                 const ucapan = document.getElementById('ucapan').value.trim();
                 
-                // Validate
+                // Validate sesuai rules
                 if (!nama || !ucapan) {
                     showNotification('Harap lengkapi nama dan ucapan', true);
                     submitBtn.disabled = false;
@@ -965,8 +968,16 @@
                     return;
                 }
                 
-                if (ucapan.length > 500) {
-                    showNotification('Ucapan terlalu panjang (maks 500 karakter)', true);
+                if (nama.length > 50) {
+                    showNotification('Nama terlalu panjang (maks 50 karakter)', true);
+                    submitBtn.disabled = false;
+                    submitText.textContent = 'Kirim';
+                    submitSpinner.classList.add('hidden');
+                    return;
+                }
+                
+                if (ucapan.length > 600) {
+                    showNotification('Ucapan terlalu panjang (maks 600 karakter)', true);
                     submitBtn.disabled = false;
                     submitText.textContent = 'Kirim';
                     submitSpinner.classList.add('hidden');
@@ -974,15 +985,15 @@
                 }
                 
                 try {
-                    // Prepare wish data
+                    // Prepare wish data sesuai rules
                     const wishData = {
                         nama: nama,
                         ucapan: ucapan,
-                        timestamp: new Date().toISOString()
+                        waktu: Date.now() // Number timestamp, sesuai rules
                     };
                     
-                    // Save to Firebase
-                    const newWishRef = db.ref('wishes').push();
+                    // Path sesuai rules: 'bukutamu'
+                    const newWishRef = db.ref('bukutamu').push();
                     await newWishRef.set(wishData);
                     
                     // Reset form
@@ -1002,13 +1013,15 @@
                     showNotification('Ucapan berhasil dikirim!');
                     
                     // Scroll to top of wishes
-                    wishesContainer.scrollTo({ top: 0, behavior: 'smooth' });
+                    setTimeout(() => {
+                        wishesContainer.scrollTo({ top: 0, behavior: 'smooth' });
+                    }, 500);
                     
                 } catch (error) {
                     console.error('Error submitting wish:', error);
                     
                     // Show error message
-                    formMessage.textContent = 'Maaf, terjadi kesalahan. Silakan coba lagi.';
+                    formMessage.textContent = 'Maaf, terjadi kesalahan: ' + error.message;
                     formMessage.className = 'mt-4 text-center text-red-600';
                     formMessage.classList.remove('hidden');
                     
