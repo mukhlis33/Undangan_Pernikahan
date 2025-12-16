@@ -1,165 +1,705 @@
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Undangan Pernikahan Dwi & Siti</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan Dwi Wardoyo & Siti</title>
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1a365d',
+                        'secondary': '#2d3748',
+                        'accent': '#c53030',
+                        'light': '#f7fafc',
+                        'gold': '#d4af37'
+                    },
+                    fontFamily: {
+                        'cursive': ['"Great Vibes"', 'cursive'],
+                        'sans': ['"Inter"', 'sans-serif'],
+                        'serif': ['"Playfair Display"', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
 
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    body { font-family: 'Inter', sans-serif; background:#f7fafc }
-    .gold { color:#d4af37 }
-  </style>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7fafc;
+            color: #2d3748;
+            overflow-x: hidden;
+        }
+        
+        .section-hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .section-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .cover-gradient {
+            background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+        }
+        
+        .hero-pattern {
+            background-image: radial-gradient(circle at 10% 20%, rgba(26, 54, 93, 0.1) 0%, rgba(26, 54, 93, 0.05) 90%);
+        }
+        
+        .floral-divider {
+            position: relative;
+            height: 20px;
+            margin: 2rem 0;
+        }
+        
+        .floral-divider::before {
+            content: "✿ ✿ ✿";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #c53030;
+            font-size: 1.2rem;
+            letter-spacing: 0.5rem;
+        }
+        
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(to right, #d4af37, #f7ef8a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .wave-divider {
+            position: relative;
+            height: 50px;
+            overflow: hidden;
+        }
+        
+        .wave-divider svg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #c53030;
+            border-radius: 10px;
+        }
+        
+        /* Animation for floating elements */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 5s ease-in-out infinite;
+        }
+        
+        /* Heart beat animation */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .heartbeat {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+    </style>
 </head>
-<body class="max-w-lg mx-auto">
+<body class="max-w-lg mx-auto relative">
 
-<!-- COVER -->
-<section id="cover" class="fixed inset-0 bg-slate-900 text-white z-50 flex items-center justify-center text-center">
-  <div>
-    <p class="tracking-widest text-sm mb-2">UNDANGAN PERNIKAHAN</p>
-    <h1 class="font-['Great_Vibes'] text-6xl gold my-4">Dwi & Siti</h1>
-    <p class="mb-6">Sabtu, 15 Maret 2025</p>
-    <p class="mb-4">Kepada Yth:</p>
-    <p id="guest-name" class="text-2xl font-bold mb-6">Bapak/Ibu/Saudara/i</p>
-    <button id="open" class="bg-white text-black px-6 py-3 rounded-full font-semibold">
-      Buka Undangan
+    <!-- COVER SECTION -->
+    <div id="cover" class="fixed top-0 left-0 right-0 bottom-0 z-50 max-w-lg mx-auto cover-gradient text-white">
+        <div class="w-full h-full flex flex-col justify-center items-center text-center p-8 relative overflow-hidden">
+            <!-- Background pattern -->
+            <div class="absolute inset-0 hero-pattern opacity-50"></div>
+            
+            <!-- Floating elements -->
+            <div class="absolute top-10 left-10 text-gold opacity-20 floating">
+                <i class="fas fa-heart text-3xl"></i>
+            </div>
+            <div class="absolute bottom-16 right-10 text-gold opacity-20 floating" style="animation-delay: 1s;">
+                <i class="fas fa-ring text-3xl"></i>
+            </div>
+            
+            <!-- Main cover content -->
+            <div class="relative z-10">
+                <p class="text-sm tracking-widest mb-2 opacity-80">UNDANGAN PERNIKAHAN</p>
+                <h1 class="font-cursive text-6xl md:text-7xl my-4 gold-gradient">Dwi & Siti</h1>
+                
+                <div class="my-6">
+                    <p class="text-lg mb-1">Akan Menyelenggarakan</p>
+                    <p class="text-xl font-semibold">Akad & Resepsi Pernikahan</p>
+                </div>
+                
+                <div class="mt-8 mb-6">
+                    <p id="wedding-date-cover" class="text-2xl font-bold">Sabtu, 15 Maret 2025</p>
+                </div>
+                
+                <div class="mt-12">
+                    <p class="text-sm mb-2">Kepada Yth:</p>
+                    <p id="guest-name" class="text-2xl font-bold mb-8">Bapak/Ibu/Saudara/i</p>
+                    
+                    <button id="open-invitation" class="bg-white text-primary hover:bg-gray-100 font-semibold py-3 px-8 rounded-full shadow-lg flex items-center mx-auto transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-envelope-open-text mr-2"></i>
+                        Buka Undangan
+                    </button>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-4 text-center text-sm opacity-70">
+                <p>Dengan Hormat Kami Mengundang Anda</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main id="main-content" class="opacity-0">
+
+        <!-- HERO SECTION -->
+        <section id="hero" class="text-center p-8 md:p-12 bg-white min-h-screen flex flex-col justify-center relative overflow-hidden">
+            <!-- Background decoration -->
+            <div class="absolute top-0 left-0 w-40 h-40 bg-red-50 rounded-full -translate-x-20 -translate-y-20"></div>
+            <div class="absolute bottom-0 right-0 w-60 h-60 bg-blue-50 rounded-full translate-x-20 translate-y-20"></div>
+            
+            <div class="relative z-10">
+                <h2 class="text-sm tracking-widest text-accent mb-2">Merayakan Cinta & Kebahagiaan</h2>
+                <h1 class="font-cursive text-7xl my-4 text-primary">Dwi & Siti</h1>
+                
+                <div class="floral-divider my-6"></div>
+                
+                <div class="max-w-md mx-auto">
+                    <p class="text-lg mb-6">"Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."</p>
+                    <p class="text-sm italic text-gray-600">QS. Ar-Rum: 21</p>
+                </div>
+                
+                <div class="mt-10">
+                    <p class="text-2xl font-semibold text-primary">Sabtu, 15 Maret 2025</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- COUPLE SECTION -->
+        <section id="couple" class="p-8 md:p-12 bg-gradient-to-b from-white to-blue-50 text-center">
+            <h2 class="font-serif text-3xl font-bold mb-10 text-primary">Mempelai</h2>
+            
+            <div class="grid md:grid-cols-2 gap-10 max-w-xl mx-auto">
+                <!-- Groom -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover">
+                    <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-white text-4xl font-bold">
+                        DW
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-primary mb-2">Dwi Wardoyo</h3>
+                    <p class="text-sm text-gray-600 mb-4">Putra dari</p>
+                    <p class="font-medium">Bapak Sudarmono & Ibu Sri Rahayu</p>
+                    <div class="mt-6">
+                        <a href="#" class="text-accent hover:text-primary"><i class="fab fa-instagram mr-2"></i> @dwiwardoyo</a>
+                    </div>
+                </div>
+                
+                <!-- Bride -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover">
+                    <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-r from-accent to-pink-500 flex items-center justify-center text-white text-4xl font-bold">
+                        S
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold text-primary mb-2">Siti</h3>
+                    <p class="text-sm text-gray-600 mb-4">Putri dari</p>
+                    <p class="font-medium">Bapak H. Ahmad Fauzi & Ibu Hj. Aminah</p>
+                    <div class="mt-6">
+                        <a href="#" class="text-accent hover:text-primary"><i class="fab fa-instagram mr-2"></i> @siti.af</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <div class="heartbeat inline-block text-accent text-4xl">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <p class="mt-4 text-lg text-gray-700">Dengan penuh rasa syukur, kami mengundang Anda untuk hadir dalam acara pernikahan kami</p>
+            </div>
+        </section>
+
+        <!-- WAVE DIVIDER -->
+        <div class="wave-divider bg-white">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#f7fafc"></path>
+            </svg>
+        </div>
+
+        <!-- EVENT DETAILS -->
+        <section id="event" class="p-8 md:p-12 bg-light text-primary">
+            <h2 class="font-serif text-3xl font-bold mb-10 text-center">Acara Pernikahan</h2>
+            
+            <div class="max-w-xl mx-auto">
+                <!-- Countdown -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg mb-10">
+                    <h3 class="text-xl font-bold mb-4 text-center">Menuju Hari Bahagia</h3>
+                    <div id="countdown" data-date="2025-03-15T08:00:00" class="grid grid-cols-4 gap-4">
+                        <div class="bg-primary text-white p-4 rounded-lg text-center">
+                            <div id="days" class="text-3xl font-bold">0</div>
+                            <div class="text-sm">Hari</div>
+                        </div>
+                        <div class="bg-primary text-white p-4 rounded-lg text-center">
+                            <div id="hours" class="text-3xl font-bold">0</div>
+                            <div class="text-sm">Jam</div>
+                        </div>
+                        <div class="bg-primary text-white p-4 rounded-lg text-center">
+                            <div id="minutes" class="text-3xl font-bold">0</div>
+                            <div class="text-sm">Menit</div>
+                        </div>
+                        <div class="bg-primary text-white p-4 rounded-lg text-center">
+                            <div id="seconds" class="text-3xl font-bold">0</div>
+                            <div class="text-sm">Detik</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 text-center">
+                        <a id="save-date-button" href="#" class="inline-block bg-accent hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-full transition-all duration-300">
+                            <i class="far fa-calendar-plus mr-2"></i>Simpan di Kalender
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Event Details -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="text-center mb-8">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-accent rounded-full flex items-center justify-center text-white text-2xl">
+                            <i class="fas fa-ring"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">Akad Nikah</h3>
+                        <p class="text-lg mt-2">Sabtu, 15 Maret 2025</p>
+                        <p class="text-xl font-bold mt-1">08:00 - 10:00 WIB</p>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <h4 class="font-bold text-lg mb-2 flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-accent"></i> Lokasi Akad
+                        </h4>
+                        <p>Gedung Serbaguna Al-Falah, Jl. Merdeka No. 123, Jakarta Pusat</p>
+                        <a href="https://maps.app.goo.gl/example" target="_blank" class="inline-block mt-3 text-accent hover:text-primary font-medium">
+                            <i class="fas fa-external-link-alt mr-1"></i> Lihat di Google Maps
+                        </a>
+                    </div>
+                    
+                    <div class="pt-6 border-t border-gray-200">
+                        <div class="text-center">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-primary rounded-full flex items-center justify-center text-white text-2xl">
+                                <i class="fas fa-glass-cheers"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold">Resepsi Pernikahan</h3>
+                            <p class="text-lg mt-2">Sabtu, 15 Maret 2025</p>
+                            <p class="text-xl font-bold mt-1">11:00 - 14:00 WIB</p>
+                            <p class="mt-2">Bertempat di lokasi yang sama</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GIFT SECTION -->
+        <section id="gift" class="p-8 md:p-12 bg-white text-primary">
+            <h2 class="font-serif text-3xl font-bold mb-10 text-center">Amplop Digital</h2>
+            
+            <div class="max-w-md mx-auto bg-gradient-to-r from-primary to-secondary p-8 rounded-2xl shadow-lg text-white">
+                <div class="text-center mb-6">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-white rounded-full flex items-center justify-center text-primary text-3xl">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <p class="text-lg">Doa dan restu Anda merupakan hadiah terindah bagi kami. Namun jika berkenan memberikan tanda kasih, kami menerima melalui:</p>
+                </div>
+                
+                <div class="space-y-6">
+                    <!-- Bank 1 -->
+                    <div class="bg-white bg-opacity-10 p-4 rounded-xl">
+                        <h4 class="font-bold text-lg mb-2">Bank BCA</h4>
+                        <p class="mb-1">a.n. Dwi Wardoyo</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <p class="font-mono text-xl">1234 5678 9012</p>
+                            <button onclick="copyToClipboard('1234 5678 9012', 'Nomor rekening BCA berhasil disalin!')" class="bg-white text-primary hover:bg-gray-100 font-semibold py-1 px-4 rounded-full text-sm">
+                                Salin
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Bank 2 -->
+                    <div class="bg-white bg-opacity-10 p-4 rounded-xl">
+                        <h4 class="font-bold text-lg mb-2">Bank Mandiri</h4>
+                        <p class="mb-1">a.n. Siti</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <p class="font-mono text-xl">9876 5432 1098</p>
+                            <button onclick="copyToClipboard('9876 5432 1098', 'Nomor rekening Mandiri berhasil disalin!')" class="bg-white text-primary hover:bg-gray-100 font-semibold py-1 px-4 rounded-full text-sm">
+                                Salin
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <p class="text-sm opacity-80">Terima kasih atas doa dan restu yang telah diberikan</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP SECTION -->
+        <section id="rsvp" class="p-8 md:p-12 bg-light text-primary">
+            <h2 class="font-serif text-3xl font-bold mb-6 text-center">Konfirmasi Kehadiran</h2>
+            <p class="text-center mb-10 max-w-md mx-auto">Merupakan kehormatan bagi kami jika Bapak/Ibu/Saudara/i berkenan hadir. Mohon konfirmasi kehadiran melalui form berikut:</p>
+            
+            <div class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-lg">
+                <form id="rsvp-form">
+                    <div class="mb-6">
+                        <label for="nama" class="block text-sm font-medium mb-2">Nama Lengkap</label>
+                        <input type="text" id="nama" name="nama" class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" required>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="kehadiran" class="block text-sm font-medium mb-2">Konfirmasi Kehadiran</label>
+                        <select id="kehadiran" name="kehadiran" class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" required>
+                            <option value="" disabled selected>Pilih opsi</option>
+                            <option value="hadir">Ya, saya akan hadir</option>
+                            <option value="mungkin">Masih belum pasti</option>
+                            <option value="tidak">Maaf, tidak dapat hadir</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="jumlah" class="block text-sm font-medium mb-2">Jumlah Tamu</label>
+                        <select id="jumlah" name="jumlah" class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent" required>
+                            <option value="1">1 orang</option>
+                            <option value="2">2 orang</option>
+                            <option value="3">3 orang</option>
+                            <option value="4">4 orang</option>
+                            <option value="5">5 orang atau lebih</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="ucapan" class="block text-sm font-medium mb-2">Ucapan & Doa (opsional)</label>
+                        <textarea id="ucapan" name="ucapan" rows="4" class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-accent hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-full transition-all duration-300">
+                        Kirim Konfirmasi
+                    </button>
+                </form>
+                
+                <div id="wishes-container" class="mt-10">
+                    <h3 class="text-xl font-bold mb-4">Ucapan dari Tamu</h3>
+                    <div id="wishes-list" class="space-y-4 max-h-60 overflow-y-auto p-2"></div>
+                    <p id="no-wishes" class="text-center text-gray-500 py-4">Belum ada ucapan. Jadilah yang pertama!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="p-8 md:p-12 bg-primary text-white text-center">
+            <div class="max-w-md mx-auto">
+                <h2 class="font-cursive text-4xl mb-6 gold-gradient">Dwi & Siti</h2>
+                
+                <div class="mb-8">
+                    <p class="text-lg">Atas kehadiran dan doa restunya, kami mengucapkan terima kasih.</p>
+                    <p class="mt-4">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+                </div>
+                
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="#" class="text-white hover:text-gold text-xl"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white hover:text-gold text-xl"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="text-white hover:text-gold text-xl"><i class="fas fa-envelope"></i></a>
+                </div>
+                
+                <div class="pt-6 border-t border-white border-opacity-20">
+                    <p class="text-sm opacity-80">Made with <i class="fas fa-heart text-accent mx-1"></i> for our special day</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div id="bottom-nav" class="hidden fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-sm z-40">
+        <div class="bg-white shadow-2xl rounded-full p-2 flex justify-around items-center text-primary border border-gray-200">
+            <a href="#hero" class="p-3 rounded-full hover:bg-blue-50 text-primary"><i class="fas fa-home"></i></a>
+            <a href="#couple" class="p-3 rounded-full hover:bg-blue-50 text-primary"><i class="fas fa-heart"></i></a>
+            <a href="#event" class="p-3 rounded-full hover:bg-blue-50 text-primary"><i class="fas fa-calendar-day"></i></a>
+            <a href="#gift" class="p-3 rounded-full hover:bg-blue-50 text-primary"><i class="fas fa-gift"></i></a>
+            <a href="#rsvp" class="p-3 rounded-full hover:bg-blue-50 text-primary"><i class="fas fa-comment-dots"></i></a>
+        </div>
+    </div>
+
+    <!-- MUSIC TOGGLE -->
+    <button id="music-toggle" class="hidden fixed bottom-20 right-4 bg-white shadow-xl w-12 h-12 rounded-full z-40 flex justify-center items-center text-primary border border-gray-200">
+        <i id="music-icon" class="fas fa-music"></i>
     </button>
-  </div>
-</section>
 
-<!-- MAIN -->
-<main id="main" class="hidden">
+    <audio id="background-music" loop src="https://assets.mixkit.co/music/preview/mixkit-wedding-day-491.mp3"></audio>
 
-<!-- HERO -->
-<section class="p-8 text-center bg-white">
-  <h2 class="font-['Great_Vibes'] text-6xl text-slate-800 mb-4">Dwi & Siti</h2>
-  <p class="italic">QS. Ar-Rum : 21</p>
-</section>
+    <!-- NOTIFICATION -->
+    <div id="notification" class="hidden fixed top-5 left-1/2 -translate-x-1/2 bg-accent text-white text-sm py-2 px-6 rounded-full shadow-lg z-50">
+        <p>Teks notifikasi</p>
+    </div>
 
-<!-- RSVP -->
-<section class="p-8 bg-slate-100">
-  <h2 class="text-2xl font-bold text-center mb-6">RSVP & Ucapan</h2>
+    <script>
+        // Notification function
+        const notification = document.getElementById('notification');
+        function showNotification(message, isError = false) {
+            notification.querySelector('p').textContent = message;
+            notification.className = isError 
+                ? 'fixed top-5 left-1/2 -translate-x-1/2 bg-red-600 text-white text-sm py-2 px-6 rounded-full shadow-lg z-50'
+                : 'fixed top-5 left-1/2 -translate-x-1/2 bg-accent text-white text-sm py-2 px-6 rounded-full shadow-lg z-50';
+            notification.classList.remove('hidden');
+            
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 3000);
+        }
+        
+        // Copy to clipboard function
+        function copyToClipboard(text, message) {
+            navigator.clipboard.writeText(text)
+                .then(() => showNotification(message))
+                .catch(() => showNotification('Gagal menyalin teks', true));
+        }
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const cover = document.getElementById('cover');
+            const mainContent = document.getElementById('main-content');
+            const openButton = document.getElementById('open-invitation');
+            const music = document.getElementById('background-music');
+            const musicToggle = document.getElementById('music-toggle');
+            const musicIcon = document.getElementById('music-icon');
+            const bottomNav = document.getElementById('bottom-nav');
+            const countdownEl = document.getElementById('countdown');
+            const targetDate = new Date(countdownEl.dataset.date);
 
-  <form id="rsvp-form" class="bg-white p-6 rounded-xl shadow space-y-4">
-    <input id="nama" type="text" placeholder="Nama" class="w-full border p-3 rounded" required>
+            // Get guest name from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const guest = urlParams.get('nama');
+            if (guest) {
+                document.getElementById('guest-name').textContent = decodeURIComponent(guest.replace(/\+/g, ' '));
+                document.getElementById('nama').value = decodeURIComponent(guest.replace(/\+/g, ' '));
+            }
 
-    <select id="kehadiran" class="w-full border p-3 rounded" required>
-      <option value="">Konfirmasi Kehadiran</option>
-      <option value="Hadir">Hadir</option>
-      <option value="Mungkin">Mungkin Hadir</option>
-      <option value="Tidak Hadir">Tidak Hadir</option>
-    </select>
+            // Set wedding date on cover
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('wedding-date-cover').textContent = targetDate.toLocaleDateString('id-ID', dateOptions);
 
-    <select id="jumlah" class="w-full border p-3 rounded" required>
-      <option value="1">1 Tamu</option>
-      <option value="2">2 Tamu</option>
-      <option value="3">3 Tamu</option>
-      <option value="4">4 Tamu</option>
-    </select>
+            // Calendar link setup
+            function formatToUTC(date, hours, minutes) {
+                let d = new Date(date);
+                d.setUTCHours(hours, minutes, 0, 0);
+                return d.toISOString().replace(/-|:|\.\d+/g, "");
+            }
+            
+            const eventStartDate = formatToUTC(targetDate, 1, 0); // 08:00 WIB is 01:00 UTC
+            const eventEndDate = formatToUTC(targetDate, 6, 0); // 13:00 WIB is 06:00 UTC
+            const calendarLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Dwi+%26+Siti&dates=${eventStartDate}/${eventEndDate}&details=Acara+pernikahan+Dwi+Wardoyo+dan+Siti.+Lihat+undangan+untuk+detail+lokasi.&location=Gedung+Serbaguna+Al-Falah,+Jakarta+Pusat`;
+            document.getElementById('save-date-button').href = calendarLink;
 
-    <textarea id="ucapan" rows="4" placeholder="Ucapan & doa" class="w-full border p-3 rounded"></textarea>
+            // Open invitation button
+            openButton.addEventListener('click', () => {
+                cover.classList.add('hidden');
+                mainContent.style.transition = 'opacity 1s 0.5s';
+                mainContent.style.opacity = '1';
+                bottomNav.classList.remove('hidden');
+                musicToggle.classList.remove('hidden');
+                
+                // Try to play music
+                const musicPromise = music.play();
+                if (musicPromise !== undefined) {
+                    musicPromise.catch(error => {
+                        console.log("Autoplay prevented. User needs to interact first.");
+                        musicToggle.addEventListener('click', () => {
+                            if (music.paused) {
+                                music.play();
+                            }
+                        }, { once: true });
+                    });
+                }
+                
+                document.body.style.overflowY = 'auto';
+                observeSections();
+            });
 
-    <button class="w-full bg-slate-900 text-white py-3 rounded font-semibold">
-      Kirim
-    </button>
-  </form>
+            // Music toggle
+            let isPlaying = false;
+            musicToggle.addEventListener('click', () => {
+                if (isPlaying) {
+                    music.pause();
+                } else {
+                    music.play();
+                }
+            });
 
-  <div class="mt-10">
-    <h3 class="text-xl font-bold mb-4">Ucapan Tamu</h3>
-    <div id="wishes-list" class="space-y-4"></div>
-    <p id="no-wishes" class="text-center text-gray-500 mt-4">Belum ada ucapan</p>
-  </div>
-</section>
+            music.onplay = () => {
+                isPlaying = true;
+                musicIcon.className = 'fas fa-pause';
+            };
+            
+            music.onpause = () => {
+                isPlaying = false;
+                musicIcon.className = 'fas fa-music';
+            };
 
-</main>
+            // Countdown timer
+            const countdownInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = targetDate.getTime() - now;
+                
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    countdownEl.innerHTML = "<p class='col-span-4 text-xl text-center py-4'>Acara telah dilaksanakan. Terima kasih!</p>";
+                    return;
+                }
+                
+                document.getElementById('days').textContent = Math.floor(distance / (1000 * 60 * 60 * 24));
+                document.getElementById('hours').textContent = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('minutes').textContent = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('seconds').textContent = Math.floor((distance % (1000 * 60)) / 1000);
+            }, 1000);
 
-<!-- FIREBASE SCRIPT -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getFirestore, collection, addDoc, getDocs,
-  query, orderBy, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+            // RSVP Form simulation (without Firebase)
+            const rsvpForm = document.getElementById('rsvp-form');
+            const wishesList = document.getElementById('wishes-list');
+            const noWishes = document.getElementById('no-wishes');
+            
+            // Load wishes from localStorage
+            let wishes = JSON.parse(localStorage.getItem('weddingWishes')) || [];
+            
+            function renderWishes() {
+                wishesList.innerHTML = '';
+                
+                if (wishes.length === 0) {
+                    noWishes.classList.remove('hidden');
+                    return;
+                }
+                
+                noWishes.classList.add('hidden');
+                
+                // Show latest 5 wishes
+                const recentWishes = wishes.slice(-5).reverse();
+                
+                recentWishes.forEach(wish => {
+                    const wishElement = document.createElement('div');
+                    wishElement.className = 'bg-gray-50 p-4 rounded-lg';
+                    wishElement.innerHTML = `
+                        <p class="font-bold text-primary">${wish.nama}</p>
+                        ${wish.kehadiran ? `<p class="text-sm text-gray-600 mt-1">Konfirmasi: <span class="font-medium">${wish.kehadiran === 'hadir' ? 'Hadir' : wish.kehadiran === 'mungkin' ? 'Mungkin Hadir' : 'Tidak Hadir'}</span></p>` : ''}
+                        ${wish.jumlah ? `<p class="text-sm text-gray-600">Jumlah tamu: ${wish.jumlah} orang</p>` : ''}
+                        ${wish.ucapan ? `<p class="mt-2 text-gray-700">"${wish.ucapan}"</p>` : ''}
+                        <p class="text-xs text-gray-500 mt-2">${new Date(wish.timestamp).toLocaleDateString('id-ID')}</p>
+                    `;
+                    wishesList.appendChild(wishElement);
+                });
+            }
+            
+            rsvpForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    nama: document.getElementById('nama').value,
+                    kehadiran: document.getElementById('kehadiran').value,
+                    jumlah: document.getElementById('jumlah').value,
+                    ucapan: document.getElementById('ucapan').value || '',
+                    timestamp: new Date().toISOString()
+                };
+                
+                // Add to wishes array
+                wishes.push(formData);
+                
+                // Save to localStorage
+                localStorage.setItem('weddingWishes', JSON.stringify(wishes));
+                
+                // Reset form
+                rsvpForm.reset();
+                
+                // Restore guest name if it was in URL
+                if (guest) {
+                    document.getElementById('nama').value = decodeURIComponent(guest.replace(/\+/g, ' '));
+                }
+                
+                // Update wishes display
+                renderWishes();
+                
+                // Show notification
+                showNotification('Konfirmasi kehadiran berhasil dikirim. Terima kasih!');
+            });
+            
+            // Initial render of wishes
+            renderWishes();
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBqdj3u_EO031MhXc98HwtVxm7DJicE23A",
-  authDomain: "bukutamudwi.firebaseapp.com",
-  projectId: "bukutamudwi",
-  storageBucket: "bukutamudwi.firebasestorage.app",
-  messagingSenderId: "62457341086",
-  appId: "1:62457341086:web:f6122cae9d733dc6be078f"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const rsvpRef = collection(db, "rsvp");
-
-const wishesList = document.getElementById("wishes-list");
-const noWishes = document.getElementById("no-wishes");
-
-// Load wishes
-async function loadWishes() {
-  wishesList.innerHTML = "";
-  const q = query(rsvpRef, orderBy("dibuat", "desc"));
-  const snap = await getDocs(q);
-
-  if (snap.empty) {
-    noWishes.classList.remove("hidden");
-    return;
-  }
-  noWishes.classList.add("hidden");
-
-  snap.forEach(d => {
-    const v = d.data();
-    const t = v.dibuat?.toDate().toLocaleString("id-ID") || "";
-    wishesList.innerHTML += `
-      <div class="bg-white p-4 rounded shadow">
-        <b>${v.nama}</b>
-        <p class="text-sm">${v.kehadiran} • ${v.jumlah} tamu</p>
-        <p class="italic mt-2">"${v.ucapan || ""}"</p>
-        <p class="text-xs text-gray-400 mt-1">${t}</p>
-      </div>
-    `;
-  });
-}
-
-// Submit RSVP
-document.getElementById("rsvp-form").addEventListener("submit", async e => {
-  e.preventDefault();
-  await addDoc(rsvpRef, {
-    nama: nama.value,
-    kehadiran: kehadiran.value,
-    jumlah: jumlah.value,
-    ucapan: ucapan.value,
-    dibuat: serverTimestamp()
-  });
-  ucapan.value = "";
-  loadWishes();
-});
-
-// Nama dari URL
-const params = new URLSearchParams(location.search);
-const guest = params.get("nama");
-if (guest) {
-  const n = decodeURIComponent(guest.replace(/\+/g," "));
-  document.getElementById("nama").value = n;
-  document.getElementById("guest-name").innerText = n;
-}
-
-// Cover
-document.getElementById("open").onclick = () => {
-  document.getElementById("cover").style.display = "none";
-  document.getElementById("main").classList.remove("hidden");
-};
-
-loadWishes();
-</script>
-
+            // Scroll animation for sections
+            const observeSections = () => {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('section-visible');
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                document.querySelectorAll('section').forEach(section => {
+                    section.classList.add('section-hidden');
+                    observer.observe(section);
+                });
+            };
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 20,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
