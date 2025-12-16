@@ -224,6 +224,13 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
         }
+        
+        /* Pindahkan audio ke posisi yang sesuai */
+        audio {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
     </style>
 </head>
 <body class="max-w-lg mx-auto relative">
@@ -657,7 +664,7 @@
     </div>
 
     <script>
-        // Firebase Configuration
+        // Firebase Configuration - KONFIGURASI ANDA
         const firebaseConfig = {
             apiKey: "AIzaSyC6pOhkZkmPcmrPkJ-Olwuk61_b9ySxAzY",
             authDomain: "undangan-pernikahan-dwi-elis.firebaseapp.com",
@@ -666,7 +673,12 @@
             storageBucket: "undangan-pernikahan-dwi-elis.firebasestorage.app",
             messagingSenderId: "317379290526",
             appId: "1:317379290526:web:7278842b3c28e73103e28f"
-            };
+        };
+        
+        // Global variables
+        let db = null;
+        let firebaseInitialized = false;
+        
         // Notification function
         const notification = document.getElementById('notification');
         function showNotification(message, isError = false) {
@@ -734,6 +746,115 @@
             });
         }
         
+        // Initialize Firebase
+        function initializeFirebase() {
+            try {
+                firebase.initializeApp(firebaseConfig);
+                db = firebase.database();
+                firebaseInitialized = true;
+                console.log("✅ Firebase initialized successfully");
+                return true;
+            } catch (error) {
+                console.error("❌ Firebase initialization error:", error);
+                showNotification("Gagal menghubungkan ke database", true);
+                return false;
+            }
+        }
+        
+        // Function to display wishes
+        function displayWishes(wishesArray) {
+            const loadingWishes = document.getElementById('loading-wishes');
+            const noWishes = document.getElementById('no-wishes');
+            const wishesList = document.getElementById('wishes-list');
+            const wishesCount = document.getElementById('wishes-count');
+            const wishesError = document.getElementById('wishes-error');
+            
+            loadingWishes.classList.add('hidden');
+            wishesError.classList.add('hidden');
+            
+            if (!wishesArray || wishesArray.length === 0) {
+                noWishes.classList.remove('hidden');
+                wishesCount.textContent = "0 ucapan";
+                return;
+            }
+            
+            noWishes.classList.add('hidden');
+            wishesCount.textContent = `${wishesArray.length} ucapan`;
+            
+            // Clear the list
+            wishesList.innerHTML = '';
+            
+            // Display wishes (newest first)
+            wishesArray.forEach((wish, index) => {
+                const wishElement = document.createElement('div');
+                wishElement.className = 'wish-item p-4 rounded-lg';
+                
+                const avatarClass = getAvatarClass(wish.nama);
+                const firstLetter = wish.nama ? wish.nama.charAt(0).toUpperCase() : '?';
+                const waktuText = formatTimestamp(wish.waktu);
+                
+                wishElement.innerHTML = `
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mr-3">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold ${avatarClass}">
+                                ${firstLetter}
+                            </div>
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex justify-between items-start mb-1">
+                                <p class="font-bold text-dark-blue">${wish.nama || 'Tamu'}</p>
+                                <p class="text-xs text-gray-500">${waktuText}</p>
+                            </div>
+                            <p class="text-gray-700">${wish.ucapan || ''}</p>
+                        </div>
+                    </div>
+                `;
+                wishesList.appendChild(wishElement);
+            });
+        }
+        
+        // Function to load wishes from Firebase
+        function loadWishes() {
+            const loadingWishes = document.getElementById('loading-wishes');
+            const wishesError = document.getElementById('wishes-error');
+            
+            loadingWishes.classList.remove('hidden');
+            
+            if (!firebaseInitialized || !db) {
+                console.log("Firebase not available");
+                wishesError.classList.remove('hidden');
+                wishesError.textContent = "Database tidak tersedia. Silakan refresh halaman.";
+                return;
+            }
+            
+            // Load from Firebase
+            const bukutamuRef = db.ref('bukutamu');
+            
+            bukutamuRef.orderByChild('waktu').limitToLast(50).once('value')
+                .then((snapshot) => {
+                    if (!snapshot.exists()) {
+                        displayWishes([]);
+                        return;
+                    }
+                    
+                    const wishes = [];
+                    snapshot.forEach((childSnapshot) => {
+                        const wish = childSnapshot.val();
+                        wish.id = childSnapshot.key;
+                        wishes.push(wish);
+                    });
+                    
+                    // Sort by waktu descending (newest first)
+                    wishes.sort((a, b) => b.waktu - a.waktu);
+                    displayWishes(wishes);
+                })
+                .catch((error) => {
+                    console.error("Error loading from Firebase:", error);
+                    wishesError.classList.remove('hidden');
+                    wishesError.textContent = "Gagal memuat ucapan. Pastikan koneksi internet stabil.";
+                });
+        }
+        
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             const cover = document.getElementById('cover');
@@ -747,25 +868,15 @@
             const targetDate = new Date(countdownEl.dataset.date);
 
             // Initialize Firebase
-            let db = null;
-            let firebaseInitialized = false;
-            
-            try {
-                firebase.initializeApp(firebaseConfig);
-                db = firebase.database();
-                firebaseInitialized = true;
-                console.log("Firebase initialized successfully");
-            } catch (error) {
-                console.error("Firebase initialization error:", error);
-                showNotification("Gagal menghubungkan ke database", true);
-            }
+            initializeFirebase();
 
             // Get guest name from URL
             const urlParams = new URLSearchParams(window.location.search);
             const guest = urlParams.get('nama');
             if (guest) {
-                document.getElementById('guest-name').textContent = decodeURIComponent(guest.replace(/\+/g, ' '));
-                document.getElementById('nama').value = decodeURIComponent(guest.replace(/\+/g, ' '));
+                const decodedGuest = decodeURIComponent(guest.replace(/\+/g, ' '));
+                document.getElementById('guest-name').textContent = decodedGuest;
+                document.getElementById('nama').value = decodedGuest;
             }
 
             // Set wedding date on cover
@@ -823,7 +934,10 @@
                 if (isPlaying) {
                     music.pause();
                 } else {
-                    music.play();
+                    music.play().catch(e => {
+                        console.log("Playback failed:", e);
+                        showNotification("Klik tombol untuk memutar musik", true);
+                    });
                 }
             });
 
@@ -861,104 +975,6 @@
             const submitSpinner = document.getElementById('submit-spinner');
             const formMessage = document.getElementById('form-message');
             
-            // Elements for displaying wishes
-            const wishesList = document.getElementById('wishes-list');
-            const loadingWishes = document.getElementById('loading-wishes');
-            const noWishes = document.getElementById('no-wishes');
-            const wishesError = document.getElementById('wishes-error');
-            const wishesCount = document.getElementById('wishes-count');
-            const wishesContainer = document.getElementById('wishes-container');
-            
-            // Function to display wishes
-            function displayWishes(wishesArray) {
-                loadingWishes.classList.add('hidden');
-                
-                if (!wishesArray || wishesArray.length === 0) {
-                    noWishes.classList.remove('hidden');
-                    wishesCount.textContent = "0 ucapan";
-                    return;
-                }
-                
-                // Update count
-                wishesCount.textContent = `${wishesArray.length} ucapan`;
-                
-                // Clear the list
-                wishesList.innerHTML = '';
-                
-                // Display wishes (show newest first)
-                wishesArray.forEach((wish, index) => {
-                    const wishElement = document.createElement('div');
-                    wishElement.className = 'wish-item p-4 rounded-lg';
-                    
-                    // Get avatar class
-                    const avatarClass = getAvatarClass(wish.nama);
-                    const firstLetter = wish.nama ? wish.nama.charAt(0).toUpperCase() : '?';
-                    
-                    // Format waktu
-                    const waktuText = formatTimestamp(wish.waktu);
-                    
-                    wishElement.innerHTML = `
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 mr-3">
-                                <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold ${avatarClass}">
-                                    ${firstLetter}
-                                </div>
-                            </div>
-                            <div class="flex-grow">
-                                <div class="flex justify-between items-start mb-1">
-                                    <p class="font-bold text-dark-blue">${wish.nama || 'Tamu'}</p>
-                                    <p class="text-xs text-gray-500">${waktuText}</p>
-                                </div>
-                                <p class="text-gray-700">${wish.ucapan || ''}</p>
-                            </div>
-                        </div>
-                    `;
-                    wishesList.appendChild(wishElement);
-                });
-            }
-            
-            // Function to load wishes from Firebase
-            function loadWishes() {
-                loadingWishes.classList.remove('hidden');
-                noWishes.classList.add('hidden');
-                wishesError.classList.add('hidden');
-                
-                if (!firebaseInitialized || !db) {
-                    console.log("Firebase not available");
-                    wishesError.classList.remove('hidden');
-                    wishesError.textContent = "Database tidak tersedia. Silakan refresh halaman.";
-                    return;
-                }
-                
-                // Load from Firebase - Fixed path
-                const bukutamuRef = db.ref('bukutamu');
-                
-                bukutamuRef.orderByChild('waktu').limitToLast(50).once('value')
-                    .then((snapshot) => {
-                        if (!snapshot.exists()) {
-                            displayWishes([]);
-                            return;
-                        }
-                        
-                        const wishes = [];
-                        snapshot.forEach((childSnapshot) => {
-                            const wish = childSnapshot.val();
-                            wish.id = childSnapshot.key;
-                            wishes.push(wish);
-                        });
-                        
-                        // Sort by waktu descending (newest first)
-                        wishes.sort((a, b) => b.waktu - a.waktu);
-                        displayWishes(wishes);
-                        
-                    })
-                    .catch((error) => {
-                        console.error("Error loading from Firebase:", error);
-                        wishesError.classList.remove('hidden');
-                        wishesError.textContent = "Gagal memuat ucapan. Pastikan koneksi internet stabil.";
-                    });
-            }
-            
             // Handle form submission
             rsvpForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
@@ -987,16 +1003,16 @@
                     return;
                 }
                 
-                if (nama.length > 50) {
-                    showNotification('Nama terlalu panjang (maks 50 karakter)', true);
+                if (nama.length < 2 || nama.length > 50) {
+                    showNotification('Nama harus 2-50 karakter', true);
                     submitBtn.disabled = false;
                     submitText.textContent = 'Kirim';
                     submitSpinner.classList.add('hidden');
                     return;
                 }
                 
-                if (ucapan.length > 600) {
-                    showNotification('Ucapan terlalu panjang (maks 600 karakter)', true);
+                if (ucapan.length < 5 || ucapan.length > 600) {
+                    showNotification('Ucapan harus 5-600 karakter', true);
                     submitBtn.disabled = false;
                     submitText.textContent = 'Kirim';
                     submitSpinner.classList.add('hidden');
@@ -1011,9 +1027,13 @@
                         waktu: Date.now()
                     };
                     
-                    // Save to Firebase - FIXED: Using correct path
+                    console.log("📤 Mengirim data ke Firebase:", wishData);
+                    
+                    // Save to Firebase
                     const newWishRef = db.ref('bukutamu').push();
                     await newWishRef.set(wishData);
+                    
+                    console.log("✅ Data berhasil disimpan dengan ID:", newWishRef.key);
                     
                     // Reset form
                     rsvpForm.reset();
@@ -1029,23 +1049,28 @@
                     formMessage.classList.remove('hidden');
                     
                     // Show notification
-                    showNotification('Ucapan berhasil dikirim!');
+                    showNotification('Ucapan berhasil dikirim! Terima kasih atas doanya.');
                     
                     // Reload wishes
-                    loadWishes();
+                    setTimeout(() => {
+                        loadWishes();
+                    }, 1000);
                     
                     // Scroll to top of wishes
                     setTimeout(() => {
+                        const wishesContainer = document.getElementById('wishes-container');
                         wishesContainer.scrollTo({ top: 0, behavior: 'smooth' });
                     }, 500);
                     
                 } catch (error) {
-                    console.error('Error submitting wish:', error);
+                    console.error('❌ Error submitting wish:', error);
+                    console.error('Error code:', error.code);
+                    console.error('Error message:', error.message);
                     
-                    // Check if it's a permission error
-                    if (error.message.includes('PERMISSION_DENIED')) {
-                        formMessage.textContent = 'Error: Izin ditolak. Silakan cek Firebase Rules Anda.';
-                        showNotification('Error Firebase Rules. Cek konfigurasi.', true);
+                    // Check error type
+                    if (error.code === 'PERMISSION_DENIED') {
+                        formMessage.textContent = 'Error: Izin Firebase ditolak. Periksa Rules di Firebase Console.';
+                        showNotification('Error Firebase Rules. Cek konfigurasi database.', true);
                     } else {
                         formMessage.textContent = 'Maaf, terjadi kesalahan: ' + error.message;
                         showNotification('Gagal mengirim ucapan. Silakan coba lagi.', true);
@@ -1098,6 +1123,15 @@
             
             // Initialize
             observeSections();
+            
+            // Show bottom nav on scroll
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    bottomNav.classList.remove('hidden');
+                } else {
+                    bottomNav.classList.add('hidden');
+                }
+            });
         });
     </script>
 </body>
