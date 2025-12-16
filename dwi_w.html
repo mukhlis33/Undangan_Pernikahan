@@ -12,13 +12,14 @@
             theme: {
                 extend: {
                     colors: {
-                        'primary': '#1a365d',
-                        'secondary': '#2d3748',
-                        'accent': '#c53030',
-                        'light': '#f7fafc',
+                        'primary': '#1e3a8a',
+                        'secondary': '#1e40af',
+                        'accent': '#3b82f6',
+                        'light': '#f0f9ff',
                         'gold': '#d4af37',
-                        'wine': '#722F37',
-                        'soft-red': '#b76e79'
+                        'dark-blue': '#1e3a8a',
+                        'soft-blue': '#60a5fa',
+                        'sky-blue': '#e0f2fe'
                     },
                     fontFamily: {
                         'cursive': ['"Great Vibes"', 'cursive'],
@@ -46,8 +47,8 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f7fafc;
-            color: #2d3748;
+            background-color: #f0f9ff;
+            color: #1e3a8a;
             overflow-x: hidden;
         }
         
@@ -62,13 +63,14 @@
         }
         
         .cover-gradient {
-            background: linear-gradient(rgba(114, 47, 55, 0.9), rgba(183, 110, 121, 0.8)), url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+            background: linear-gradient(rgba(30, 58, 138, 0.7), rgba(59, 130, 246, 0.6)), url('cover.jpg');
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
         }
         
         .hero-pattern {
-            background-image: radial-gradient(circle at 10% 20%, rgba(114, 47, 55, 0.1) 0%, rgba(114, 47, 55, 0.05) 90%);
+            background-image: radial-gradient(circle at 10% 20%, rgba(30, 58, 138, 0.1) 0%, rgba(59, 130, 246, 0.05) 90%);
         }
         
         .floral-divider {
@@ -78,12 +80,12 @@
         }
         
         .floral-divider::before {
-            content: "❀ ❀ ❀";
+            content: "✦ ✦ ✦";
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: #b76e79;
+            color: #3b82f6;
             font-size: 1.2rem;
             letter-spacing: 0.5rem;
         }
@@ -94,7 +96,7 @@
         
         .card-hover:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px rgba(30, 58, 138, 0.1);
         }
         
         .gold-gradient {
@@ -122,12 +124,12 @@
         }
         
         ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: #e0f2fe;
             border-radius: 10px;
         }
         
         ::-webkit-scrollbar-thumb {
-            background: #b76e79;
+            background: #3b82f6;
             border-radius: 10px;
         }
         
@@ -157,7 +159,7 @@
         .spinner {
             border: 3px solid rgba(0, 0, 0, 0.1);
             border-radius: 50%;
-            border-top: 3px solid #b76e79;
+            border-top: 3px solid #3b82f6;
             width: 30px;
             height: 30px;
             animation: spin 1s linear infinite;
@@ -169,7 +171,7 @@
         }
         
         .javanese-date {
-            background: linear-gradient(135deg, #722F37 0%, #b76e79 100%);
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
             color: white;
             border-radius: 10px;
             padding: 10px 20px;
@@ -178,14 +180,14 @@
         
         /* Wish item styling */
         .wish-item {
-            background: linear-gradient(to right, #fef2f2, #fce7f3);
-            border-left: 4px solid #b76e79;
+            background: linear-gradient(to right, #eff6ff, #dbeafe);
+            border-left: 4px solid #3b82f6;
             transition: all 0.3s ease;
         }
         
         .wish-item:hover {
             transform: translateX(5px);
-            box-shadow: 0 5px 15px rgba(183, 110, 121, 0.2);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2);
         }
         
         /* Form styling */
@@ -195,50 +197,36 @@
         }
         
         .form-input:focus {
-            border-color: #b76e79;
-            box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.1);
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
             outline: none;
         }
         
         /* Avatar colors */
-        .avatar-1 { background-color: #b76e79 !important; }
-        .avatar-2 { background-color: #722F37 !important; }
-        .avatar-3 { background-color: #9c6a7e !important; }
-        .avatar-4 { background-color: #d4a5a5 !important; }
-        .avatar-5 { background-color: #c86b6b !important; }
-        .avatar-6 { background-color: #a05858 !important; }
-        .avatar-7 { background-color: #e8a5a5 !important; }
-        .avatar-8 { background-color: #b56576 !important; }
+        .avatar-1 { background-color: #3b82f6 !important; }
+        .avatar-2 { background-color: #1e40af !important; }
+        .avatar-3 { background-color: #2563eb !important; }
+        .avatar-4 { background-color: #60a5fa !important; }
+        .avatar-5 { background-color: #1d4ed8 !important; }
+        .avatar-6 { background-color: #93c5fd !important; }
+        .avatar-7 { background-color: #1e3a8a !important; }
+        .avatar-8 { background-color: #6366f1 !important; }
         
-        /* Firebase connection status */
-        .firebase-status {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 100;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
+        /* Button styling */
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+            transition: all 0.3s ease;
         }
         
-        .firebase-connected {
-            background-color: #10b981;
-            color: white;
-        }
-        
-        .firebase-disconnected {
-            background-color: #ef4444;
-            color: white;
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
         }
     </style>
 </head>
 <body class="max-w-lg mx-auto relative">
-
-    <!-- Firebase Connection Status -->
-    <div id="firebase-status" class="firebase-status firebase-disconnected hidden">
-        <i class="fas fa-circle mr-1"></i> Firebase
-    </div>
 
     <!-- COVER SECTION -->
     <div id="cover" class="fixed top-0 left-0 right-0 bottom-0 z-50 max-w-lg mx-auto cover-gradient text-white">
@@ -269,14 +257,14 @@
                 
                 <div class="mt-8 mb-6">
                     <p id="wedding-date-cover" class="text-2xl font-bold">Ahad Manis, 4 Januari 2026</p>
-                    <p class="text-lg mt-2">08.00 WIB - Selesai</p>
+                    <p class="text-lg mt-2">Akad: 08.00 WIB | Resepsi: 10.00 WIB</p>
                 </div>
                 
                 <div class="mt-12">
                     <p class="text-sm mb-2">Kepada Yth:</p>
                     <p id="guest-name" class="text-2xl font-bold mb-8">Bapak/Ibu/Saudara/i</p>
                     
-                    <button id="open-invitation" class="bg-white text-wine hover:bg-gray-100 font-semibold py-3 px-8 rounded-full shadow-lg flex items-center mx-auto transition-all duration-300 transform hover:scale-105">
+                    <button id="open-invitation" class="bg-white text-dark-blue hover:bg-blue-50 font-semibold py-3 px-8 rounded-full shadow-lg flex items-center mx-auto transition-all duration-300 transform hover:scale-105">
                         <i class="fas fa-envelope-open-text mr-2"></i>
                         Buka Undangan
                     </button>
@@ -296,12 +284,12 @@
         <!-- HERO SECTION -->
         <section id="hero" class="text-center p-8 md:p-12 bg-white min-h-screen flex flex-col justify-center relative overflow-hidden">
             <!-- Background decoration -->
-            <div class="absolute top-0 left-0 w-40 h-40 bg-red-50 rounded-full -translate-x-20 -translate-y-20"></div>
-            <div class="absolute bottom-0 right-0 w-60 h-60 bg-pink-50 rounded-full translate-x-20 translate-y-20"></div>
+            <div class="absolute top-0 left-0 w-40 h-40 bg-blue-50 rounded-full -translate-x-20 -translate-y-20"></div>
+            <div class="absolute bottom-0 right-0 w-60 h-60 bg-sky-blue rounded-full translate-x-20 translate-y-20"></div>
             
             <div class="relative z-10">
-                <h2 class="text-sm tracking-widest text-wine mb-2">Merayakan Cinta & Kebahagiaan</h2>
-                <h1 class="font-cursive text-7xl my-4 text-wine">Dwi & Elis</h1>
+                <h2 class="text-sm tracking-widest text-dark-blue mb-2">Merayakan Cinta & Kebahagiaan</h2>
+                <h1 class="font-cursive text-7xl my-4 text-dark-blue">Dwi & Elis</h1>
                 
                 <div class="floral-divider my-6"></div>
                 
@@ -314,46 +302,46 @@
                     <div class="javanese-date">
                         <p class="text-xl font-semibold">Ahad Manis</p>
                         <p class="text-2xl font-bold">4 Januari 2026</p>
-                        <p class="text-lg mt-2">08.00 WIB - Selesai</p>
+                        <p class="text-lg mt-2">Akad: 08.00 WIB | Resepsi: 10.00 WIB</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- COUPLE SECTION -->
-        <section id="couple" class="p-8 md:p-12 bg-gradient-to-b from-white to-pink-50 text-center">
-            <h2 class="font-serif text-3xl font-bold mb-10 text-wine">Mempelai</h2>
+        <section id="couple" class="p-8 md:p-12 bg-gradient-to-b from-white to-blue-50 text-center">
+            <h2 class="font-serif text-3xl font-bold mb-10 text-dark-blue">Mempelai</h2>
             
             <div class="grid md:grid-cols-2 gap-10 max-w-xl mx-auto">
                 <!-- Groom -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover border border-soft-red border-opacity-20">
-                    <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-r from-wine to-soft-red flex items-center justify-center text-white text-4xl font-bold">
+                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover border border-soft-blue border-opacity-20">
+                    <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-r from-dark-blue to-accent flex items-center justify-center text-white text-4xl font-bold">
                         DW
                     </div>
-                    <h3 class="font-serif text-2xl font-bold text-wine mb-2">Dwi Wardoyo</h3>
+                    <h3 class="font-serif text-2xl font-bold text-dark-blue mb-2">Dwi Wardoyo</h3>
                     <p class="text-sm text-gray-600 mb-4">Putra kedua dari</p>
                     <p class="font-medium">Bapak Siswadi & Ibu Polinah</p>
                     <p class="text-sm mt-2 text-gray-600">Kedungbenda RT 3 RW 3</p>
                     <p class="text-sm text-gray-600">Kec. Kemangkon, Kab. Purbalingga</p>
                     <div class="mt-6">
-                        <a href="https://maps.app.goo.gl/1nbnTUMNqCC2tunZ7" target="_blank" class="text-soft-red hover:text-wine inline-flex items-center">
+                        <a href="https://maps.app.goo.gl/1nbnTUMNqCC2tunZ7" target="_blank" class="text-accent hover:text-dark-blue inline-flex items-center">
                             <i class="fas fa-map-marker-alt mr-2"></i> Lihat Lokasi
                         </a>
                     </div>
                 </div>
                 
                 <!-- Bride -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover border border-soft-red border-opacity-20">
-                    <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-r from-soft-red to-pink-300 flex items-center justify-center text-white text-4xl font-bold">
+                <div class="bg-white p-8 rounded-2xl shadow-lg card-hover border border-soft-blue border-opacity-20">
+                    <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-r from-accent to-soft-blue flex items-center justify-center text-white text-4xl font-bold">
                         EK
                     </div>
-                    <h3 class="font-serif text-2xl font-bold text-wine mb-2">Elis Kurniasih</h3>
+                    <h3 class="font-serif text-2xl font-bold text-dark-blue mb-2">Elis Kurniasih</h3>
                     <p class="text-sm text-gray-600 mb-4">Putri pertama dari</p>
                     <p class="font-medium">Bapak Amin Setiyono Al Sakidi & Ibu Salinah</p>
                     <p class="text-sm mt-2 text-gray-600">Gumelem Kulon RT 6 RW 4</p>
                     <p class="text-sm text-gray-600">Kec. Susukan, Kab. Banjarnegara</p>
                     <div class="mt-6">
-                        <a href="https://s.id/yUUVb" target="_blank" class="text-soft-red hover:text-wine inline-flex items-center">
+                        <a href="https://maps.app.goo.gl/x3BEkjMbf14ssLMS7" target="_blank" class="text-accent hover:text-dark-blue inline-flex items-center">
                             <i class="fas fa-map-marker-alt mr-2"></i> Lihat Lokasi
                         </a>
                     </div>
@@ -361,7 +349,7 @@
             </div>
             
             <div class="mt-12 text-center">
-                <div class="heartbeat inline-block text-soft-red text-4xl">
+                <div class="heartbeat inline-block text-accent text-4xl">
                     <i class="fas fa-heart"></i>
                 </div>
                 <p class="mt-4 text-lg text-gray-700">Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan acara pernikahan putra-putri kami</p>
@@ -371,48 +359,48 @@
         <!-- WAVE DIVIDER -->
         <div class="wave-divider bg-white">
             <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#f7fafc"></path>
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#f0f9ff"></path>
             </svg>
         </div>
 
         <!-- EVENT DETAILS -->
-        <section id="event" class="p-8 md:p-12 bg-light text-wine">
+        <section id="event" class="p-8 md:p-12 bg-light text-dark-blue">
             <h2 class="font-serif text-3xl font-bold mb-10 text-center">Acara Pernikahan</h2>
             
             <div class="max-w-xl mx-auto">
                 <!-- Countdown -->
-                <div class="bg-white p-6 rounded-2xl shadow-lg mb-10 border border-soft-red border-opacity-20">
+                <div class="bg-white p-6 rounded-2xl shadow-lg mb-10 border border-soft-blue border-opacity-20">
                     <h3 class="text-xl font-bold mb-4 text-center">Menuju Hari Bahagia</h3>
                     <div id="countdown" data-date="2026-01-04T08:00:00" class="grid grid-cols-4 gap-4">
-                        <div class="bg-wine text-white p-4 rounded-lg text-center">
+                        <div class="bg-dark-blue text-white p-4 rounded-lg text-center">
                             <div id="days" class="text-3xl font-bold">0</div>
                             <div class="text-sm">Hari</div>
                         </div>
-                        <div class="bg-wine text-white p-4 rounded-lg text-center">
+                        <div class="bg-dark-blue text-white p-4 rounded-lg text-center">
                             <div id="hours" class="text-3xl font-bold">0</div>
                             <div class="text-sm">Jam</div>
                         </div>
-                        <div class="bg-wine text-white p-4 rounded-lg text-center">
+                        <div class="bg-dark-blue text-white p-4 rounded-lg text-center">
                             <div id="minutes" class="text-3xl font-bold">0</div>
                             <div class="text-sm">Menit</div>
                         </div>
-                        <div class="bg-wine text-white p-4 rounded-lg text-center">
+                        <div class="bg-dark-blue text-white p-4 rounded-lg text-center">
                             <div id="seconds" class="text-3xl font-bold">0</div>
                             <div class="text-sm">Detik</div>
                         </div>
                     </div>
                     
                     <div class="mt-6 text-center">
-                        <a id="save-date-button" href="#" class="inline-block bg-soft-red hover:bg-wine text-white font-semibold py-2 px-6 rounded-full transition-all duration-300">
+                        <a id="save-date-button" href="#" class="inline-block btn-primary font-semibold py-2 px-6 rounded-full transition-all duration-300">
                             <i class="far fa-calendar-plus mr-2"></i>Simpan di Kalender
                         </a>
                     </div>
                 </div>
                 
                 <!-- Event Details -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg border border-soft-red border-opacity-20">
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-soft-blue border-opacity-20">
                     <div class="text-center mb-8">
-                        <div class="w-16 h-16 mx-auto mb-4 bg-wine rounded-full flex items-center justify-center text-white text-2xl">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-dark-blue rounded-full flex items-center justify-center text-white text-2xl">
                             <i class="fas fa-ring"></i>
                         </div>
                         <h3 class="text-2xl font-bold">Akad Nikah</h3>
@@ -426,29 +414,29 @@
                     
                     <div class="mb-8">
                         <h4 class="font-bold text-lg mb-2 flex items-center">
-                            <i class="fas fa-map-marker-alt mr-2 text-wine"></i> Lokasi Acara
+                            <i class="fas fa-map-marker-alt mr-2 text-dark-blue"></i> Lokasi Acara
                         </h4>
                         <p>Kediaman Mempelai Wanita, Gumelem Kulon RT 6 RW 4, Susukan, Banjarnegara</p>
                         
                         <!-- Maps Embed -->
                         <div class="mt-4 rounded-lg overflow-hidden border border-gray-200">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d608.4558848159411!2d109.33568583865541!3d-7.473086986193974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zN8KwMjgnMjMuOCJTIDEwOcKwMjAnMDguMyJF!5e1!3m2!1sid!2sid" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d304.20426110619525!2d109.40049174671107!3d-7.507010446421854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2s!5e1!3m2!1sid!2sid!4v1765879335379!5m2!1sid!2sid" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                         
-                        <a href="https://s.id/yUUVb" target="_blank" class="inline-block mt-3 text-wine hover:text-soft-red font-medium">
+                        <a href="https://maps.app.goo.gl/x3BEkjMbf14ssLMS7" target="_blank" class="inline-block mt-3 text-dark-blue hover:text-accent font-medium">
                             <i class="fas fa-external-link-alt mr-1"></i> Buka di Google Maps
                         </a>
                     </div>
                     
                     <div class="pt-6 border-t border-gray-200">
                         <div class="text-center">
-                            <div class="w-16 h-16 mx-auto mb-4 bg-soft-red rounded-full flex items-center justify-center text-white text-2xl">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-accent rounded-full flex items-center justify-center text-white text-2xl">
                                 <i class="fas fa-glass-cheers"></i>
                             </div>
                             <h3 class="text-2xl font-bold">Resepsi Pernikahan</h3>
                             <div class="mt-4">
                                 <p class="text-lg">Ahad Manis, 4 Januari 2026</p>
-                                <p class="text-xl font-bold mt-1">08.00 WIB - Selesai</p>
+                                <p class="text-xl font-bold mt-1">10.00 WIB - Selesai</p>
                                 <p class="text-sm mt-2 text-gray-600">Bertempat di lokasi yang sama</p>
                             </div>
                         </div>
@@ -456,7 +444,7 @@
                     
                     <div class="mt-8 pt-6 border-t border-gray-200">
                         <div class="text-center">
-                            <div class="w-16 h-16 mx-auto mb-4 bg-wine rounded-full flex items-center justify-center text-white text-2xl">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-dark-blue rounded-full flex items-center justify-center text-white text-2xl">
                                 <i class="fas fa-hands-praying"></i>
                             </div>
                             <h3 class="text-2xl font-bold">Tasyakuran Keluarga</h3>
@@ -467,7 +455,7 @@
                                         <p class="text-sm">Jumat Wage - Sabtu Kliwon</p>
                                         <p class="font-bold">2-3 Januari 2026</p>
                                         <p class="text-xs mt-1 text-gray-600">Kedungbenda RT 3 RW 3, Kemangkon, Purbalingga</p>
-                                        <a href="https://maps.app.goo.gl/1nbnTUMNqCC2tunZ7" target="_blank" class="inline-block mt-2 text-xs text-wine hover:text-soft-red">
+                                        <a href="https://maps.app.goo.gl/1nbnTUMNqCC2tunZ7" target="_blank" class="inline-block mt-2 text-xs text-dark-blue hover:text-accent">
                                             <i class="fas fa-map-marker-alt mr-1"></i> Lihat Peta
                                         </a>
                                     </div>
@@ -476,7 +464,7 @@
                                         <p class="text-sm">Ahad Manis</p>
                                         <p class="font-bold">4 Januari 2026</p>
                                         <p class="text-xs mt-1 text-gray-600">Gumelem Kulon RT 6 RW 4, Susukan, Banjarnegara</p>
-                                        <a href="https://s.id/yUUVb" target="_blank" class="inline-block mt-2 text-xs text-wine hover:text-soft-red">
+                                        <a href="https://maps.app.goo.gl/x3BEkjMbf14ssLMS7" target="_blank" class="inline-block mt-2 text-xs text-dark-blue hover:text-accent">
                                             <i class="fas fa-map-marker-alt mr-1"></i> Lihat Peta
                                         </a>
                                     </div>
@@ -489,12 +477,12 @@
         </section>
 
         <!-- GIFT SECTION -->
-        <section id="gift" class="p-8 md:p-12 bg-white text-wine">
+        <section id="gift" class="p-8 md:p-12 bg-white text-dark-blue">
             <h2 class="font-serif text-3xl font-bold mb-10 text-center">Amplop Digital</h2>
             
-            <div class="max-w-md mx-auto bg-gradient-to-r from-wine to-soft-red p-8 rounded-2xl shadow-lg text-white">
+            <div class="max-w-md mx-auto bg-gradient-to-r from-dark-blue to-accent p-8 rounded-2xl shadow-lg text-white">
                 <div class="text-center mb-6">
-                    <div class="w-20 h-20 mx-auto mb-4 bg-white rounded-full flex items-center justify-center text-wine text-3xl">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-white rounded-full flex items-center justify-center text-dark-blue text-3xl">
                         <i class="fas fa-gift"></i>
                     </div>
                     <p class="text-lg">Doa dan restu Anda merupakan hadiah terindah bagi kami. Namun jika berkenan memberikan tanda kasih, kami menerima melalui:</p>
@@ -504,7 +492,7 @@
                     <!-- Bank 1 -->
                     <div class="bg-white bg-opacity-15 p-5 rounded-xl">
                         <div class="flex items-center mb-3">
-                            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-wine mr-3">
+                            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-dark-blue mr-3">
                                 <i class="fas fa-user"></i>
                             </div>
                             <div>
@@ -514,7 +502,7 @@
                         </div>
                         <div class="flex justify-between items-center mt-4">
                             <p class="font-mono text-xl tracking-wider">1800 0158 9358 1</p>
-                            <button onclick="copyToClipboard('1800015893581', 'Nomor rekening Dwi Wardoyo berhasil disalin!')" class="bg-white text-wine hover:bg-gray-100 font-semibold py-2 px-4 rounded-full text-sm">
+                            <button onclick="copyToClipboard('1800015893581', 'Nomor rekening Dwi Wardoyo berhasil disalin!')" class="bg-white text-dark-blue hover:bg-blue-100 font-semibold py-2 px-4 rounded-full text-sm">
                                 Salin
                             </button>
                         </div>
@@ -523,7 +511,7 @@
                     <!-- Bank 2 -->
                     <div class="bg-white bg-opacity-15 p-5 rounded-xl">
                         <div class="flex items-center mb-3">
-                            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-wine mr-3">
+                            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-dark-blue mr-3">
                                 <i class="fas fa-user"></i>
                             </div>
                             <div>
@@ -533,7 +521,7 @@
                         </div>
                         <div class="flex justify-between items-center mt-4">
                             <p class="font-mono text-xl tracking-wider">1800 0166 6306 6</p>
-                            <button onclick="copyToClipboard('1800016663066', 'Nomor rekening Elis Kurniasih berhasil disalin!')" class="bg-white text-wine hover:bg-gray-100 font-semibold py-2 px-4 rounded-full text-sm">
+                            <button onclick="copyToClipboard('1800016663066', 'Nomor rekening Elis Kurniasih berhasil disalin!')" class="bg-white text-dark-blue hover:bg-blue-100 font-semibold py-2 px-4 rounded-full text-sm">
                                 Salin
                             </button>
                         </div>
@@ -547,28 +535,14 @@
             </div>
         </section>
 
-        <!-- RSVP SECTION - DENGAN FALLBACK LOCALSTORAGE -->
-        <section id="rsvp" class="p-8 md:p-12 bg-light text-wine">
+        <!-- RSVP SECTION - FIXED FIREBASE -->
+        <section id="rsvp" class="p-8 md:p-12 bg-light text-dark-blue">
             <h2 class="font-serif text-3xl font-bold mb-6 text-center">Buku Tamu & Ucapan</h2>
             <p class="text-center mb-10 max-w-md mx-auto">Berikan ucapan dan doa restu untuk kami melalui form berikut:</p>
             
             <div class="max-w-md mx-auto">
-                <!-- Firebase Connection Warning -->
-                <div id="firebase-warning" class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <i class="fas fa-exclamation-triangle text-yellow-400"></i>
-                        </div>
-                        <div class="ml-3">
-                            <p class="text-sm text-yellow-700" id="firebase-warning-text">
-                                Menghubungkan ke database...
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
                 <!-- Form Input -->
-                <div class="bg-white p-8 rounded-2xl shadow-lg mb-8 border border-soft-red border-opacity-20">
+                <div class="bg-white p-8 rounded-2xl shadow-lg mb-8 border border-soft-blue border-opacity-20">
                     <form id="rsvp-form">
                         <div class="mb-6">
                             <label for="nama" class="block text-sm font-medium mb-2">Nama Anda <span class="text-red-500">*</span></label>
@@ -584,12 +558,12 @@
                         
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex items-center">
-                                <div class="w-10 h-10 rounded-full bg-soft-red flex items-center justify-center text-white mr-3">
+                                <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white mr-3">
                                     <i class="fas fa-heart"></i>
                                 </div>
                                 <p class="text-sm text-gray-600">Kirim doa & ucapanmu</p>
                             </div>
-                            <button type="submit" id="submit-btn" class="bg-gradient-to-r from-soft-red to-wine hover:opacity-90 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 flex items-center">
+                            <button type="submit" id="submit-btn" class="btn-primary font-semibold py-3 px-6 rounded-full transition-all duration-300 flex items-center">
                                 <span id="submit-text">Kirim</span>
                                 <div id="submit-spinner" class="spinner ml-2 hidden"></div>
                             </button>
@@ -600,10 +574,10 @@
                 </div>
                 
                 <!-- Wishes Display -->
-                <div class="bg-white p-6 rounded-2xl shadow-lg border border-soft-red border-opacity-20">
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-soft-blue border-opacity-20">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-xl font-bold flex items-center">
-                            <i class="fas fa-comments mr-2 text-soft-red"></i>
+                            <i class="fas fa-comments mr-2 text-accent"></i>
                             Ucapan dari Tamu
                         </h3>
                         <div class="text-sm text-gray-500" id="wishes-count">Memuat...</div>
@@ -633,7 +607,7 @@
         </section>
 
         <!-- FOOTER -->
-        <footer class="p-8 md:p-12 bg-wine text-white text-center">
+        <footer class="p-8 md:p-12 bg-dark-blue text-white text-center">
             <div class="max-w-md mx-auto">
                 <h2 class="font-cursive text-4xl mb-6">Dwi & Elis</h2>
                 
@@ -643,10 +617,10 @@
                 </div>
                 
                 <div class="flex justify-center space-x-6 mb-8">
-                    <a href="https://wa.me/62?text=Assalamu'alaikum,%20saya%20konfirmasi%20kehadiran%20untuk%20acara%20pernikahan%20Dwi%20%26%20Elis" target="_blank" class="text-white hover:text-pink-200 text-xl">
+                    <a href="https://wa.me/62?text=Assalamu'alaikum,%20saya%20konfirmasi%20kehadiran%20untuk%20acara%20pernikahan%20Dwi%20%26%20Elis" target="_blank" class="text-white hover:text-sky-blue text-xl">
                         <i class="fab fa-whatsapp"></i>
                     </a>
-                    <a href="tel:+62" class="text-white hover:text-pink-200 text-xl">
+                    <a href="tel:+62" class="text-white hover:text-sky-blue text-xl">
                         <i class="fas fa-phone"></i>
                     </a>
                 </div>
@@ -661,51 +635,45 @@
 
     <!-- BOTTOM NAVIGATION -->
     <div id="bottom-nav" class="hidden fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-sm z-40">
-        <div class="bg-white shadow-2xl rounded-full p-2 flex justify-around items-center text-wine border border-gray-200">
-            <a href="#hero" class="p-3 rounded-full hover:bg-pink-50 text-wine"><i class="fas fa-home"></i></a>
-            <a href="#couple" class="p-3 rounded-full hover:bg-pink-50 text-wine"><i class="fas fa-heart"></i></a>
-            <a href="#event" class="p-3 rounded-full hover:bg-pink-50 text-wine"><i class="fas fa-calendar-day"></i></a>
-            <a href="#gift" class="p-3 rounded-full hover:bg-pink-50 text-wine"><i class="fas fa-gift"></i></a>
-            <a href="#rsvp" class="p-3 rounded-full hover:bg-pink-50 text-wine"><i class="fas fa-comment-dots"></i></a>
+        <div class="bg-white shadow-2xl rounded-full p-2 flex justify-around items-center text-dark-blue border border-gray-200">
+            <a href="#hero" class="p-3 rounded-full hover:bg-blue-50 text-dark-blue"><i class="fas fa-home"></i></a>
+            <a href="#couple" class="p-3 rounded-full hover:bg-blue-50 text-dark-blue"><i class="fas fa-heart"></i></a>
+            <a href="#event" class="p-3 rounded-full hover:bg-blue-50 text-dark-blue"><i class="fas fa-calendar-day"></i></a>
+            <a href="#gift" class="p-3 rounded-full hover:bg-blue-50 text-dark-blue"><i class="fas fa-gift"></i></a>
+            <a href="#rsvp" class="p-3 rounded-full hover:bg-blue-50 text-dark-blue"><i class="fas fa-comment-dots"></i></a>
         </div>
     </div>
 
     <!-- MUSIC TOGGLE -->
-    <button id="music-toggle" class="hidden fixed bottom-20 right-4 bg-white shadow-xl w-12 h-12 rounded-full z-40 flex justify-center items-center text-wine border border-gray-200">
+    <button id="music-toggle" class="hidden fixed bottom-20 right-4 bg-white shadow-xl w-12 h-12 rounded-full z-40 flex justify-center items-center text-dark-blue border border-gray-200">
         <i id="music-icon" class="fas fa-music"></i>
     </button>
 
     <audio id="background-music" loop src="audio_wedding.mp3"></audio>
 
     <!-- NOTIFICATION -->
-    <div id="notification" class="hidden fixed top-5 left-1/2 -translate-x-1/2 bg-soft-red text-white text-sm py-2 px-6 rounded-full shadow-lg z-50">
+    <div id="notification" class="hidden fixed top-5 left-1/2 -translate-x-1/2 bg-accent text-white text-sm py-2 px-6 rounded-full shadow-lg z-50">
         <p>Teks notifikasi</p>
     </div>
 
     <script>
         // Firebase Configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyDLrbafcvpy_3vJbwNG2mvlllOMTqk1ggc",
-            authDomain: "buku-tamu-nikahan-5dc3b.firebaseapp.com",
-            databaseURL: "https://buku-tamu-nikahan-5dc3b-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "buku-tamu-nikahan-5dc3b",
-            storageBucket: "buku-tamu-nikahan-5dc3b.firebasestorage.app",
-            messagingSenderId: "719498963668",
-            appId: "1:719498963668:web:b09e08d469f001e5fa6941"
-        };
-
-        // Global variables
-        let db = null;
-        let useLocalStorage = false;
-        let localStorageWishes = JSON.parse(localStorage.getItem('weddingWishes')) || [];
-
+            apiKey: "AIzaSyC6pOhkZkmPcmrPkJ-Olwuk61_b9ySxAzY",
+            authDomain: "undangan-pernikahan-dwi-elis.firebaseapp.com",
+            databaseURL: "https://undangan-pernikahan-dwi-elis-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "undangan-pernikahan-dwi-elis",
+            storageBucket: "undangan-pernikahan-dwi-elis.firebasestorage.app",
+            messagingSenderId: "317379290526",
+            appId: "1:317379290526:web:7278842b3c28e73103e28f"
+            };
         // Notification function
         const notification = document.getElementById('notification');
         function showNotification(message, isError = false) {
             notification.querySelector('p').textContent = message;
             notification.className = isError 
                 ? 'fixed top-5 left-1/2 -translate-x-1/2 bg-red-600 text-white text-sm py-2 px-6 rounded-full shadow-lg z-50'
-                : 'fixed top-5 left-1/2 -translate-x-1/2 bg-soft-red text-white text-sm py-2 px-6 rounded-full shadow-lg z-50';
+                : 'fixed top-5 left-1/2 -translate-x-1/2 bg-accent text-white text-sm py-2 px-6 rounded-full shadow-lg z-50';
             notification.classList.remove('hidden');
             
             setTimeout(() => {
@@ -766,25 +734,6 @@
             });
         }
         
-        // Update Firebase status indicator
-        function updateFirebaseStatus(connected) {
-            const statusEl = document.getElementById('firebase-status');
-            const warningEl = document.getElementById('firebase-warning');
-            const warningText = document.getElementById('firebase-warning-text');
-            
-            if (connected) {
-                statusEl.className = 'firebase-status firebase-connected';
-                statusEl.innerHTML = '<i class="fas fa-circle mr-1"></i> Firebase Online';
-                warningEl.className = 'hidden';
-            } else {
-                statusEl.className = 'firebase-status firebase-disconnected';
-                statusEl.innerHTML = '<i class="fas fa-circle mr-1"></i> Firebase Offline';
-                warningEl.className = 'bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded';
-                warningText.textContent = 'Mode offline aktif. Ucapan disimpan sementara di browser.';
-            }
-            statusEl.classList.remove('hidden');
-        }
-        
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
             const cover = document.getElementById('cover');
@@ -797,24 +746,18 @@
             const countdownEl = document.getElementById('countdown');
             const targetDate = new Date(countdownEl.dataset.date);
 
-            // Try to initialize Firebase
+            // Initialize Firebase
+            let db = null;
+            let firebaseInitialized = false;
+            
             try {
                 firebase.initializeApp(firebaseConfig);
                 db = firebase.database();
+                firebaseInitialized = true;
                 console.log("Firebase initialized successfully");
-                updateFirebaseStatus(true);
-                
-                // Test Firebase connection
-                db.ref('.info/connected').on('value', (snapshot) => {
-                    const connected = snapshot.val() === true;
-                    updateFirebaseStatus(connected);
-                    useLocalStorage = !connected;
-                });
-                
             } catch (error) {
                 console.error("Firebase initialization error:", error);
-                useLocalStorage = true;
-                updateFirebaseStatus(false);
+                showNotification("Gagal menghubungkan ke database", true);
             }
 
             // Get guest name from URL
@@ -835,9 +778,9 @@
                 return d.toISOString().replace(/-|:|\.\d+/g, "");
             }
             
-            const eventStartDate = formatToUTC(targetDate, 1, 0);
-            const eventEndDate = formatToUTC(targetDate, 12, 0);
-            const calendarLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Dwi+Wardoyo+%26+Elis+Kurniasih&dates=${eventStartDate}/${eventEndDate}&details=Acara+pernikahan+Dwi+Wardoyo+dan+Elis+Kurniasih.+Lokasi:+Gumelem+Kulon+RT+6+RW+4,+Susukan,+Banjarnegara&location=Gumelem+Kulon+RT+6+RW+4,+Susukan,+Banjarnegara`;
+            const eventStartDate = formatToUTC(targetDate, 1, 0); // 08:00 WIB
+            const eventEndDate = formatToUTC(targetDate, 14, 0); // 21:00 WIB
+            const calendarLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Dwi+Wardoyo+%26+Elis+Kurniasih&dates=${eventStartDate}/${eventEndDate}&details=Acara+pernikahan+Dwi+Wardoyo+dan+Elis+Kurniasih.+Akad:+08.00+WIB,+Resepsi:+10.00+WIB.+Lokasi:+Gumelem+Kulon+RT+6+RW+4,+Susukan,+Banjarnegara&location=Gumelem+Kulon+RT+6+RW+4,+Susukan,+Banjarnegara`;
             document.getElementById('save-date-button').href = calendarLink;
 
             // Open invitation button
@@ -911,7 +854,7 @@
                 document.getElementById('seconds').textContent = Math.floor((distance % (1000 * 60)) / 1000);
             }, 1000);
 
-            // RSVP Form with Firebase (with fallback to localStorage)
+            // RSVP Form with Firebase
             const rsvpForm = document.getElementById('rsvp-form');
             const submitBtn = document.getElementById('submit-btn');
             const submitText = document.getElementById('submit-text');
@@ -926,7 +869,7 @@
             const wishesCount = document.getElementById('wishes-count');
             const wishesContainer = document.getElementById('wishes-container');
             
-            // Function to display wishes (common for both Firebase and localStorage)
+            // Function to display wishes
             function displayWishes(wishesArray) {
                 loadingWishes.classList.add('hidden');
                 
@@ -963,7 +906,7 @@
                             </div>
                             <div class="flex-grow">
                                 <div class="flex justify-between items-start mb-1">
-                                    <p class="font-bold text-wine">${wish.nama || 'Tamu'}</p>
+                                    <p class="font-bold text-dark-blue">${wish.nama || 'Tamu'}</p>
                                     <p class="text-xs text-gray-500">${waktuText}</p>
                                 </div>
                                 <p class="text-gray-700">${wish.ucapan || ''}</p>
@@ -974,87 +917,56 @@
                 });
             }
             
-            // Function to load wishes from Firebase (with fallback)
+            // Function to load wishes from Firebase
             function loadWishes() {
                 loadingWishes.classList.remove('hidden');
                 noWishes.classList.add('hidden');
                 wishesError.classList.add('hidden');
                 
-                if (useLocalStorage || !db) {
-                    // Use localStorage
-                    console.log("Using localStorage for wishes");
-                    displayWishes(localStorageWishes);
+                if (!firebaseInitialized || !db) {
+                    console.log("Firebase not available");
+                    wishesError.classList.remove('hidden');
+                    wishesError.textContent = "Database tidak tersedia. Silakan refresh halaman.";
                     return;
                 }
                 
-                // Try Firebase first
-                try {
-                    const bukutamuRef = db.ref('bukutamu');
-                    
-                    // Try with simpler query
-                    bukutamuRef.once('value')
-                        .then((snapshot) => {
-                            if (!snapshot.exists()) {
-                                // No data in Firebase, check localStorage
-                                if (localStorageWishes.length > 0) {
-                                    displayWishes(localStorageWishes);
-                                } else {
-                                    displayWishes([]);
-                                }
-                                return;
-                            }
-                            
-                            const wishes = [];
-                            snapshot.forEach((childSnapshot) => {
-                                const wish = childSnapshot.val();
-                                wish.id = childSnapshot.key;
-                                wishes.push(wish);
-                            });
-                            
-                            // Sort by waktu descending (newest first)
-                            wishes.sort((a, b) => b.waktu - a.waktu);
-                            
-                            // Limit to 30 most recent
-                            const recentWishes = wishes.slice(0, 30);
-                            displayWishes(recentWishes);
-                            
-                        })
-                        .catch((error) => {
-                            console.error("Error loading from Firebase:", error);
-                            // Fallback to localStorage
-                            displayWishes(localStorageWishes);
+                // Load from Firebase - Fixed path
+                const bukutamuRef = db.ref('bukutamu');
+                
+                bukutamuRef.orderByChild('waktu').limitToLast(50).once('value')
+                    .then((snapshot) => {
+                        if (!snapshot.exists()) {
+                            displayWishes([]);
+                            return;
+                        }
+                        
+                        const wishes = [];
+                        snapshot.forEach((childSnapshot) => {
+                            const wish = childSnapshot.val();
+                            wish.id = childSnapshot.key;
+                            wishes.push(wish);
                         });
-                    
-                } catch (error) {
-                    console.error('Error in loadWishes:', error);
-                    // Fallback to localStorage
-                    displayWishes(localStorageWishes);
-                }
-            }
-            
-            // Function to save to localStorage
-            function saveToLocalStorage(wishData) {
-                const wish = {
-                    ...wishData,
-                    id: 'local_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
-                };
-                
-                localStorageWishes.unshift(wish); // Add to beginning
-                
-                // Keep only last 50 wishes
-                if (localStorageWishes.length > 50) {
-                    localStorageWishes = localStorageWishes.slice(0, 50);
-                }
-                
-                // Save to localStorage
-                localStorage.setItem('weddingWishes', JSON.stringify(localStorageWishes));
-                
-                return wish;
+                        
+                        // Sort by waktu descending (newest first)
+                        wishes.sort((a, b) => b.waktu - a.waktu);
+                        displayWishes(wishes);
+                        
+                    })
+                    .catch((error) => {
+                        console.error("Error loading from Firebase:", error);
+                        wishesError.classList.remove('hidden');
+                        wishesError.textContent = "Gagal memuat ucapan. Pastikan koneksi internet stabil.";
+                    });
             }
             
             // Handle form submission
             rsvpForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
+                
+                if (!firebaseInitialized || !db) {
+                    showNotification("Database tidak tersedia. Silakan refresh halaman.", true);
+                    return;
+                }
                 
                 // Disable submit button and show spinner
                 submitBtn.disabled = true;
@@ -1099,26 +1011,9 @@
                         waktu: Date.now()
                     };
                     
-                    let savedWish;
-                    
-                    if (useLocalStorage || !db) {
-                        // Save to localStorage
-                        savedWish = saveToLocalStorage(wishData);
-                        console.log("Saved to localStorage:", savedWish);
-                    } else {
-                        // Try to save to Firebase
-                        try {
-                            const newWishRef = db.ref('bukutamu').push();
-                            await newWishRef.set(wishData);
-                            savedWish = { ...wishData, id: newWishRef.key };
-                            console.log("Saved to Firebase:", savedWish);
-                        } catch (firebaseError) {
-                            console.error("Firebase save error:", firebaseError);
-                            // Fallback to localStorage
-                            savedWish = saveToLocalStorage(wishData);
-                            showNotification('Menggunakan penyimpanan lokal', false);
-                        }
-                    }
+                    // Save to Firebase - FIXED: Using correct path
+                    const newWishRef = db.ref('bukutamu').push();
+                    await newWishRef.set(wishData);
                     
                     // Reset form
                     rsvpForm.reset();
@@ -1147,12 +1042,17 @@
                 } catch (error) {
                     console.error('Error submitting wish:', error);
                     
-                    // Show error message
-                    formMessage.textContent = 'Maaf, terjadi kesalahan: ' + error.message;
+                    // Check if it's a permission error
+                    if (error.message.includes('PERMISSION_DENIED')) {
+                        formMessage.textContent = 'Error: Izin ditolak. Silakan cek Firebase Rules Anda.';
+                        showNotification('Error Firebase Rules. Cek konfigurasi.', true);
+                    } else {
+                        formMessage.textContent = 'Maaf, terjadi kesalahan: ' + error.message;
+                        showNotification('Gagal mengirim ucapan. Silakan coba lagi.', true);
+                    }
+                    
                     formMessage.className = 'mt-4 text-center text-red-600';
                     formMessage.classList.remove('hidden');
-                    
-                    showNotification('Gagal mengirim ucapan. Silakan coba lagi.', true);
                     
                 } finally {
                     // Re-enable submit button
