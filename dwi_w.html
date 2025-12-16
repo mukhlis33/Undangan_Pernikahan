@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Undangan Pernikahan Dwi & Siti</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; background:#f7fafc }
+    .gold { color:#d4af37 }
+  </style>
+</head>
+<body class="max-w-lg mx-auto">
+
+<!-- COVER -->
+<section id="cover" class="fixed inset-0 bg-slate-900 text-white z-50 flex items-center justify-center text-center">
+  <div>
+    <p class="tracking-widest text-sm mb-2">UNDANGAN PERNIKAHAN</p>
+    <h1 class="font-['Great_Vibes'] text-6xl gold my-4">Dwi & Siti</h1>
+    <p class="mb-6">Sabtu, 15 Maret 2025</p>
+    <p class="mb-4">Kepada Yth:</p>
+    <p id="guest-name" class="text-2xl font-bold mb-6">Bapak/Ibu/Saudara/i</p>
+    <button id="open" class="bg-white text-black px-6 py-3 rounded-full font-semibold">
+      Buka Undangan
+    </button>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main id="main" class="hidden">
+
+<!-- HERO -->
+<section class="p-8 text-center bg-white">
+  <h2 class="font-['Great_Vibes'] text-6xl text-slate-800 mb-4">Dwi & Siti</h2>
+  <p class="italic">QS. Ar-Rum : 21</p>
+</section>
+
+<!-- RSVP -->
+<section class="p-8 bg-slate-100">
+  <h2 class="text-2xl font-bold text-center mb-6">RSVP & Ucapan</h2>
+
+  <form id="rsvp-form" class="bg-white p-6 rounded-xl shadow space-y-4">
+    <input id="nama" type="text" placeholder="Nama" class="w-full border p-3 rounded" required>
+
+    <select id="kehadiran" class="w-full border p-3 rounded" required>
+      <option value="">Konfirmasi Kehadiran</option>
+      <option value="Hadir">Hadir</option>
+      <option value="Mungkin">Mungkin Hadir</option>
+      <option value="Tidak Hadir">Tidak Hadir</option>
+    </select>
+
+    <select id="jumlah" class="w-full border p-3 rounded" required>
+      <option value="1">1 Tamu</option>
+      <option value="2">2 Tamu</option>
+      <option value="3">3 Tamu</option>
+      <option value="4">4 Tamu</option>
+    </select>
+
+    <textarea id="ucapan" rows="4" placeholder="Ucapan & doa" class="w-full border p-3 rounded"></textarea>
+
+    <button class="w-full bg-slate-900 text-white py-3 rounded font-semibold">
+      Kirim
+    </button>
+  </form>
+
+  <div class="mt-10">
+    <h3 class="text-xl font-bold mb-4">Ucapan Tamu</h3>
+    <div id="wishes-list" class="space-y-4"></div>
+    <p id="no-wishes" class="text-center text-gray-500 mt-4">Belum ada ucapan</p>
+  </div>
+</section>
+
+</main>
+
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getFirestore, collection, addDoc, getDocs,
+  query, orderBy, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBqdj3u_EO031MhXc98HwtVxm7DJicE23A",
+  authDomain: "bukutamudwi.firebaseapp.com",
+  projectId: "bukutamudwi",
+  storageBucket: "bukutamudwi.firebasestorage.app",
+  messagingSenderId: "62457341086",
+  appId: "1:62457341086:web:f6122cae9d733dc6be078f"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const rsvpRef = collection(db, "rsvp");
+
+const wishesList = document.getElementById("wishes-list");
+const noWishes = document.getElementById("no-wishes");
+
+// Load wishes
+async function loadWishes() {
+  wishesList.innerHTML = "";
+  const q = query(rsvpRef, orderBy("dibuat", "desc"));
+  const snap = await getDocs(q);
+
+  if (snap.empty) {
+    noWishes.classList.remove("hidden");
+    return;
+  }
+  noWishes.classList.add("hidden");
+
+  snap.forEach(d => {
+    const v = d.data();
+    const t = v.dibuat?.toDate().toLocaleString("id-ID") || "";
+    wishesList.innerHTML += `
+      <div class="bg-white p-4 rounded shadow">
+        <b>${v.nama}</b>
+        <p class="text-sm">${v.kehadiran} • ${v.jumlah} tamu</p>
+        <p class="italic mt-2">"${v.ucapan || ""}"</p>
+        <p class="text-xs text-gray-400 mt-1">${t}</p>
+      </div>
+    `;
+  });
+}
+
+// Submit RSVP
+document.getElementById("rsvp-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  await addDoc(rsvpRef, {
+    nama: nama.value,
+    kehadiran: kehadiran.value,
+    jumlah: jumlah.value,
+    ucapan: ucapan.value,
+    dibuat: serverTimestamp()
+  });
+  ucapan.value = "";
+  loadWishes();
+});
+
+// Nama dari URL
+const params = new URLSearchParams(location.search);
+const guest = params.get("nama");
+if (guest) {
+  const n = decodeURIComponent(guest.replace(/\+/g," "));
+  document.getElementById("nama").value = n;
+  document.getElementById("guest-name").innerText = n;
+}
+
+// Cover
+document.getElementById("open").onclick = () => {
+  document.getElementById("cover").style.display = "none";
+  document.getElementById("main").classList.remove("hidden");
+};
+
+loadWishes();
+</script>
+
+</body>
+</html>
