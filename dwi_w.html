@@ -225,6 +225,50 @@
             box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
         }
         
+        /* Photo styling */
+        .photo-frame {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            margin: 0 auto;
+        }
+        
+        .photo-frame::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            z-index: -1;
+        }
+        
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        /* Fallback for missing photos */
+        .photo-fallback {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            font-weight: bold;
+            font-size: 2rem;
+        }
+        
         /* Pindahkan audio ke posisi yang sesuai */
         audio {
             position: absolute;
@@ -322,8 +366,10 @@
             <div class="grid md:grid-cols-2 gap-10 max-w-xl mx-auto">
                 <!-- Groom -->
                 <div class="bg-white p-8 rounded-2xl shadow-lg card-hover border border-soft-blue border-opacity-20">
-                    <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-r from-dark-blue to-accent flex items-center justify-center text-white text-4xl font-bold">
-                        DW
+                    <div class="photo-frame mb-6">
+                        <img src="foto_l.jpg" alt="Dwi Wardoyo" class="groom-photo" 
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80';">
+                        <div class="photo-fallback hidden">DW</div>
                     </div>
                     <h3 class="font-serif text-2xl font-bold text-dark-blue mb-2">Dwi Wardoyo</h3>
                     <p class="text-sm text-gray-600 mb-4">Putra kedua dari</p>
@@ -339,12 +385,14 @@
                 
                 <!-- Bride -->
                 <div class="bg-white p-8 rounded-2xl shadow-lg card-hover border border-soft-blue border-opacity-20">
-                    <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-r from-accent to-soft-blue flex items-center justify-center text-white text-4xl font-bold">
-                        EK
+                    <div class="photo-frame mb-6">
+                        <img src="foto_p.jpg" alt="Elis Kurniasih" class="bride-photo"
+                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80';">
+                        <div class="photo-fallback hidden">EK</div>
                     </div>
                     <h3 class="font-serif text-2xl font-bold text-dark-blue mb-2">Elis Kurniasih</h3>
                     <p class="text-sm text-gray-600 mb-4">Putri pertama dari</p>
-                    <p class="font-medium">Bapak Amin Setiyono Al Sakidi & Ibu Salinah</p>
+                    <p class="font-medium">Bapak Amin Setiono Al Sakidi & Ibu Salinah</p>
                     <p class="text-sm mt-2 text-gray-600">Gumelem Kulon RT 6 RW 4</p>
                     <p class="text-sm text-gray-600">Kec. Susukan, Kab. Banjarnegara</p>
                     <div class="mt-6">
@@ -761,6 +809,48 @@
             }
         }
         
+        // Check photo availability and show fallback if needed
+        function checkPhotos() {
+            const groomPhoto = document.querySelector('.groom-photo');
+            const bridePhoto = document.querySelector('.bride-photo');
+            const groomFallback = groomPhoto ? groomPhoto.parentNode.querySelector('.photo-fallback') : null;
+            const brideFallback = bridePhoto ? bridePhoto.parentNode.querySelector('.photo-fallback') : null;
+            
+            // Check if groom photo loaded
+            if (groomPhoto) {
+                groomPhoto.onerror = function() {
+                    console.log("Groom photo not found, using fallback");
+                    this.style.display = 'none';
+                    if (groomFallback) {
+                        groomFallback.classList.remove('hidden');
+                        groomFallback.textContent = 'DW';
+                    }
+                };
+                
+                // Trigger check
+                if (groomPhoto.complete && groomPhoto.naturalHeight === 0) {
+                    groomPhoto.onerror();
+                }
+            }
+            
+            // Check if bride photo loaded
+            if (bridePhoto) {
+                bridePhoto.onerror = function() {
+                    console.log("Bride photo not found, using fallback");
+                    this.style.display = 'none';
+                    if (brideFallback) {
+                        brideFallback.classList.remove('hidden');
+                        brideFallback.textContent = 'EK';
+                    }
+                };
+                
+                // Trigger check
+                if (bridePhoto.complete && bridePhoto.naturalHeight === 0) {
+                    bridePhoto.onerror();
+                }
+            }
+        }
+        
         // Function to display wishes
         function displayWishes(wishesArray) {
             const loadingWishes = document.getElementById('loading-wishes');
@@ -901,6 +991,9 @@
                 mainContent.style.opacity = '1';
                 bottomNav.classList.remove('hidden');
                 musicToggle.classList.remove('hidden');
+                
+                // Check photos after opening
+                setTimeout(checkPhotos, 500);
                 
                 // Try to play music
                 try {
@@ -1132,6 +1225,9 @@
                     bottomNav.classList.add('hidden');
                 }
             });
+            
+            // Check photos immediately if user opened directly (without cover)
+            checkPhotos();
         });
     </script>
 </body>
