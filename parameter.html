@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Undangan Digital Generator</title>
+  <title>Kang_Moek Undangan Digital Generator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -119,13 +119,13 @@
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
-const BASE_URL = "https://mukhlis33.github.io/Undangan_Pernikahan/";
+const BASE_URL = "https://mukhlis33.github.io/Undangan_Pernikahan/dwi_w.html";
 let bulkData = [];
 
 function buildText(nama){
   const enc = encodeURIComponent(nama).replace(/%20/g,'+');
   const url = BASE_URL + '?nama=' + enc;
-  return `Assalamu’alaikum Warahmatullahi Wabarakatuh\n\nBismillahirahmanirrahim.\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami.\n\n*_Mukhlis & Yuyun_*\n\nBerikut link undangan kami, untuk info lengkap dari acara bisa kunjungi :\n\n${url}\n\n\nMerupakan suatu kehormatan serta kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan mendoakan kami.\n\nMohon maaf perihal undangan hanya di bagikan melalui pesan ini.\n\nWassalamu'alaikum Warahmatullahi Wabarakatuh\n\nKami yang berbahagia,\n_Mukhlis & Yuyun_`;
+  return `Assalamu’alaikum Warahmatullahi Wabarakatuh\n\nBismillahirahmanirrahim.\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami.\n\n*_Dwi & Elis_*\n\nBerikut link undangan kami, untuk info lengkap dari acara bisa kunjungi :\n\n${url}\n\n\nMerupakan suatu kehormatan serta kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan mendoakan kami.\n\nMohon maaf perihal undangan hanya di bagikan melalui pesan ini.\n\nWassalamu'alaikum Warahmatullahi Wabarakatuh\n\nKami yang berbahagia,\n_Dwi & Elis_`;
 }
 
 function generateSingle(){
